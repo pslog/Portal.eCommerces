@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3308303efd6145ff854efcae9c00b5b4" Name="Diagram1">
+        <EntityTypeShape EntityType="Portal.eCommerceModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.AspNetRole" Width="1.5" PointX="7.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.AspNetUser" Width="1.5" PointX="10" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.cms_Categories" Width="1.5" PointX="7.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.cms_News" Width="1.5" PointX="10" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.product_Categories" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.product_OrderDetails" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.product_Orders" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.product_Products" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.share_Images" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.sysdiagram" Width="1.5" PointX="9.75" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_cms_News_cms_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_product_Products_product_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="Portal.eCommerceModel.product_Products_Images" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
