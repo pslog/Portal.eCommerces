@@ -63,6 +63,7 @@ body {
   transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
   margin-left: 230px;
   z-index: 820;
+  padding-left: 15px;
 }
 .layout-top-nav .content-wrapper,
 .layout-top-nav .right-side,
