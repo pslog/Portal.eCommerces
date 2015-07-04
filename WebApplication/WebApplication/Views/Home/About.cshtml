@@ -1,7 +1,41 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@section styles {
+    <style>
+        .row img{
+            width:150px;
+            height:150px;
+        }
+        strong,
+        span {
+            display:block;
+        }
+    </style>
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div style="height:30px;"></div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div style="float:right">
+            <img src="http://mobile-img.realtyidx.com/sorry.jpg" />
+            <strong>Võ Văn Sinh</strong>
+            <span>Chief Executive Officer</span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div style="float:left">
+            <img src="https://lh3.googleusercontent.com/-ZZrubkrSVtw/VRQg8saGo9I/AAAAAAAAAC8/dXbSfU3QFII/w139-h140-p/_MG_9557.JPG" />
+            <strong>Lê Minh Thành</strong>
+            <span>Chief Financial Officer</span>
+        </div>
+    </div>
+</div>
+<div style="height:30px;"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div style="margin:0 auto;display:table;">
+            <img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xap1/t31.0-8/56590_152069901496910_472406_o.jpg" />
+            <strong>Trịnh Trung Kiên</strong>
+            <span>Less Experience Developer</span>
+        </div>
+    </div>
+</div>
