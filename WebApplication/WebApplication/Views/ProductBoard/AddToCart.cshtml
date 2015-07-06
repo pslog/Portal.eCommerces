@@ -37,7 +37,7 @@
                             </div>
                         </td>
                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <input type="email" class="form-control" id="exampleInputEmail1" value="@product.Quantity">
+                            <input type="number" class="form-control" id="ProductBoard_Quantity" value="@product.Quantity" onchange="ProductBoard.UpdateQuantityProduct(this.value,@product.Id)">
                         </td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>$@product.Price</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>$@(product.Price*product.Quantity)</strong></td>

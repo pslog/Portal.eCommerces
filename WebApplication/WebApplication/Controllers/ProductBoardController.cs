@@ -89,5 +89,46 @@ namespace WebApplication.Controllers
 
             return PartialView("AddToCart", productsInCart);
         }
+
+        /// <summary>
+        /// Update quantity of product in Cart and reCalculate total price of order 
+        /// </summary>
+        /// <param name="Id">product Id</param>
+        /// <param name="quantity">product quantity</param>
+        /// <returns>updated view of Cart</returns>
+        /// 
+        public ActionResult UpdateQuantityOfProduct(int Id,int quantity)
+        {
+            
+            List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
+            if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
+            {
+                productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
+            }
+
+            // Update quantity of product in Cart
+            if (quantity > 0)
+            {
+                foreach (var item in productsInCart)
+                {
+                    if (item.Id == Id)
+                    {
+                        item.Quantity = quantity;
+                    }
+                }
+            }
+
+            if (HttpContext.Session != null)
+            {
+                HttpContext.Session["ASPNETShoppingCart"] = productsInCart;
+            }
+
+            return PartialView("AddToCart", productsInCart);
+        }
+
+        public ActionResult CheckOutCart()
+        {
+            return View();
+        }
     }
 }
