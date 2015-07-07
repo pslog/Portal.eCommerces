@@ -11,6 +11,9 @@ namespace WebApplication.Models.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using WebApplication.Common.Constants;
     
     public partial class cms_Categories
     {
@@ -20,9 +23,13 @@ namespace WebApplication.Models.Models
         }
     
         public int ID { get; set; }
+        [Required]
         public System.Guid GUID { get; set; }
+        [Required]
         public System.Guid ParentID { get; set; }
+        [Required, DisplayName(displayName: Label.CmsCategory.Title)]
         public string Title { get; set; }
+        [DisplayName(displayName: Label.CmsCategory.Description)]
         public string Description { get; set; }
         public string Url { get; set; }
         public Nullable<int> SortOrder { get; set; }

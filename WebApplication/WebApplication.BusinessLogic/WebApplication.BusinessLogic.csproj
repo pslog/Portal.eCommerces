@@ -36,6 +36,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -48,10 +57,23 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\ProductBoard_Business.cs" />
     <Compile Include="BusinessLogic\ProductMapperExtensionMethods.cs" />
+    <Compile Include="Interface\ICmsCategoryRepository.cs" />
+    <Compile Include="Repositories\CmsCategoryRepository.cs" />
+    <Compile Include="Repositories\CmsNewsRepository.cs" />
+    <Compile Include="Interface\ICmsNewsRepository.cs" />
+    <Compile Include="UnitOfWork\DataContainer.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebApplication.Common\WebApplication.Common.csproj">
+      <Project>{9bf41ada-f468-43e4-be1c-db3d4f9e5234}</Project>
+      <Name>WebApplication.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApplication.Models\WebApplication.Models.csproj">
       <Project>{13e2554e-c5af-4081-bead-da13f8260fbe}</Project>
       <Name>WebApplication.Models</Name>

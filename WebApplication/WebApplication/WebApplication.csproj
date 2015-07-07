@@ -161,7 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\CmsController.cs" />
     <Compile Include="Controllers\ProductBoardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,16 +227,16 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ListProduct.cshtml" />
-    <Content Include="Views\News\Create.cshtml" />
-    <Content Include="Views\News\Delete.cshtml" />
-    <Content Include="Views\News\Details.cshtml" />
-    <Content Include="Views\News\Edit.cshtml" />
-    <Content Include="Views\News\Index.cshtml" />
-    <Content Include="Views\News\CreateCategory.cshtml" />
-    <Content Include="Views\News\DeleteCategory.cshtml" />
-    <Content Include="Views\News\CategoryDetails.cshtml" />
-    <Content Include="Views\News\EditCategory.cshtml" />
-    <Content Include="Views\News\CategoryIndex.cshtml" />
+    <Content Include="Views\Cms\CreateCmsNews.cshtml" />
+    <Content Include="Views\Cms\DeleteCmsNews.cshtml" />
+    <Content Include="Views\Cms\CmsNewsDetails.cshtml" />
+    <Content Include="Views\Cms\EditCmsNews.cshtml" />
+    <Content Include="Views\Cms\CmsNewsIndex.cshtml" />
+    <Content Include="Views\Cms\CreateCmsCategory.cshtml" />
+    <Content Include="Views\Cms\DeleteCmsCategory.cshtml" />
+    <Content Include="Views\Cms\CmsCategoryDetails.cshtml" />
+    <Content Include="Views\Cms\EditCmsCategory.cshtml" />
+    <Content Include="Views\Cms\CmsCategoryIndex.cshtml" />
     <Content Include="Views\ProductBoard\AddToCart.cshtml" />
     <Content Include="Views\ProductBoard\CheckOutCart.cshtml" />
   </ItemGroup>

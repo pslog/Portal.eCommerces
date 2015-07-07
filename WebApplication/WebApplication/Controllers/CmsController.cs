@@ -8,21 +8,26 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models.Models;
+using WebApplication.Common;
+using Uow.Package.Data;
+using WebApplication.Common.Constants;
 
 namespace WebApplication.Controllers
 {
-    public class NewsController : Controller
+    public class CmsController : Controller
     {
         private PortalEntities db = new PortalEntities();
 
+        private IUnitOfWork uow = UnitOfWork.Begin();
+
         // GET: Category
-        public async Task<ActionResult> CategoryIndex()
+        public async Task<ActionResult> CmsCategoryIndex()
         {
             return View(await db.cms_Categories.ToListAsync());
         }
 
         // GET: Category/Details/5
-        public async Task<ActionResult> CategoryDetails(int? id)
+        public async Task<ActionResult> CmsCategoryDetails(int? id)
         {
             if (id == null)
             {
@@ -37,8 +42,14 @@ namespace WebApplication.Controllers
         }
 
         // GET: Category/Create
-        public ActionResult CreateCategory()
+        public ActionResult CreateCmsCategory()
         {
+            var parents = uow.CmsCategory.GetAll().ToList();
+
+            parents.Insert(0, new cms_Categories { GUID = Guid.Empty, Title = string.Empty });
+
+            ViewBag.Parents = parents.Count < 2 ? null : new SelectList(parents, ModelName.CmsCategory.GUID, ModelName.CmsCategory.Title);
+            
             return View();
         }
 
@@ -47,20 +58,22 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCategory([Bind(Include = "ID,GUID,ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_Categories cms_Categories)
+        public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = ExcludeProperties.CmsCategory)] cms_Categories cmsCategory)
         {
             if (ModelState.IsValid)
             {
-                db.cms_Categories.Add(cms_Categories);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                uow.CmsCategory.Create(uow.CmsCategory.GetCmsCategory(cmsCategory, 0, 0));
+
+                await uow.CommitAsync();
+                
+                return RedirectToAction("CmsCategoryIndex");
             }
 
-            return View(cms_Categories);
+            return View(cmsCategory);
         }
 
         // GET: Category/Edit/5
-        public async Task<ActionResult> EditCategory(int? id)
+        public async Task<ActionResult> EditCmsCategory(int? id)
         {
             if (id == null)
             {
@@ -79,7 +92,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditCategory([Bind(Include = "ID,GUID,ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_Categories cms_Categories)
+        public async Task<ActionResult> EditCmsCategory([Bind(Include = "ID,GUID,ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_Categories cms_Categories)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +104,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Category/Delete/5
-        public async Task<ActionResult> DeleteCategory(int? id)
+        public async Task<ActionResult> DeleteCmsCategory(int? id)
         {
             if (id == null)
             {
@@ -108,27 +121,22 @@ namespace WebApplication.Controllers
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteCategoryConfirmed(int id)
+        public async Task<ActionResult> DeleteCmsCategoryConfirmed(int id)
         {
             cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
             db.cms_Categories.Remove(cms_Categories);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-
-
-
-
         // GET: News
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> CmsNewsIndex()
         {
             var cms_News = db.cms_News.Include(c => c.cms_Categories);
             return View(await cms_News.ToListAsync());
         }
 
         // GET: News/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> CmsNewsDetails(int? id)
         {
             if (id == null)
             {
@@ -143,7 +151,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Create
-        public ActionResult Create()
+        public ActionResult CreateCmsNews()
         {
             ViewBag.CategoryID = new SelectList(db.cms_Categories, "ID", "Title");
             return View();
@@ -154,7 +162,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,GUID,CategoryID,Title,SubTitle,ContentNews,Authors,Tags,TotalView,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_News cms_News)
+        public async Task<ActionResult> CreateCmsNews([Bind(Include = "ID,GUID,CategoryID,Title,SubTitle,ContentNews,Authors,Tags,TotalView,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_News cms_News)
         {
             if (ModelState.IsValid)
             {
@@ -168,7 +176,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> EditCmsNews(int? id)
         {
             if (id == null)
             {
@@ -188,7 +196,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,GUID,CategoryID,Title,SubTitle,ContentNews,Authors,Tags,TotalView,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_News cms_News)
+        public async Task<ActionResult> EditCmsNews([Bind(Include = "ID,GUID,CategoryID,Title,SubTitle,ContentNews,Authors,Tags,TotalView,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_News cms_News)
         {
             if (ModelState.IsValid)
             {
@@ -201,7 +209,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> DeleteCmsNews(int? id)
         {
             if (id == null)
             {

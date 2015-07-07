@@ -139,7 +139,12 @@
     <Compile Include="ViewModels\Product.cs" />
     <Compile Include="ViewModels\ProductPartialViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WebApplication.Common\WebApplication.Common.csproj">
+      <Project>{9bf41ada-f468-43e4-be1c-db3d4f9e5234}</Project>
+      <Name>WebApplication.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Models\PortalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
