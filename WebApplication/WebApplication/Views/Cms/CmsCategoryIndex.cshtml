@@ -1,33 +1,33 @@
 ﻿@model IEnumerable<WebApplication.Models.Models.cms_Categories>
+@using WebApplication.Common.Constants
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = PageTitle.CmsCategory.Index;
 }
 
-<h2>Index</h2>
+<h2>@PageTitle.CmsCategory.Index</h2>
+@using (Html.BeginForm(RouteName.CmsCategory.CmsCategoryIndex, RouteName.CmsCategory.Controller))
+{
+<div class="row">
+    <div class="col-md-4">
+        <p>@Html.ActionLink(Label.CmsCategory.CreateTitle, RouteName.CmsCategory.CreateCmsCategory)</p>
+    </div>
+    
+    <div class="col-md-4 pull-right">
+        <input type="search" id="cms_category_search" name="searchKey" placeholder="Tìm danh mục" class="form-control pull-right" value="@((string)ViewBag.SearchKey)"/>
+    </div>
+    
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "CreateCmsCategory")
-</p>
+<p></p>
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GUID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ParentID)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SortOrder)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -50,22 +50,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.GUID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParentID)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SortOrder)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
@@ -83,11 +71,12 @@
             @Html.DisplayFor(modelItem => item.ModifiedDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.CreateCmsCategory, new { cmsCategoryID = item.ID }) |
+            @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.EditCmsCategory, new { id = item.ID }) |
+            @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategory.CmsCategoryDetails, new { id = item.ID }) |
+            @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategory.DeleteCmsCategory, new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>
+}

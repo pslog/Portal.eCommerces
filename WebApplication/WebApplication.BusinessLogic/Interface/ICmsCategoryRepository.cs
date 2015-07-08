@@ -12,6 +12,7 @@ namespace WebApplication.BusinessLogic.Interface
     {
         IQueryable<cms_Categories> GetExcept(int id);
         IQueryable<cms_Categories> GetExcepts(int[] id);
+        Task<IQueryable<cms_Categories>> SearchCategories(string searchKey = null, string orderBy = null, bool orderbyDesc = false, int page = 1);
         cms_Categories GetCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId);
     }
 }

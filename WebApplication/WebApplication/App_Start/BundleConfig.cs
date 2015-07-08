@@ -23,10 +23,16 @@ namespace WebApplication
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+                      "~/Content/Plugins/ckeditor/ckeditor.js",
+                      "~/Content/Plugins/ckeditor/config.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                        "~/Content/Home/product_Home.css"));
+
+            bundles.Add(new StyleBundle("~/Content/pagedlist").Include("~/Content/Common/PagedList.css"));
         }
     }
 }

@@ -21,9 +21,11 @@ namespace WebApplication.Controllers
         private IUnitOfWork uow = UnitOfWork.Begin();
 
         // GET: Category
-        public async Task<ActionResult> CmsCategoryIndex()
+        public async Task<ActionResult> CmsCategoryIndex(string searchKey = null, string orderBy = null, bool orderByDesc = false, int page = 1)
         {
-            return View(await db.cms_Categories.ToListAsync());
+            ViewBag.SearchKey = searchKey;
+
+            return View(await uow.CmsCategory.SearchCategories(searchKey, orderBy, orderByDesc, page));
         }
 
         // GET: Category/Details/5
@@ -42,14 +44,16 @@ namespace WebApplication.Controllers
         }
 
         // GET: Category/Create
-        public ActionResult CreateCmsCategory()
+        public ActionResult CreateCmsCategory(int? cmsCategoryID = null)
         {
-            var parents = uow.CmsCategory.GetAll().ToList();
+            var parent = uow.CmsCategory.GetById(cmsCategoryID ?? -1);
 
-            parents.Insert(0, new cms_Categories { GUID = Guid.Empty, Title = string.Empty });
+            if (parent != null)
+            {
+                ViewBag.ParentID = parent.GUID;
+                ViewBag.ParentTitle = parent.Title;
+            }
 
-            ViewBag.Parents = parents.Count < 2 ? null : new SelectList(parents, ModelName.CmsCategory.GUID, ModelName.CmsCategory.Title);
-            
             return View();
         }
 
@@ -238,6 +242,7 @@ namespace WebApplication.Controllers
         {
             if (disposing)
             {
+                uow.Dispose();
                 db.Dispose();
             }
             base.Dispose(disposing);

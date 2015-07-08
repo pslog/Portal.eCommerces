@@ -26,17 +26,23 @@ namespace WebApplication.Models.Models
         [Required]
         public System.Guid GUID { get; set; }
         [Required]
+        [DisplayName(displayName: Label.CmsCategory.ParentID)]
         public System.Guid ParentID { get; set; }
-        [Required, DisplayName(displayName: Label.CmsCategory.Title)]
+        [Required]
+        [DisplayName(displayName: Label.CmsCategory.Title)]
         public string Title { get; set; }
         [DisplayName(displayName: Label.CmsCategory.Description)]
         public string Description { get; set; }
         public string Url { get; set; }
         public Nullable<int> SortOrder { get; set; }
         public Nullable<int> Status { get; set; }
+        [DisplayName(displayName: Label.CmsCategory.CreatedBy)]
         public Nullable<int> CreatedBy { get; set; }
+        [DisplayName(displayName: Label.CmsCategory.CreatedDate)]
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        [DisplayName(displayName: Label.CmsCategory.ModifiedBy)]
         public Nullable<int> ModifiedBy { get; set; }
+        [DisplayName(displayName: Label.CmsCategory.ModifiedDate)]
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual ICollection<cms_News> cms_News { get; set; }
