@@ -89,8 +89,6 @@ namespace WebApplication.Common.Constants
     public class PagingOptConst
     {
         public const int Wrapper = 0;
-        //public const int PagerButton = 1;
-        //public const int PagerButton = 2;
         public const int FirstLastButton = 1;
         public const int PrevNextButton = 2;
         public const int NumberButton = 3;

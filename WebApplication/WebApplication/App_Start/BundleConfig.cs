@@ -11,6 +11,9 @@ namespace WebApplication
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryunobtrusiveajax").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -31,8 +34,6 @@ namespace WebApplication
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                        "~/Content/Home/product_Home.css"));
-
-            bundles.Add(new StyleBundle("~/Content/pagedlist").Include("~/Content/Common/PagedList.css"));
         }
     }
 }

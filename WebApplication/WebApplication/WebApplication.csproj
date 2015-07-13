@@ -174,7 +174,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Home\product_Home.css" />
-    <Content Include="Content\Common\PagedList.css" />
     <Content Include="Content\Plugins\ckeditor\build-config.js" />
     <Content Include="Content\Plugins\ckeditor\ckeditor.js" />
     <Content Include="Content\Plugins\ckeditor\config.js" />
@@ -499,6 +498,8 @@
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -514,6 +515,9 @@
     <Content Include="Content\Plugins\ckeditor\plugins\wsc\README.md" />
     <Content Include="Content\Plugins\ckeditor\README.md" />
     <Content Include="Content\Plugins\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
+      <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
