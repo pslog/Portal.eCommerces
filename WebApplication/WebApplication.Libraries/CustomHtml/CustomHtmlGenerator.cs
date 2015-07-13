@@ -17,7 +17,8 @@ namespace WebApplication.Libraries.CustomHtml
             switch (option)
             {
                 case PagingOptConst.Wrapper: return @"<ul class=""pagination"">{0}{1}{2}{3}{4}</ul>";
-                case PagingOptConst.PagerButton: return string.Format(@"<li><a class=""pager-item"" href=""{0}"">{1}</a></li>", action, text);
+                case PagingOptConst.FirstLastButton: return string.Format(@"<li><a class=""paging-first-last"" href=""{0}"">{1}</a></li>", action, text);
+                case PagingOptConst.PrevNextButton: return string.Format(@"<li><a class=""paging-prev-next"" href=""{0}"">{1}</a></li>", action, text);
                 case PagingOptConst.NumberButton: return string.Format(@"<li><a class=""page-number {0}"" href=""{1}"">{2}</a></li>", active ? "paging-active" : string.Empty, action, text);
                 case PagingOptConst.NoneActionString: return string.Format(@"<li><a href=""javascript:;"">...</a></li>");
             }

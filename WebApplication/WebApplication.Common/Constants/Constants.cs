@@ -43,7 +43,6 @@ namespace WebApplication.Common.Constants
     {
         public class CmsCategory
         {
-            public const string CreateTitle = "Thêm danh mục";
             public const string CreateSubCategory = "Thêm mục con";
             public const string Title = "Tên danh mục";
             public const string Url = "Url";
@@ -70,6 +69,7 @@ namespace WebApplication.Common.Constants
         public class CmsCategory
         {
             public const string Index = "Danh sách danh mục";
+            public const string Create = "Thêm danh mục";
         }
     }
 
@@ -78,24 +78,27 @@ namespace WebApplication.Common.Constants
         public class CmsCategory
         {
             public const string Controller = "Cms";
-            public const string CmsCategoryIndex = "CmsCategoryIndex";
-            public const string CreateCmsCategory = "CreateCmsCategory";
-            public const string CmsCategoryDetails = "CmsCategoryDetails";
-            public const string EditCmsCategory = "EditCmsCategory";
-            public const string DeleteCmsCategory = "DeleteCmsCategory";
+            public const string Index = "CmsCategoryIndex";
+            public const string Create = "CreateCmsCategory";
+            public const string Details = "CmsCategoryDetails";
+            public const string Edit = "EditCmsCategory";
+            public const string Delete = "DeleteCmsCategory";
         }
     }
 
     public class PagingOptConst
     {
         public const int Wrapper = 0;
-        public const int PagerButton = 1;
-        public const int NumberButton = 2;
-        public const int NoneActionString = 3;
-        public const string First = "First";
-        public const string Last = "Last";
-        public const string Prev = "Prev";
-        public const string Next = "Next";
+        //public const int PagerButton = 1;
+        //public const int PagerButton = 2;
+        public const int FirstLastButton = 1;
+        public const int PrevNextButton = 2;
+        public const int NumberButton = 3;
+        public const int NoneActionString = 4;
+        public const string First = "Trang đầu";
+        public const string Last = "Trang cuối";
+        public const string Prev = "Trang trước";
+        public const string Next = "Trang sau";
         public const string PageNumber = "PageNumber";
     }
 

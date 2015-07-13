@@ -142,8 +142,8 @@ namespace WebApplication.Libraries.Extensions
 
             if (option.DisplayFirstLast)
             {
-                firstButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.First), PagingOptConst.First);
-                lastButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.Last), PagingOptConst.Last);
+                firstButton = generator(PagingOptConst.FirstLastButton, url.PagingAction(routeValue, PagingOptConst.First), PagingOptConst.First);
+                lastButton = generator(PagingOptConst.FirstLastButton, url.PagingAction(routeValue, PagingOptConst.Last), PagingOptConst.Last);
             }
 
             if (option.DisplayPrevNext)
@@ -152,18 +152,18 @@ namespace WebApplication.Libraries.Extensions
                 {
                     if (routeValue.PageNumber > 1)
                     {
-                        prevButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.Prev), PagingOptConst.Prev);
+                        prevButton = generator(PagingOptConst.PrevNextButton, url.PagingAction(routeValue, PagingOptConst.Prev), PagingOptConst.Prev);
                     }
 
                     if (routeValue.PageNumber < routeValue.TotalPages)
                     {
-                        nextButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.Next), PagingOptConst.Next);
+                        nextButton = generator(PagingOptConst.PrevNextButton, url.PagingAction(routeValue, PagingOptConst.Next), PagingOptConst.Next);
                     }
                 }
                 else
                 {
-                    prevButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.Prev), PagingOptConst.Prev);
-                    nextButton = generator(PagingOptConst.PagerButton, url.PagingAction(routeValue, PagingOptConst.Next), PagingOptConst.Next);
+                    prevButton = generator(PagingOptConst.PrevNextButton, url.PagingAction(routeValue, PagingOptConst.Prev), PagingOptConst.Prev);
+                    nextButton = generator(PagingOptConst.PrevNextButton, url.PagingAction(routeValue, PagingOptConst.Next), PagingOptConst.Next);
                 }
             }
 

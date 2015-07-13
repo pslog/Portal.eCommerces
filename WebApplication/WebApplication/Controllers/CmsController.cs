@@ -24,15 +24,9 @@ namespace WebApplication.Controllers
         // GET: Category
         public async Task<ActionResult> CmsCategoryIndex(PagingRouteValue routeValue = null)
         {
-            //ViewBag.SearchKey = searchKey;
-            //ViewBag.OrderBy = orderBy;
-            //ViewBag.OrderByDesc = orderByDesc;
-            //ViewBag.PageNumber = pageNumber;
-            //ViewBag.TotalPages = totalPages;
-
             if (string.IsNullOrEmpty(routeValue.ActionName) || string.IsNullOrEmpty(routeValue.ControllerName))
             {
-                routeValue.ActionName = RouteName.CmsCategory.CmsCategoryIndex;
+                routeValue.ActionName = RouteName.CmsCategory.Index;
                 routeValue.ControllerName = RouteName.CmsCategory.Controller;
             }
 

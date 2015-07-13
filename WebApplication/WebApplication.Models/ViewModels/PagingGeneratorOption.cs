@@ -26,6 +26,7 @@ namespace WebApplication.Models.ViewModels
                     DisplayAllNumber = false,
                     DisplayFirstLast = true,
                     DisplayPrevNext = true,
+                    AutoHidePrevNext = true,
                     FirstPageNumbers = 1,
                     LastPageNumbers = 1,
                     MiddlePageNumbers = 3
