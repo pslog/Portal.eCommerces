@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Uow.Package.Data.Repositories;
 using WebApplication.Models.Models;
+using WebApplication.Models.ViewModels;
 
 namespace WebApplication.BusinessLogic.Interface
 {
@@ -12,7 +13,7 @@ namespace WebApplication.BusinessLogic.Interface
     {
         IQueryable<cms_Categories> GetExcept(int id);
         IQueryable<cms_Categories> GetExcepts(int[] id);
-        Task<IQueryable<cms_Categories>> SearchCategories(string searchKey = null, string orderBy = null, bool orderbyDesc = false, int page = 1);
+        CmsCategoryView SearchCategories(PagingRouteValue routeValue = null);
         cms_Categories GetCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId);
     }
 }

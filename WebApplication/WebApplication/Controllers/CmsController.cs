@@ -11,6 +11,7 @@ using WebApplication.Models.Models;
 using WebApplication.Common;
 using Uow.Package.Data;
 using WebApplication.Common.Constants;
+using WebApplication.Models.ViewModels;
 
 namespace WebApplication.Controllers
 {
@@ -21,11 +22,21 @@ namespace WebApplication.Controllers
         private IUnitOfWork uow = UnitOfWork.Begin();
 
         // GET: Category
-        public async Task<ActionResult> CmsCategoryIndex(string searchKey = null, string orderBy = null, bool orderByDesc = false, int page = 1)
+        public async Task<ActionResult> CmsCategoryIndex(PagingRouteValue routeValue = null)
         {
-            ViewBag.SearchKey = searchKey;
+            //ViewBag.SearchKey = searchKey;
+            //ViewBag.OrderBy = orderBy;
+            //ViewBag.OrderByDesc = orderByDesc;
+            //ViewBag.PageNumber = pageNumber;
+            //ViewBag.TotalPages = totalPages;
 
-            return View(await uow.CmsCategory.SearchCategories(searchKey, orderBy, orderByDesc, page));
+            if (string.IsNullOrEmpty(routeValue.ActionName) || string.IsNullOrEmpty(routeValue.ControllerName))
+            {
+                routeValue.ActionName = RouteName.CmsCategory.CmsCategoryIndex;
+                routeValue.ControllerName = RouteName.CmsCategory.Controller;
+            }
+
+            return View(await Task.FromResult<CmsCategoryView>(uow.CmsCategory.SearchCategories(routeValue)));
         }
 
         // GET: Category/Details/5

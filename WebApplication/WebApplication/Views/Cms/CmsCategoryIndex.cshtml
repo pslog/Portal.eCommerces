@@ -1,5 +1,9 @@
-﻿@model IEnumerable<WebApplication.Models.Models.cms_Categories>
+﻿@model WebApplication.Models.ViewModels.CmsCategoryView
+
 @using WebApplication.Common.Constants
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.ViewModels
 
 @{
     ViewBag.Title = PageTitle.CmsCategory.Index;
@@ -8,75 +12,105 @@
 <h2>@PageTitle.CmsCategory.Index</h2>
 @using (Html.BeginForm(RouteName.CmsCategory.CmsCategoryIndex, RouteName.CmsCategory.Controller))
 {
-<div class="row">
-    <div class="col-md-4">
-        <p>@Html.ActionLink(Label.CmsCategory.CreateTitle, RouteName.CmsCategory.CreateCmsCategory)</p>
+    @Html.HiddenFor(model => model.RouteValue.OrderBy);
+    @Html.HiddenFor(model => model.RouteValue.ActionName)
+    @Html.HiddenFor(model => model.RouteValue.ControllerName)
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>@Html.ActionLink(Label.CmsCategory.CreateTitle, RouteName.CmsCategory.CreateCmsCategory)</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <span>Order By</span>
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, false)Asc</label>
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true)Desc</label>
+        </div>
+        <div class="col-md-4 pull-right">
+            @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = "Tìm danh mục", @class = "form-control pull-right" })
+        </div>
     </div>
-    
-    <div class="col-md-4 pull-right">
-        <input type="search" id="cms_category_search" name="searchKey" placeholder="Tìm danh mục" class="form-control pull-right" value="@((string)ViewBag.SearchKey)"/>
+
+    <p></p>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.Title)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.Url)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.Status)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayName(Label.CmsCategory.ModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.CmsCategories)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.CreateCmsCategory, new { cmsCategoryID = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.EditCmsCategory, new { id = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategory.CmsCategoryDetails, new { id = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategory.DeleteCmsCategory, new { id = item.ID })
+            </td>
+        </tr>
+        }
+    </table>
+
+    <div class="pull-right">
+        @Html.PagingGenerator(PagingGeneratorOption.DefaultOption, CustomHtmlGenerator.DefaultPagingHtml, Model.RouteValue)
     </div>
-    
-</div>
-
-<p></p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedDate)
-        </td>
-        <td>
-            @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.CreateCmsCategory, new { cmsCategoryID = item.ID }) |
-            @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.EditCmsCategory, new { id = item.ID }) |
-            @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategory.CmsCategoryDetails, new { id = item.ID }) |
-            @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategory.DeleteCmsCategory, new { id = item.ID })
-        </td>
-    </tr>
 }
-</table>
+
+@section styles {
+    <style>
+        .pagination > li > a.paging-active{
+            background-color:#CCC;
+        }
+    </style>
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('input[type=radio]').click(function () {
+                $('form').submit();
+            });
+        });
+    </script>
 }

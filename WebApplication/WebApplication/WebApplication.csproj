@@ -586,6 +586,10 @@
       <Project>{9bf41ada-f468-43e4-be1c-db3d4f9e5234}</Project>
       <Name>WebApplication.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebApplication.Libraries\WebApplication.Libraries.csproj">
+      <Project>{3f1f99cf-aa10-4815-8cc3-699ccdcad991}</Project>
+      <Name>WebApplication.Libraries</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApplication.Models\WebApplication.Models.csproj">
       <Project>{13e2554e-c5af-4081-bead-da13f8260fbe}</Project>
       <Name>WebApplication.Models</Name>

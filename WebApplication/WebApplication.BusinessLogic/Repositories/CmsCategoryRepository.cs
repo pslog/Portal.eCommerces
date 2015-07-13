@@ -8,6 +8,8 @@ using Uow.Package.Data.Repositories;
 using WebApplication.BusinessLogic.Interface;
 using WebApplication.Common.Constants;
 using WebApplication.Models.Models;
+using WebApplication.Libraries.Extensions;
+using WebApplication.Models.ViewModels;
 
 namespace WebApplication.BusinessLogic.Repositories
 {
@@ -28,55 +30,62 @@ namespace WebApplication.BusinessLogic.Repositories
             return DbSet.Where(nc => !id.Contains(nc.ID));
         }
 
-        public cms_Categories GetCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId)
+        public cms_Categories GetCmsCategory(cms_Categories cmsCategory, int creatorId, int modifierId)
         {
             cmsCategory.CreatedBy = creatorId;
             cmsCategory.CreatedDate = DateTime.Now;
-            cmsCategory.ModifiedBy = modiferId;
+            cmsCategory.ModifiedBy = modifierId;
             cmsCategory.ModifiedDate = cmsCategory.CreatedDate;
             cmsCategory.GUID = Guid.NewGuid();
 
             return cmsCategory;
         }
 
-        public Task<IQueryable<cms_Categories>> SearchCategories(string searchKey = null, string orderBy = null, bool orderbyDesc = false, int page = 1)
+        public CmsCategoryView SearchCategories(PagingRouteValue routeValue = null)
         {
-            var categories = DbSet.AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchKey))
+            var cmsCategories = DbSet.AsQueryable();
+          
+            if (!string.IsNullOrEmpty(routeValue.SearchKey))
             {
-                categories = categories.Where(c => c.ID.ToString().Contains(searchKey) || c.Title.Contains(searchKey) || c.GUID.ToString().Contains(searchKey));
+                cmsCategories = cmsCategories.Where(c => c.ID.ToString().Contains(routeValue.SearchKey) || c.Title.Contains(routeValue.SearchKey) || c.GUID.ToString().Contains(routeValue.SearchKey));
             }
-            
-            switch (orderBy)
+
+            switch (routeValue.OrderBy)
             {
                 case ModelName.CmsCategory.ID:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.ID) : categories.OrderByDescending(c => c.ID);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.ID) : cmsCategories.OrderByDescending(c => c.ID);
                     break;
                 case ModelName.CmsCategory.Title:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.Title) : categories.OrderByDescending(c => c.Title);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.Title) : cmsCategories.OrderByDescending(c => c.Title);
                     break;
                 case ModelName.CmsCategory.GUID:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.GUID) : categories.OrderByDescending(c => c.GUID);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.GUID) : cmsCategories.OrderByDescending(c => c.GUID);
                     break;
                 case ModelName.CmsCategory.CreatedBy:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.CreatedBy) : categories.OrderByDescending(c => c.CreatedBy);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.CreatedBy) : cmsCategories.OrderByDescending(c => c.CreatedBy);
                     break;
                 case ModelName.CmsCategory.CreatedDate:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.CreatedDate) : categories.OrderByDescending(c => c.CreatedDate);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.CreatedDate) : cmsCategories.OrderByDescending(c => c.CreatedDate);
                     break;
                 case ModelName.CmsCategory.ModifiedBy:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.ModifiedBy) : categories.OrderByDescending(c => c.ModifiedBy);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.ModifiedBy) : cmsCategories.OrderByDescending(c => c.ModifiedBy);
                     break;
                 case ModelName.CmsCategory.ModifiedDate:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.ModifiedDate) : categories.OrderByDescending(c => c.ModifiedDate);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.ModifiedDate) : cmsCategories.OrderByDescending(c => c.ModifiedDate);
                     break;
                 default:
-                    categories = orderbyDesc ? categories.OrderBy(c => c.ID) : categories.OrderByDescending(c => c.ID);
+                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderBy(c => c.ID) : cmsCategories.OrderByDescending(c => c.ID);
                     break;
             }
 
-            return Task.FromResult<IQueryable<cms_Categories>>(categories.Skip(ConstValue.PageSize * (page - 1)).Take(ConstValue.PageSize));
+            routeValue.TotalPages = cmsCategories.Count();
+            routeValue.TotalPages = routeValue.TotalPages % ConstValue.PageSize == 0 ? routeValue.TotalPages / ConstValue.PageSize : routeValue.TotalPages / ConstValue.PageSize + 1;
+
+            return new CmsCategoryView
+            {
+                CmsCategories = cmsCategories.ToPageList(ConstValue.PageSize, routeValue.PageNumber),
+                RouteValue = routeValue
+            };
         }
     }
 }
