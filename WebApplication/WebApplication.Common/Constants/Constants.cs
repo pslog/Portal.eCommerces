@@ -34,11 +34,6 @@ namespace WebApplication.Common.Constants
         }
     }
 
-    public class ExcludeProperties
-    {
-        public const string CmsCategory = "ID,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate";
-    }
-
     public class Label
     {
         public class CmsCategory
@@ -48,11 +43,12 @@ namespace WebApplication.Common.Constants
             public const string Url = "Url";
             public const string Status = "Tình trạng";
             public const string Description = "Mô tả";
-            public const string ParentID = "Ông già";
+            public const string ParentID = "Danh mục con của";
             public const string CreatedBy = "Người thêm";
             public const string CreatedDate = "Ngày thêm";
             public const string ModifiedBy = "Người sửa";
             public const string ModifiedDate = "Ngày sửa";
+            public const string RootCategory = "";
         }
 
         public class CRUD
@@ -70,6 +66,9 @@ namespace WebApplication.Common.Constants
         {
             public const string Index = "Danh sách danh mục";
             public const string Create = "Thêm danh mục";
+            public const string Edit = "Sửa danh mục";
+            public const string Delete = "Xóa danh mục";
+            public const string Details = "Chi tiết danh mục";
         }
     }
 
@@ -102,7 +101,7 @@ namespace WebApplication.Common.Constants
 
     public class ConstValue
     {
-        public const int PageSize = 5;
+        public const int PageSize = 10;
         public const int PagingFirstPagesNumber = 1;
         public const int PagingLastPagesNumber = 1;
         public const int PagingMiddlePagesNumber = 3;

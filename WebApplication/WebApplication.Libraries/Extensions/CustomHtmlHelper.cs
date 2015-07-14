@@ -27,5 +27,7 @@ namespace WebApplication.Libraries.Extensions
 
             return new MvcHtmlString(string.Format(generator(PagingOptConst.Wrapper), htmlElements.Item1, htmlElements.Item2, htmlElements.Item3, htmlElements.Item4, htmlElements.Item5));
         }
+
+
     }
 }

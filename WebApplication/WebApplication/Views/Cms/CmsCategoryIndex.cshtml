@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.ViewModels.CmsCategoryView
+﻿@model WebApplication.Models.ViewModels.CmsCategoryIndexView
 
 @using WebApplication.Common.Constants
 @using WebApplication.Libraries.Extensions
@@ -34,14 +34,9 @@
 
     <table class="table">
         <tr>
+            <th>ID</th>
             <th>
                 @Html.DisplayName(Label.CmsCategory.Title)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.Url)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.Status)
             </th>
             <th>
                 @Html.DisplayName(Label.CmsCategory.CreatedBy)
@@ -61,14 +56,9 @@
         @foreach (var item in Model.CmsCategories)
         {
         <tr>
+            <td>@Html.DisplayFor(modelItem => item.ID)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedBy)
@@ -83,7 +73,7 @@
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>
             <td>
-                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.Create, new { cmsCategoryID = item.ID }) |
+                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.Create, new { parentID = item.ID }) |
                 @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.Edit, new { id = item.ID }) |
                 @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategory.Details, new { id = item.ID }) |
                 @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategory.Delete, new { id = item.ID })

@@ -30,7 +30,7 @@ namespace WebApplication.Controllers
                 routeValue.ControllerName = RouteName.CmsCategory.Controller;
             }
 
-            return View(await Task.FromResult<CmsCategoryView>(uow.CmsCategory.SearchCategories(routeValue)));
+            return View(await Task.FromResult<CmsCategoryIndexView>(uow.CmsCategory.GetIndexView(routeValue)));
         }
 
         // GET: Category/Details/5
@@ -40,26 +40,24 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
-            if (cms_Categories == null)
+            cms_Categories cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id ?? 0));
+
+            if (cmsCategory == null)
             {
                 return HttpNotFound();
             }
-            return View(cms_Categories);
+
+            var parent = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetByGuid(cmsCategory.ParentID));
+
+            ViewBag.ParentTitle = parent == null ? string.Empty : parent.Title;
+
+            return View(cmsCategory);
         }
 
         // GET: Category/Create
-        public ActionResult CreateCmsCategory(int? cmsCategoryID = null)
+        public async Task<ActionResult> CreateCmsCategory(int? parentID = null)
         {
-            var parent = uow.CmsCategory.GetById(cmsCategoryID ?? -1);
-
-            if (parent != null)
-            {
-                ViewBag.ParentID = parent.GUID;
-                ViewBag.ParentTitle = parent.Title;
-            }
-
-            return View();
+            return View(await Task.FromResult<CmsCategoryCreateView>(uow.CmsCategory.GetCreateView(parentID)));
         }
 
         // POST: Category/Create
@@ -67,18 +65,18 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = ExcludeProperties.CmsCategory)] cms_Categories cmsCategory)
+        public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = "CmsCategory.ID, ParentID")]CmsCategoryCreateView createView)
         {
             if (ModelState.IsValid)
             {
-                uow.CmsCategory.Create(uow.CmsCategory.GetCmsCategory(cmsCategory, 0, 0));
+                uow.CmsCategory.Create(uow.CmsCategory.GetNewCmsCategory(createView.CmsCategory, 0, 0));
 
                 await uow.CommitAsync();
                 
-                return RedirectToAction("CmsCategoryIndex");
+                return RedirectToAction(RouteName.CmsCategory.Index);
             }
 
-            return View(cmsCategory);
+            return View(createView);
         }
 
         // GET: Category/Edit/5
@@ -88,12 +86,15 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
-            if (cms_Categories == null)
+
+            var editView = await Task.FromResult<CmsCategoryEditView>(uow.CmsCategory.GetEditView(id ?? 0));
+
+            if (editView == null)
             {
                 return HttpNotFound();
             }
-            return View(cms_Categories);
+
+            return View(editView);
         }
 
         // POST: Category/Edit/5
@@ -101,15 +102,15 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditCmsCategory([Bind(Include = "ID,GUID,ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] cms_Categories cms_Categories)
+        public async Task<ActionResult> EditCmsCategory(CmsCategoryEditView editView)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cms_Categories).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                uow.CmsCategory.Update(uow.CmsCategory.GetUpdateCmsCategory(editView.CmsCategory, 1));
+                await uow.CommitAsync();
+                return RedirectToAction(RouteName.CmsCategory.Index);
             }
-            return View(cms_Categories);
+            return View(editView);
         }
 
         // GET: Category/Delete/5
@@ -119,23 +120,33 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
-            if (cms_Categories == null)
+
+            //cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
+            
+            var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id ?? 0));
+
+            if (cmsCategory == null)
             {
                 return HttpNotFound();
             }
-            return View(cms_Categories);
+            return View(cmsCategory);
         }
 
         // POST: Category/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteCmsCategory")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteCmsCategoryConfirmed(int id)
         {
-            cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
-            db.cms_Categories.Remove(cms_Categories);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id));
+
+            uow.CmsCategory.Delete(cmsCategory);
+
+            await uow.CommitAsync();
+
+            //cms_Categories cms_Categories = await db.cms_Categories.FindAsync(id);
+            //db.cms_Categories.Remove(cms_Categories);
+            //await db.SaveChangesAsync();
+            return RedirectToAction(RouteName.CmsCategory.Index);
         }
         // GET: News
         public async Task<ActionResult> CmsNewsIndex()

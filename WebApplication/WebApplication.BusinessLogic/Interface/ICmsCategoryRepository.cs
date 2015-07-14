@@ -11,9 +11,13 @@ namespace WebApplication.BusinessLogic.Interface
 {
     public interface ICmsCategoryRepository : IRepository<cms_Categories>
     {
+        cms_Categories GetByGuid(Guid guid);
         IQueryable<cms_Categories> GetExcept(int id);
-        IQueryable<cms_Categories> GetExcepts(int[] id);
-        CmsCategoryView SearchCategories(PagingRouteValue routeValue = null);
-        cms_Categories GetCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId);
+        CmsCategoryCreateView GetCreateView(int? parentID);
+        CmsCategoryEditView GetEditView(int id);
+        CmsCategoryIndexView GetIndexView(PagingRouteValue routeValue = null);
+        cms_Categories GetNewCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId);
+        cms_Categories GetUpdateCmsCategory(cms_Categories cmsCategory, int modiferId);
+
     }
 }
