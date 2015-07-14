@@ -1,10 +1,10 @@
-﻿@model WebApplication.Models.Models.cms_Categories
+﻿@model WebApplication.Models.ViewModels.CmsCategoryCreateView
 
 @{
-    ViewBag.Title = WebApplication.Common.Constants.Label.CmsCategory.CreateTitle;
+    ViewBag.Title = WebApplication.Common.Constants.PageTitle.CmsCategory.Create;
 }
 
-<h2>@WebApplication.Common.Constants.Label.CmsCategory.CreateTitle</h2>
+<h2>@WebApplication.Common.Constants.PageTitle.CmsCategory.Create</h2>
 
 @using (Html.BeginForm())
 {
@@ -13,37 +13,29 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @if (ViewBag.ParentID != null)
+        @if (Guid.Empty != Model.ParentID)
         {
             <div class="form-group">
-                @Html.LabelFor(model => model.ParentID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.CmsCategory.ParentID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBox(WebApplication.Common.Constants.ModelName.CmsCategory.ParentTitle, (string)ViewBag.ParentTitle, new { @readonly = "readonly", @class = "form-control" })
-                    @Html.HiddenFor(model => model.ParentID, new { Value = (Guid)ViewBag.ParentID })
+                    @Html.TextBox(WebApplication.Common.Constants.ModelName.CmsCategory.ParentTitle, Model.ParentTitle, new { @readonly = "readonly", @class = "form-control" })
+                    @Html.HiddenFor(model => model.CmsCategory.ParentID, new { Value = (Guid)Model.ParentID })
                 </div>
             </div>
         }
         
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CmsCategory.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.CmsCategory.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CmsCategory.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CmsCategory.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.CmsCategory.Description)
             </div>
         </div>
 
@@ -56,7 +48,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "CmsCategoryIndex")
+    @Html.ActionLink(WebApplication.Common.Constants.PageTitle.CmsCategory.Index, WebApplication.Common.Constants.RouteName.CmsCategory.Index)
 </div>
 
 @section Scripts {
@@ -64,7 +56,7 @@
     @Scripts.Render("~/bundles/ckeditor")
     <script>
         $(document).ready(function () {
-            CKEDITOR.replace('Description');
+            CKEDITOR.replace('CmsCategory.Description');
         });
     </script>
 }

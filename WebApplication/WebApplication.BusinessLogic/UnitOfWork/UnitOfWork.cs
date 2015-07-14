@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Uow.Package.Data.Repositories;
 using WebApplication.BusinessLogic.Interface;
 using WebApplication.BusinessLogic.Repositories;
@@ -34,12 +35,28 @@ namespace Uow.Package.Data
         /// </summary>
         public void Commit()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception)
+            {
+                db.Dispose();
+            }
         }
 
         public Task<int> CommitAsync()
         {
-            return db.SaveChangesAsync();
+            try
+            {
+                return db.SaveChangesAsync();
+            }
+            catch(Exception)
+            {
+                db.Dispose();
+            }
+
+            return Task.FromResult<int>(-1);
         }
 
         public void Dispose()
