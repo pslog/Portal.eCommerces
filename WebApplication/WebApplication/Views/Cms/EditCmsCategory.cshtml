@@ -60,7 +60,11 @@
     @Scripts.Render("~/bundles/ckeditor")
     <script>
         $(document).ready(function () {
-            CKEDITOR.replace('CmsCategory.Description');
+            //var text = $('#CmsCategory_Description').val();
+            
+            CKEDITOR.replace('CmsCategory_Description');
+
+            //$('#CmsCategory.Description').text(text);
         });
     </script>
 }

@@ -4,9 +4,37 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc.Ajax;
 
 namespace WebApplication.Models.ViewModels
 {
+
+    public class PagingRouteValue
+    {
+        public string ActionName { get; set; }
+        public string ControllerName { get; set; }
+        public string SearchKey { get; set; }
+        public string OrderBy { get; set; }
+        public bool OrderByDesc { get; set; }
+        public int PageNumber { get; set; }
+        public int TotalPages { get; set; }
+
+        public AjaxOptions AjaxOptions { get; set; }
+        public PagingRouteValue()
+        {
+            this.SearchKey = string.Empty;
+            this.OrderBy = string.Empty;
+            this.OrderByDesc = false;
+            this.PageNumber = 1;
+            this.AjaxOptions = null;
+        }
+
+        public PagingRouteValue(AjaxOptions ajaxOptions) : this()
+        {
+            this.AjaxOptions = ajaxOptions;
+        }
+    }
+
     public class PagingGeneratorOption
     {
         public bool DisplayAllNumber { get; set; }
