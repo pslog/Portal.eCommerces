@@ -27,22 +27,4 @@ namespace WebApplication.Models.ViewModels
         public PagingRouteValue RouteValue { get; set; }
     }
 
-    public class PagingRouteValue
-    {
-        public string ActionName { get; set; }
-        public string ControllerName { get; set; }
-        public string SearchKey { get; set; }
-        public string OrderBy { get; set; }
-        public bool OrderByDesc { get; set; }
-        public int PageNumber { get; set; }
-        public int TotalPages { get; set; }
-
-        public PagingRouteValue()
-        {
-            this.SearchKey = string.Empty;
-            this.OrderBy = string.Empty;
-            this.OrderByDesc = false;
-            this.PageNumber = 1;
-        }
-    }
 }

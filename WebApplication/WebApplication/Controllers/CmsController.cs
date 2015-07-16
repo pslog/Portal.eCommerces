@@ -65,6 +65,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = "CmsCategory.ID, ParentID")]CmsCategoryCreateView createView)
         {
             if (ModelState.IsValid)
@@ -102,6 +103,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public async Task<ActionResult> EditCmsCategory(CmsCategoryEditView editView)
         {
             if (ModelState.IsValid)
@@ -139,6 +141,7 @@ namespace WebApplication.Controllers
         {
             var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id));
 
+            cmsCategory.cms_News.Clear();
             uow.CmsCategory.Delete(cmsCategory);
 
             await uow.CommitAsync();
