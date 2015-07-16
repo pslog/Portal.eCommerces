@@ -1,0 +1,125 @@
+﻿@model WebApplication.Models.Models.product_Orders
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<section class="content-header">
+    <h1>
+        Orders
+        <small>Manage portal orders</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="~/Orders">Orders</a></li>
+        <li class="active">Delete order</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Delete order</h3>
+                </div>
+                <div class="box-body">
+                    <h3>Are you sure you want to delete this?</h3>
+                    <div>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UserID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UserID)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OrderCode)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.OrderCode)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TotalPrice)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TotalPrice)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FeeShip)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.FeeShip)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TotalOrder)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TotalOrder)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OrderStatus)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.OrderStatus)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OrderNote)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.OrderNote)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.NameOfRecipient)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.NameOfRecipient)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PhoneOfRecipient)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PhoneOfRecipient)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.AddressOfRecipient)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.AddressOfRecipient)
+                            </dd>
+                            
+                        </dl>
+                        
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Delete" class="btn btn-primary" />
+                                @Html.ActionLink("Back to List", "Index", "Orders", null, new { @class = "btn btn-default" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
