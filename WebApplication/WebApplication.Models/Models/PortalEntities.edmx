@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Portal.eCommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,7 +79,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="SubTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="ContentNews" Type="ntext" Nullable="false" />
@@ -125,8 +115,8 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="ProductID" Type="int" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="PriceOfUnit" Type="money" Nullable="false" />
           <Property Name="TotalDiscount" Type="money" />
@@ -166,7 +156,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductCode" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" />
           <Property Name="Title" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Unit" Type="int" Nullable="false" />
@@ -219,7 +209,7 @@
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_cms_News_cms_Categories">
-          <End Role="cms_Categories" Type="Self.cms_Categories" Multiplicity="1" />
+          <End Role="cms_Categories" Type="Self.cms_Categories" Multiplicity="0..1" />
           <End Role="cms_News" Type="Self.cms_News" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cms_Categories">
@@ -287,7 +277,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_OrderDetails_product_Orders">
-          <End Role="product_Orders" Type="Self.product_Orders" Multiplicity="1" />
+          <End Role="product_Orders" Type="Self.product_Orders" Multiplicity="0..1" />
           <End Role="product_OrderDetails" Type="Self.product_OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Orders">
@@ -299,7 +289,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_OrderDetails_product_Products">
-          <End Role="product_Products" Type="Self.product_Products" Multiplicity="1" />
+          <End Role="product_Products" Type="Self.product_Products" Multiplicity="0..1" />
           <End Role="product_OrderDetails" Type="Self.product_OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Products">
@@ -311,7 +301,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_Products_Images_product_Products">
-          <End Role="product_Products" Type="Self.product_Products" Multiplicity="1" />
+          <End Role="product_Products" Type="Self.product_Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="product_Products_Images" Type="Self.product_Products_Images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Products">
@@ -323,7 +315,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_Products_Images_share_Images">
-          <End Role="share_Images" Type="Self.share_Images" Multiplicity="1" />
+          <End Role="share_Images" Type="Self.share_Images" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="product_Products_Images" Type="Self.product_Products_Images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="share_Images">
@@ -335,7 +329,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_Products_product_Categories">
-          <End Role="product_Categories" Type="Self.product_Categories" Multiplicity="1" />
+          <End Role="product_Categories" Type="Self.product_Categories" Multiplicity="0..1" />
           <End Role="product_Products" Type="Self.product_Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Categories">
@@ -347,7 +341,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PortaleCommerceModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -408,16 +401,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Portal.eCommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -491,7 +474,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" />
           <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SubTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContentNews" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -529,8 +512,8 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="PriceOfUnit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TotalDiscount" Type="Decimal" Precision="19" Scale="4" />
@@ -573,7 +556,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="ProductCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" />
           <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="Unit" Type="Int32" Nullable="false" />
@@ -650,7 +633,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_cms_News_cms_Categories">
-          <End Role="cms_Categories" Type="Self.cms_Categories" Multiplicity="1" />
+          <End Role="cms_Categories" Type="Self.cms_Categories" Multiplicity="0..1" />
           <End Role="cms_News" Type="Self.cms_News" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cms_Categories">
@@ -662,7 +645,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_Products_product_Categories">
-          <End Role="product_Categories" Type="Self.product_Categories" Multiplicity="1" />
+          <End Role="product_Categories" Type="Self.product_Categories" Multiplicity="0..1" />
           <End Role="product_Products" Type="Self.product_Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Categories">
@@ -674,7 +657,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_OrderDetails_product_Orders">
-          <End Role="product_Orders" Type="Self.product_Orders" Multiplicity="1" />
+          <End Role="product_Orders" Type="Self.product_Orders" Multiplicity="0..1" />
           <End Role="product_OrderDetails" Type="Self.product_OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Orders">
@@ -686,7 +669,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_product_OrderDetails_product_Products">
-          <End Role="product_Products" Type="Self.product_Products" Multiplicity="1" />
+          <End Role="product_Products" Type="Self.product_Products" Multiplicity="0..1" />
           <End Role="product_OrderDetails" Type="Self.product_OrderDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_Products">
@@ -706,7 +689,6 @@
           <End Role="share_Images" Type="Self.share_Images" Multiplicity="*" />
         </Association>
         <EntityContainer Name="PortalEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -758,16 +740,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PortaleCommerceModelStoreContainer" CdmEntityContainer="PortalEntities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="Portal.eCommerceModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="Portal.eCommerceModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">

@@ -79,58 +79,55 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\cms_Categories.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\cms_News.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PortalModel.Context.cs">
+    <Compile Include="Models\PortalEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PortalModel.Context.tt</DependentUpon>
+      <DependentUpon>PortalEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PortalModel.cs">
+    <Compile Include="Models\PortalEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PortalModel.Designer.cs">
+    <Compile Include="Models\PortalEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PortalModel.edmx</DependentUpon>
+      <DependentUpon>PortalEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\product_Categories.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\product_OrderDetails.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\product_Orders.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\product_Products.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\share_Images.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>PortalModel.tt</DependentUpon>
+      <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -148,25 +145,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\PortalModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PortalModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Models\PortalModel.Context.tt">
+    <EntityDeploy Include="Models\PortalEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PortalEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\PortalEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PortalModel.edmx</DependentUpon>
-      <LastGenOutput>PortalModel.Context.cs</LastGenOutput>
+      <DependentUpon>PortalEntities.edmx</DependentUpon>
+      <LastGenOutput>PortalEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Models\PortalModel.edmx.diagram">
-      <DependentUpon>PortalModel.edmx</DependentUpon>
+    <None Include="Models\PortalEntities.edmx.diagram">
+      <DependentUpon>PortalEntities.edmx</DependentUpon>
     </None>
-    <None Include="Models\PortalModel.tt">
+    <None Include="Models\PortalEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PortalModel.edmx</DependentUpon>
-      <LastGenOutput>PortalModel.cs</LastGenOutput>
+      <DependentUpon>PortalEntities.edmx</DependentUpon>
+      <LastGenOutput>PortalEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

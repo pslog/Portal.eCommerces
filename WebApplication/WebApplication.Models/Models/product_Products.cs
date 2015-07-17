@@ -23,7 +23,7 @@ namespace WebApplication.Models.Models
         public int ID { get; set; }
         public System.Guid GUID { get; set; }
         public string ProductCode { get; set; }
-        public int CategoryID { get; set; }
+        public Nullable<int> CategoryID { get; set; }
         public string Title { get; set; }
         public Nullable<int> Quantity { get; set; }
         public int Unit { get; set; }

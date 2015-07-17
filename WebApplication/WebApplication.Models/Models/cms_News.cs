@@ -16,7 +16,7 @@ namespace WebApplication.Models.Models
     {
         public int ID { get; set; }
         public System.Guid GUID { get; set; }
-        public int CategoryID { get; set; }
+        public Nullable<int> CategoryID { get; set; }
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string ContentNews { get; set; }

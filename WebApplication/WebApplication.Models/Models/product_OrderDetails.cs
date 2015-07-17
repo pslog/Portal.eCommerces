@@ -16,8 +16,8 @@ namespace WebApplication.Models.Models
     {
         public int ID { get; set; }
         public System.Guid GUID { get; set; }
-        public int OrderID { get; set; }
-        public int ProductID { get; set; }
+        public Nullable<int> OrderID { get; set; }
+        public Nullable<int> ProductID { get; set; }
         public int Quantity { get; set; }
         public decimal PriceOfUnit { get; set; }
         public Nullable<decimal> TotalDiscount { get; set; }
