@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WebApplication.Models.Models.product_Orders>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+        Orders
+        <small>Manage portal orders</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Order</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="box-tools pull-right" style="padding-right: 15px; padding-bottom: 10px;">
+            @Html.ActionLink("Add new order", "Create", "Orders", null, new { @class = "btn btn-default btn-sm" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box ">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Result</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalPrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FeeShip)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalOrder)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderStatus)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NameOfRecipient)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PhoneOfRecipient)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AddressOfRecipient)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FeeShip)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalOrder)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NameOfRecipient)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneOfRecipient)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AddressOfRecipient)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    <div class="box-footer clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
