@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="CustomHtml\CustomHtmlGenerator.cs" />
     <Compile Include="Delegates\Delegate.cs" />
-    <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\PagingExtension.cs" />
     <Compile Include="Extensions\CustomHtmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,10 +64,6 @@
       <Project>{13e2554e-c5af-4081-bead-da13f8260fbe}</Project>
       <Name>WebApplication.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
