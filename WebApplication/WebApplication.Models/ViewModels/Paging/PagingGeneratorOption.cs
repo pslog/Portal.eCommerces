@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc.Ajax;
+using WebApplication.Common.Constants;
 
 namespace WebApplication.Models.ViewModels
 {
@@ -16,22 +17,34 @@ namespace WebApplication.Models.ViewModels
         public string SearchKey { get; set; }
         public string OrderBy { get; set; }
         public bool OrderByDesc { get; set; }
+        public string RouteValuePrefix { get; set; }
         public int PageNumber { get; set; }
         public int TotalPages { get; set; }
-
+        public object OptionValues { get; set; }
         public AjaxOptions AjaxOptions { get; set; }
         public PagingRouteValue()
         {
+            this.RouteValuePrefix = string.Empty;
             this.SearchKey = string.Empty;
             this.OrderBy = string.Empty;
             this.OrderByDesc = false;
             this.PageNumber = 1;
             this.AjaxOptions = null;
+            this.OptionValues = null;
         }
 
-        public PagingRouteValue(AjaxOptions ajaxOptions) : this()
+        public PagingRouteValue(string actionName, string controllerName, object optionValues = null, AjaxOptions ajaxOption = null, string prefix = "") : this()
         {
-            this.AjaxOptions = ajaxOptions;
+            this.ActionName = actionName;
+            this.ControllerName = controllerName;
+            this.AjaxOptions = ajaxOption;
+            this.OptionValues = optionValues;
+            this.RouteValuePrefix = prefix;
+        }
+
+        public void SetTotalPages(int itemsCount)
+        {
+            this.TotalPages = itemsCount % ConstValue.PageSize == 0 ? itemsCount / ConstValue.PageSize : itemsCount / ConstValue.PageSize + 1;
         }
     }
 

@@ -173,6 +173,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Common\paging.css" />
     <Content Include="Content\Home\product_Home.css" />
     <Content Include="Content\Plugins\ckeditor\build-config.js" />
     <Content Include="Content\Plugins\ckeditor\ckeditor.js" />
@@ -518,6 +519,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
       <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
     </Content>
+    <Content Include="App_Data\Portal.eCommerce.bak" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -566,9 +568,10 @@
     <Content Include="Views\Cms\CmsCategoryIndex.cshtml" />
     <Content Include="Views\ProductBoard\AddToCart.cshtml" />
     <Content Include="Views\ProductBoard\CheckOutCart.cshtml" />
+    <Content Include="Views\Cms\GetCmsCategories.cshtml" />
+    <Content Include="Views\Cms\GetCmsNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Product\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>

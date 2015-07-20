@@ -34,6 +34,10 @@ namespace WebApplication
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                        "~/Content/Home/product_Home.css"));
+
+            // Paging
+            bundles.Add(new StyleBundle("~/Content/paging").Include(
+                      "~/Content/Common/paging.css"));
         }
     }
 }

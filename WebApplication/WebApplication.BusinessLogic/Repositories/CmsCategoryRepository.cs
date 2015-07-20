@@ -40,14 +40,15 @@ namespace WebApplication.BusinessLogic.Repositories
 
             return cmsCategory;
         }
-        public cms_Categories GetUpdateCmsCategory(cms_Categories cmsCategory, int modifierId)
+        public cms_Categories GetUpdateCmsCategory(cms_Categories updateCmsCategory,  int modifierId)
         {
-            cmsCategory.ModifiedBy = modifierId;
-            cmsCategory.ModifiedDate = DateTime.Now;
+            updateCmsCategory.ParentID = updateCmsCategory.ParentID == 0 ? null : updateCmsCategory.ParentID;
+            updateCmsCategory.ModifiedBy = modifierId;
+            updateCmsCategory.ModifiedDate = DateTime.Now;
 
-            return cmsCategory;
+            return updateCmsCategory;
         }
-        public CmsCategoryIndexView GetIndexView(PagingRouteValue routeValue = null)
+        public PagingView<cms_Categories> GetIndexView(PagingRouteValue routeValue = null)
         {
             var cmsCategories = DbSet.AsQueryable();
           
@@ -63,9 +64,6 @@ namespace WebApplication.BusinessLogic.Repositories
                     break;
                 case ModelName.CmsCategory.Title:
                     cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.Title) : cmsCategories.OrderBy(c => c.Title);
-                    break;
-                case ModelName.CmsCategory.GUID:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.GUID) : cmsCategories.OrderBy(c => c.GUID);
                     break;
                 case ModelName.CmsCategory.CreatedBy:
                     cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.CreatedBy) : cmsCategories.OrderBy(c => c.CreatedBy);
@@ -84,12 +82,14 @@ namespace WebApplication.BusinessLogic.Repositories
                     break;
             }
 
-            routeValue.TotalPages = cmsCategories.Count();
-            routeValue.TotalPages = routeValue.TotalPages % ConstValue.PageSize == 0 ? routeValue.TotalPages / ConstValue.PageSize : routeValue.TotalPages / ConstValue.PageSize + 1;
+            //routeValue.TotalPages = cmsCategories.Count();
+            //routeValue.TotalPages = routeValue.TotalPages % ConstValue.PageSize == 0 ? routeValue.TotalPages / ConstValue.PageSize : routeValue.TotalPages / ConstValue.PageSize + 1;
 
-            return new CmsCategoryIndexView
+            routeValue.SetTotalPages(cmsCategories.Count());
+
+            return new PagingView<cms_Categories>
             {
-                CmsCategories = cmsCategories.ToPageList(ConstValue.PageSize, routeValue.PageNumber),
+                Items = cmsCategories.ToPageList(ConstValue.PageSize, routeValue.PageNumber),
                 RouteValue = routeValue
             };
         }
@@ -102,7 +102,7 @@ namespace WebApplication.BusinessLogic.Repositories
             {
                 return new CmsCategoryCreateView
                 {
-                    ParentID = parent.GUID,
+                    ParentID = parent.ID,
                     ParentTitle = parent.Title
                 };
             }
@@ -114,19 +114,32 @@ namespace WebApplication.BusinessLogic.Repositories
             var cmsCategory = this.GetById(id);
             var parents = this.GetExcept(id).ToList();
 
-            parents.Insert(0, new cms_Categories { GUID = Guid.Empty, Title = Label.CmsCategory.RootCategory });
+            parents.Insert(0, new cms_Categories { ID = 0, Title = Label.CmsCategory.RootCategory });
 
             if (cmsCategory != null)
             {
                 return new CmsCategoryEditView
                 {
                     CmsCategory = cmsCategory,
-                    Parents = new SelectList(parents, ModelName.CmsCategory.GUID, ModelName.CmsCategory.Title, cmsCategory.ParentID)
+                    Parents = new SelectList(parents, ModelName.CmsCategory.ID, ModelName.CmsCategory.Title, cmsCategory.ParentID ?? 0)
                 };
             }
 
             return null;
         }
 
+        public IEnumerable<cms_Categories> GetCmsCategories(int? parentId)
+        {
+            var cmsCategories = DbSet.AsQueryable().Where(c => c.ParentID == parentId).OrderBy(c => c.ID).ToList();
+
+            if(parentId == null)
+            {
+                cmsCategories.Add(new cms_Categories { ID = 0, Title = "khác", GUID = Guid.Empty});
+            }
+
+            return cmsCategories;
+        }
+
+        
     }
 }
