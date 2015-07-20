@@ -1,105 +1,71 @@
-﻿@model IEnumerable<WebApplication.Models.Models.cms_News>
+﻿@using WebApplication.Common.Constants
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.ViewModels
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = PageTitle.CmsNews.Index;
 }
 
-<h2>Index</h2>
+<h2>@PageTitle.CmsNews.Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GUID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContentNews)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Authors)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tags)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalView)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cms_Categories.Title)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.GUID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContentNews)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Authors)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tags)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalView)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cms_Categories.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
+
+
+<div id="cms_categories_container" class="col-md-2">
+    @Html.Action("GetCmsCategories")
+</div>
+
+<div id="cms_news_container" class="col-md-10"></div>
+
+@section styles {
+    @Styles.Render("~/Content/paging")
+
+    <style>
+        #cms_news_view{
+            margin:0;
+        }
+        #cms_categories_container {
+            border: 1px solid #CCC;
+            padding: 5px;
+        }
+        
+        ul {
+            padding:5px;
+        }
+        li > a {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        li > ul {
+            margin-left: 10px;
+        }
+        a.active{
+            background-color:#EEE;
+        }
+    </style>
 }
 
-</table>
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
+    <script>
+        $(document).ready(function () {
+            var categoryId = '@((int?)ViewBag.CategoryID)';
+
+            if (categoryId != '')
+            {
+                $('#category_' + categoryId).parents('ul').show();
+                $('#category_' + categoryId + ' > a').addClass('active').click();
+            }
+              
+
+            $('#cms_categories_container li > a').click(function () {
+                $('li > a').removeClass('active');
+                $(this).addClass('active');
+                $(this).siblings('ul').toggle();
+            })
+        });
+    </script>
+}

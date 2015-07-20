@@ -35,6 +35,10 @@ namespace WebApplication
                       "~/Content/site.css",
                        "~/Content/Home/product_Home.css"));
 
+            // Paging
+            bundles.Add(new StyleBundle("~/Content/paging").Include(
+                      "~/Content/Common/paging.css"));
+
             bundles.Add(new StyleBundle("~/Content/cssAdminSite").Include(
                       "~/Content/bootstrap/css/bootstrap.css",                      
                       "~/Content/font-awesome/4.3.0/css/font-awesome.min.css",
@@ -47,7 +51,6 @@ namespace WebApplication
                       "~/Content/dist/js/app.min.js",
                       "~/Content/respond/1.4.2/respond.min.js",
                       "~/Content/html5shiv/3.7.2/html5shiv.min.js"));
-
         }
     }
 }

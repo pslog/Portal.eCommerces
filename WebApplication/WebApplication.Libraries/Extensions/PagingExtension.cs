@@ -38,34 +38,49 @@ namespace WebApplication.Libraries.Extensions
 
             return routeValue;
         }
-        public static RouteValueDictionary ToRouteValueDictionary(this PagingRouteValue routeValue, string pageType, int pageNumber = 0)
+        public static RouteValueDictionary ToRouteValueDictionary(this PagingRouteValue pagingRouteValue, string pageType, int pageNumber = 0)
         {
 
             var routeValues = new RouteValueDictionary
             {
-                { ModelName.PagingRouteValue.SearchKey, routeValue.SearchKey},
-                { ModelName.PagingRouteValue.OrderBy, routeValue.OrderBy},
-                { ModelName.PagingRouteValue.OrderByDesc, routeValue.OrderByDesc},
-                { ModelName.PagingRouteValue.TotalPages, routeValue.TotalPages},
-                { ModelName.PagingRouteValue.PageNumber, routeValue.PageNumber}
+                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.SearchKey), pagingRouteValue.SearchKey},
+                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.OrderBy), pagingRouteValue.OrderBy},
+                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.OrderByDesc), pagingRouteValue.OrderByDesc},
+                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.TotalPages), pagingRouteValue.TotalPages},
+                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber), pagingRouteValue.PageNumber},
             };
+
+            if (pagingRouteValue.OptionValues != null)
+            {
+                var optionValues = new RouteValueDictionary(pagingRouteValue.OptionValues);
+
+                foreach (var key in optionValues.Keys)
+                {
+                    string routeKey = key.First().ToString().ToUpper() + key.Substring(1);
+
+                    if (!routeValues.ContainsKey(routeKey))
+                    {
+                        routeValues.Add(routeKey, optionValues[key]);   
+                    }
+                }
+            }
 
             switch (pageType)
             {
                 case PagingOptConst.First:
-                    routeValues[ModelName.PagingRouteValue.PageNumber] = 1;
+                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = 1;
                     break;
                 case PagingOptConst.Last:
-                    routeValues[ModelName.PagingRouteValue.PageNumber] = routeValue.TotalPages;
+                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.TotalPages;
                     break;
                 case PagingOptConst.Prev:
-                    routeValues[ModelName.PagingRouteValue.PageNumber] = routeValue.PageNumber == 1 ? routeValue.PageNumber : routeValue.PageNumber - 1;
+                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == 1 ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber - 1;
                     break;
                 case PagingOptConst.Next:
-                    routeValues[ModelName.PagingRouteValue.PageNumber] = routeValue.PageNumber == routeValue.TotalPages ? routeValue.PageNumber : routeValue.PageNumber + 1;
+                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == pagingRouteValue.TotalPages ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber + 1;
                     break;
                 default:
-                    routeValues[ModelName.PagingRouteValue.PageNumber] = pageNumber;
+                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pageNumber;
                     break;
             }
 
