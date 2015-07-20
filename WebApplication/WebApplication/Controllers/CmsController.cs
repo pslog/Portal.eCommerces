@@ -18,8 +18,6 @@ namespace WebApplication.Controllers
 {
     public class CmsController : Controller
     {
-        private PortalEntities db = new PortalEntities();
-
         private IUnitOfWork uow = UnitOfWork.Begin();
 
         // GET: Category
@@ -187,7 +185,6 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //cms_News cms_News = await db.cms_News.FindAsync(id);
 
             var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById((int)id));
 
@@ -263,8 +260,6 @@ namespace WebApplication.Controllers
                 }
             }
 
-            ViewBag.CategoryID = new SelectList(db.cms_Categories, "ID", "Title", cmsNewsDTO.CmsNews.CategoryID);
-
             return View(await Task.FromResult<CmsNewsDTO>(uow.CmsNews.GetCmsNewsDTO(cmsNewsDTO.CmsNews.CategoryID ?? 0, uow.CmsCategory, cmsNewsDTO.CmsNews)));
         }
 
@@ -275,7 +270,7 @@ namespace WebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //cms_News cms_News = await db.cms_News.FindAsync(id);
+            
             var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id ?? 0));
 
             if (cmsNews == null)
@@ -306,7 +301,6 @@ namespace WebApplication.Controllers
             if (disposing)
             {
                 uow.Dispose();
-                db.Dispose();
             }
             base.Dispose(disposing);
         }
