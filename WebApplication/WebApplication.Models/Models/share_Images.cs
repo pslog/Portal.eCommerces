@@ -17,7 +17,6 @@ namespace WebApplication.Models.Models
         public share_Images()
         {
             this.product_Products = new HashSet<product_Products>();
-            GUID = Guid.NewGuid();
         }
     
         public int ID { get; set; }

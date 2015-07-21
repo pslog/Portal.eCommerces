@@ -61,7 +61,7 @@ namespace WebApplication.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,GUID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,9 @@ namespace WebApplication.Admin.Controllers
                 {
                     product_Categories.ParentID = Guid.Parse(ParentID);
                 }
+                product_Categories.GUID = System.Guid.NewGuid();
                 db.product_Categories.Add(product_Categories);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

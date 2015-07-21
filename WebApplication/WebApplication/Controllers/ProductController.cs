@@ -102,6 +102,7 @@ namespace WebApplication.Admin.Controllers
                     }
                 }
 
+                product_Products.GUID = System.Guid.NewGuid();
                 db.product_Products.Add(product_Products);
                 db.SaveChanges();
                 return RedirectToAction("Index");
