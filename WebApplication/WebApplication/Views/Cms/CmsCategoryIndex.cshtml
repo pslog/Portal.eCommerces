@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.ViewModels.CmsCategoryIndexView
+﻿@model WebApplication.Models.ViewModels.PagingView<WebApplication.Models.Models.cms_Categories>
 
 @using WebApplication.Common.Constants
 @using WebApplication.Libraries.Extensions
@@ -10,23 +10,21 @@
 }
 
 <h2>@PageTitle.CmsCategory.Index</h2>
-@using (Html.BeginForm(RouteName.CmsCategory.Index, RouteName.CmsCategory.Controller))
+@using (Html.BeginForm(RouteName.CmsCategoryAction.Index, RouteName.Controller.Cms))
 {
     @Html.HiddenFor(model => model.RouteValue.OrderBy);
-    @Html.HiddenFor(model => model.RouteValue.ActionName)
-    @Html.HiddenFor(model => model.RouteValue.ControllerName)
-
+    
     <div class="row">
         <div class="col-md-4">
-            <p>@Html.ActionLink(PageTitle.CmsCategory.Create, RouteName.CmsCategory.Create)</p>
+            <p>@Html.ActionLink(PageTitle.CmsCategory.Create, RouteName.CmsCategoryAction.Create)</p>
         </div>
         <div class="col-md-4 text-right">
-            <span>Order By</span>
-            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, false)Asc</label>
-            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true)Desc</label>
+            <span>@Label.Paging.OrderBy</span>
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, false)@Label.Paging.OrderByAsc</label>
+            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true)@Label.Paging.OrderByDesc</label>
         </div>
         <div class="col-md-4 pull-right">
-            @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = "Tìm danh mục", @class = "form-control pull-right" })
+            @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = Label.Paging.Search, @class = "form-control pull-right" })
         </div>
     </div>
 
@@ -34,7 +32,6 @@
 
     <table class="table">
         <tr>
-            <th>ID</th>
             <th>
                 @Html.DisplayName(Label.CmsCategory.Title)
             </th>
@@ -53,10 +50,9 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model.CmsCategories)
+        @foreach (var item in Model.Items)
         {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.ID)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -73,10 +69,10 @@
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>
             <td>
-                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategory.Create, new { parentID = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.Edit, new { id = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategory.Details, new { id = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategory.Delete, new { id = item.ID })
+                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategoryAction.Create, new { parentID = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategoryAction.Edit, new { id = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategoryAction.Details, new { id = item.ID }) |
+                @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategoryAction.Delete, new { id = item.ID })
             </td>
         </tr>
         }
@@ -88,11 +84,7 @@
 }
 
 @section styles {
-    <style>
-        .pagination > li > a.paging-active{
-            background-color:#CCC;
-        }
-    </style>
+    @Styles.Render("~/Content/paging")
 }
 
 @section scripts {

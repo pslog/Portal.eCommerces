@@ -15,6 +15,7 @@ using Microsoft.Owin.Security;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private PortalEntities db = new PortalEntities();

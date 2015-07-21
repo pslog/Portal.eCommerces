@@ -1,0 +1,99 @@
+﻿@model WebApplication.Models.ViewModels.PagingView<WebApplication.Models.Models.cms_News>
+
+@using WebApplication.Common.Constants
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.ViewModels
+
+@{
+    Layout =  null;    
+}
+
+<div id="cms_news_view" class="row">
+    @using (Ajax.BeginForm("GetCmsNews", null, new AjaxOptions { UpdateTargetId = "cms_news_container" }, new { @id = "get_cms_news" }))
+    {
+        @Html.HiddenFor(model => model.RouteValue.OrderBy);
+        @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID)
+        <div class="row">
+            <div class="col-md-4">
+                <span>@Label.Paging.OrderBy</span>
+                <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, false, new { @onclick = "$('#get_cms_news').submit();" })@Label.Paging.OrderByAsc</label>
+                <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true, new { @onclick = "$('#get_cms_news').submit();" })@Label.Paging.OrderByDesc</label>
+            </div>
+            <div class="col-md-4 pull-right">
+                @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = Label.Paging.Search, @class = "form-control pull-right" })
+            </div>
+        </div>
+        <p></p>
+    }
+
+    @if (Model.Items.Count() > 0)
+    {
+        <div id="cms_news_items">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayName(Label.CmsNews.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsNews.Authors)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsNews.TotalView)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.CreatedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.CreatedDate)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.ModifiedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.ModifiedDate)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Items)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Authors)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tags)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalView)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsNewsAction.Edit, new { id = item.ID }) |
+                        @Html.ActionLink(Label.CRUD.Details, RouteName.CmsNewsAction.Details, new { id = item.ID }) |
+                        @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsNewsAction.Delete, new { id = item.ID })
+                    </td>
+                </tr>
+                }
+            </table>
+        </div>
+        <div class="pull-right">
+            @Html.PagingGenerator(PagingGeneratorOption.DefaultOption, CustomHtmlGenerator.DefaultPagingHtml, Model.RouteValue.AddAjaxOptions(new AjaxOptions { UpdateTargetId = "cms_news_container", OnComplete = "$('#cms_news_view').show()" }))
+        </div>
+    }
+</div>

@@ -16,12 +16,13 @@ namespace WebApplication.Models.Models
     {
         public cms_Categories()
         {
+            this.cms_Categories1 = new HashSet<cms_Categories>();
             this.cms_News = new HashSet<cms_News>();
         }
     
         public int ID { get; set; }
         public System.Guid GUID { get; set; }
-        public System.Guid ParentID { get; set; }
+        public Nullable<int> ParentID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
@@ -32,6 +33,8 @@ namespace WebApplication.Models.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual ICollection<cms_Categories> cms_Categories1 { get; set; }
+        public virtual cms_Categories cms_Categories2 { get; set; }
         public virtual ICollection<cms_News> cms_News { get; set; }
     }
 }

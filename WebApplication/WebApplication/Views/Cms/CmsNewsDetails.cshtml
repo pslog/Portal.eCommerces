@@ -10,6 +10,14 @@
     <h4>cms_News</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cms_Categories.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cms_Categories.Title)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.GUID)
         </dt>
@@ -32,14 +40,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.SubTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ContentNews)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ContentNews)
         </dd>
 
         <dt>
@@ -107,16 +107,31 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.cms_Categories.Title)
+            @Html.DisplayNameFor(model => model.ContentNews)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.cms_Categories.Title)
+            <button id="btn" data-true="Collapse" data-false="Expand">Expand</button>
+            <div id="html_content" style="display:none;">
+                @Html.Raw(Model.ContentNews);
+            </div>
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "EditCmsNews", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "CmsNewsIndex")
 </p>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btn').click(function () {
+                $('#html_content').toggle(1, function () {
+                    $('#btn').html($('#btn').attr('data-' + $(this).is(':visible')));
+                });
+            });
+        });
+    </script>
+}

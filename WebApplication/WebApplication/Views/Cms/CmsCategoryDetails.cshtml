@@ -12,14 +12,14 @@
         <dd>
             @Html.DisplayFor(model => model.GUID)
         </dd>
-        @if(Model.ParentID != Guid.Empty)
+        @if(Model.ParentID != null)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.ParentID)
             </dt>
 
             <dd>
-                @((string)ViewBag.ParentTitle) (@Html.DisplayNameFor(model => model.GUID): @Html.DisplayFor(model => model.ParentID))
+                @((string)ViewBag.ParentTitle) (@Html.DisplayNameFor(model => model.ParentID): @Html.DisplayFor(model => model.ParentID))
             </dd>
         }
        
@@ -36,10 +36,7 @@
         </dt>
 
         <dd>
-            <button id="btn_expand" data-true="Collapse" data-false="Expand" class="btn btn-default">Expand</button>
-            <div id="html_raw">
-                @Html.Raw(Model.Description)
-            </div>
+            @Html.DisplayFor(model => model.Url)
         </dd>
 
         <dt>
@@ -101,27 +98,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategory.Edit, new { id = Model.ID }) |
-    @Html.ActionLink(WebApplication.Common.Constants.PageTitle.CmsCategory.Index, WebApplication.Common.Constants.RouteName.CmsCategory.Index)
+    @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategoryAction.Edit, new { id = Model.ID }) |
+    @Html.ActionLink(WebApplication.Common.Constants.PageTitle.CmsCategory.Index, WebApplication.Common.Constants.RouteName.CmsCategoryAction.Index)
 </p>
-
-@section styles {
-    <style>
-        #html_raw{
-            display:none;
-        }
-    </style>
-    
-}
-
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('#btn_expand').click(function () {
-                $('#html_raw').toggle(0, function () {
-                    $('#btn_expand').html($('#btn_expand').attr('data-' + $(this).is(':visible')));
-                });
-            });
-        })
-    </script>
-}

@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Uow.Package.Data.Repositories;
 using WebApplication.Models.Models;
+using WebApplication.Models.ViewModels;
 
 namespace WebApplication.BusinessLogic.Interface
 {
     public interface ICmsNewsRepository : IRepository<cms_News>
     {
-        IQueryable<cms_News> GetNewsByCategory(int categoryId);
+        PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView);
+        CmsNewsDTO GetCmsNewsDTO(int? categoryID, IRepository<cms_Categories> cmsCategoryRepository, cms_News cmsNews = null);
+        cms_News GetNewCmsNews(cms_News cmsNews, int creatorId, int modifierId);
+        cms_News GetUpdateCmsNews(cms_News updateCmsNews, int modifierId);
     }
 }

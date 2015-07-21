@@ -183,6 +183,7 @@
     <Content Include="Content\BoardProduct\AddToCart_PartialView.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Common\paging.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -706,6 +707,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
       <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
     </Content>
+    <Content Include="App_Data\Portal.eCommerce.bak" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -790,6 +792,8 @@
     <Content Include="Views\Cms\CmsCategoryIndex.cshtml" />
     <Content Include="Views\ProductBoard\AddToCart.cshtml" />
     <Content Include="Views\ProductBoard\CheckOutCart.cshtml" />
+    <Content Include="Views\Cms\GetCmsCategories.cshtml" />
+    <Content Include="Views\Cms\GetCmsNews.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
@@ -832,7 +836,6 @@
     <Content Include="Views\Shop\ListProductPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Product\" />
   </ItemGroup>
   <ItemGroup>

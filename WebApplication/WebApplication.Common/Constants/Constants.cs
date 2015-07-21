@@ -21,6 +21,24 @@ namespace WebApplication.Common.Constants
             public const string ModifiedDate = "ModifiedDate";
         }
 
+        public class CmsNews
+        {
+            public const string ID = "ID";
+            public const string GUID = "GUID";
+            public const string CategoryID = "CategoryID";
+            public const string Title = "Title";
+            public const string SubTitle = "SubTitle";
+            public const string ContentNews = "ContentNews";
+            public const string Authors = "Authors";
+            public const string Tags = "Tags";
+            public const string TotalView = "TotalView";
+            public const string Status = "Status";
+            public const string CreatedBy = "CreatedBy";
+            public const string CreatedDate = "CreatedDate";
+            public const string ModifiedBy = "ModifiedBy";
+            public const string ModifiedDate = "ModifiedDate";
+        }
+
         public class PagingRouteValue
         {
             public const string ActionName = "ActionName";
@@ -51,6 +69,21 @@ namespace WebApplication.Common.Constants
             public const string RootCategory = "";
         }
 
+        public class CmsNews
+        {
+            public const string Title = "Tiêu đề";
+            public const string Authors = "Tác giả";
+            public const string TotalView = "Lượt xem";
+        }
+
+        public class Paging
+        {
+            public const string Search = "Tìm danh mục";
+            public const string OrderBy = "Sắp xếp";
+            public const string OrderByAsc = "Tăng dần";
+            public const string OrderByDesc = "Giảm dần";
+        }
+
         public class CRUD
         {
             public const string Create = "Thêm";
@@ -70,18 +103,40 @@ namespace WebApplication.Common.Constants
             public const string Delete = "Xóa danh mục";
             public const string Details = "Chi tiết danh mục";
         }
+
+        public class CmsNews
+        {
+            public const string Index = "Danh sách tin tức";
+            public const string Create = "Thêm tin tức";
+            public const string Edit = "Sửa tin tức";
+            public const string Delete = "Xóa tin tức";
+            public const string Details = "Chi tiết tin tức";
+        }
     }
 
     public class RouteName
     {
-        public class CmsCategory
+        public class Controller
         {
-            public const string Controller = "Cms";
+            public const string Cms = "Cms";
+        }
+
+        public class CmsCategoryAction
+        {
             public const string Index = "CmsCategoryIndex";
             public const string Create = "CreateCmsCategory";
             public const string Details = "CmsCategoryDetails";
             public const string Edit = "EditCmsCategory";
             public const string Delete = "DeleteCmsCategory";
+        }
+
+        public class CmsNewsAction
+        {
+            public const string Index = "CmsNewsIndex";
+            public const string Create = "CreateCmsNews";
+            public const string Details = "CmsNewsDetails";
+            public const string Edit = "EditCmsNews";
+            public const string Delete = "DeleteCmsNews";
         }
     }
 

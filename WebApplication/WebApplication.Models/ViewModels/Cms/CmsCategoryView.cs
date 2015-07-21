@@ -11,7 +11,7 @@ namespace WebApplication.Models.ViewModels
     public class CmsCategoryCreateView
     {
         public cms_Categories CmsCategory { get; set; }
-        public Guid ParentID { get; set; }
+        public int? ParentID { get; set; }
         public string ParentTitle { get; set; }
     }
 
@@ -26,5 +26,4 @@ namespace WebApplication.Models.ViewModels
         public IEnumerable<cms_Categories> CmsCategories { get; set; }
         public PagingRouteValue RouteValue { get; set; }
     }
-
 }

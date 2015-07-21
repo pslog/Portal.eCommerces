@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -23,6 +25,21 @@ namespace Uow.Package.Data.Repositories
             //return DbSet.Find(id);
         }
 
+        public T GetById(int id, params string[] includeProperties)
+        {
+            var dbSet = DbContext.Set<T>();//.AsQueryable();
+
+            if (includeProperties != null)
+            {
+                foreach (var property in includeProperties)
+                {
+                    dbSet = (DbSet<T>)dbSet.Include(property);
+                }
+            }
+
+            return dbSet.Find(id);
+        }
+
         public IQueryable<T> GetAll()
         {
             return DbContext.Set<T>().AsQueryable();
@@ -40,8 +57,47 @@ namespace Uow.Package.Data.Repositories
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public bool Update(T entity, params string[] updateProperties)
+        {
+            try
+            {
+                if (DbContext.Entry(entity).State == EntityState.Detached)
+                {
+                    DbSet.Attach(entity);
+                }
+
+                if (updateProperties != null)
+                {
+                    var entityProperties = entity.GetType().GetProperties();
+
+                    foreach (var property in updateProperties)
+                    {
+                        DbContext.Entry(entity).Property(property).IsModified = true;
+                    }
+                }
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
         public void Delete(T entity)
         {
+            Type entityType = entity.GetType();
+
+            foreach (var property in entityType.GetProperties())
+            {
+                if (property.PropertyType.Name == typeof(ICollection<>).Name)
+                {
+                    dynamic navProp = entityType.GetProperty(property.Name).GetValue(entity);
+                    navProp.Clear();
+                }
+            }
+
+
             DbContext.Set<T>().Remove(entity);
             //DbSet.Remove(entity);
         }
