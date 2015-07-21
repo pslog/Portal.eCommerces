@@ -1,0 +1,225 @@
+﻿@model WebApplication.Models.Models.product_Products
+
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+}
+
+<h2>Chi tiết sản phẩm</h2>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#common">Thông tin cơ bản</a></li>
+        <li><a data-toggle="tab" href="#images">Hình ảnh</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="common" class="tab-pane fade in active">
+            <h3>Thông tin cơ bản</h3>
+            <div>
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ProductCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductCode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Quantity)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Unit)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Unit)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PriceOfUnit)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PriceOfUnit)
+                    </dd>
+
+                    @if (Model.share_Images.Any())
+                    {
+                        <dt>
+                            Hình sản phẩm
+                        </dt>
+                        <dd>
+                            <img src="@Model.share_Images.First().ImagePath" height="70" width="70" alt="ảnh không tồn tại" />
+                        </dd>
+                    }
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description2)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description2)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TotalView)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalView)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TotalBuy)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalBuy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Tags)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Tags)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IsNewProduct)
+                    </dt>
+
+                    @{
+                        bool IsNew = Model.IsNewProduct == null ? false : (bool)Model.IsNewProduct;
+                        <dd>
+                            @Html.CheckBox("Is new Product?", IsNew, htmlAttributes: new { @disabled = true })
+                        </dd>
+                    }
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IsBestSellProduct)
+                    </dt>
+
+                    @{
+                        bool IsBestSell = Model.IsBestSellProduct == null ? false : (bool)Model.IsBestSellProduct;
+                        <dd>
+                            @Html.CheckBox("Is best sell Product?", IsBestSell, htmlAttributes: new { @disabled = true })
+                        </dd>
+                    }
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SortOrder)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SortOrder)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
+
+                    @{
+                        <dd>
+                            @*@Html.DisplayFor(model => model.Status)*@
+                            @WebApplication.Admin.BusinessLogic.StatusProductViewModels.GetValueOfStatus(Model.Status)
+                        </dd>
+                    }
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CreatedBy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ModifiedBy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ModifiedDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ModifiedDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.product_Categories.Title)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.product_Categories.Title)
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+        <div id="images" class="tab-pane fade">
+            <h3>Hình ảnh</h3>
+            @if (Model.share_Images != null)
+            {
+                <table class="table">
+                    <tr>
+                        <th>Tên</th>
+                        <th>Ảnh</th>
+                    </tr>
+                    @foreach (var item in Model.share_Images)
+                    {
+                        <tr>
+                            <td>
+                                @item.ImageName
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.ImagePath)*@
+                                <img src="@item.ImagePath" height="70" width="70" alt="ảnh không tồn tại" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Cập nhật sản phẩm", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Trở về", "Index")
+</p>

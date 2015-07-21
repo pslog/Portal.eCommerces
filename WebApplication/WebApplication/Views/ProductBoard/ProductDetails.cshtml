@@ -1,0 +1,157 @@
+﻿@model WebApplication.Models.ViewModels.ProductDetailsPartialViewModels
+@Scripts.Render("~/bundles/ProductDetails")
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/ProductDetails");
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    @*@Html.Partial("_CategoryProducts_LeftSideBar_Partial")*@
+                    @Html.Action("ListCategoriesLeftMenu", "Category")
+                    @Html.Partial("BrandProducts_LeftSideBar_Partial")
+                    @Html.Partial("PriceRange_LeftSideBar_Partial")
+                    @Html.Partial("Shipping_LeftSideBar_Partial")
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                @Html.Partial("_ProductDetails_Partial",@Model)
+
+                <div class="recommended_items">
+                    <!--recommended_items-->
+                    <h2 class="title text-center">recommended items</h2>
+
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend1.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend2.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend3.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend1.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend2.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="../../Content/Images/home/recommend3.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div><!--/recommended_items-->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cart Modal popup -->
+<div class="modal fade" id="ProductPartialView_CartModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" id="ProductBoard_ContinueShopping">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                </button>
+
+                @*<button type="button" class="btn btn-success" id="ProductBoard_CheckOut">
+                        Checkout <span class="glyphicon glyphicon-play"></span>
+                    </button>*@
+                <a href="/ProductBoard/CheckOutCart" class="btn btn-success">Checkout <span class="glyphicon glyphicon-play"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    ProductBoard.init();
+</script>
+
+
+

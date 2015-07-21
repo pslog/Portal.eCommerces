@@ -1,63 +1,37 @@
 ﻿<script src="~/Scripts/Home/ProductPartialView.js"></script>
 @model IEnumerable<WebApplication.Models.ViewModels.ProductPartialViewModel>
-    <div class="container">
-        <div class="row">
-           
-            <div class="col-md-12">
-                @foreach (var product in Model)
-                {
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <h4 class="text-center"><span class="label label-info">@product.Catagory</span></h4>
-                            <img src="@product.Image" class="img-responsive">
-                            <div class="caption">
-                                <div class="row">
-                                    <div class="col-md-6 col-xs-6">
-                                        <h3>@product.Name</h3>
-                                    </div>
-                                    <div class="col-md-6 col-xs-6 price">
-                                        <h3>
-                                            <label>$@product.Price</label>
-                                        </h3>
-                                    </div>
-                                </div>
-                                <p>@product.Description</p>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button class="btn btn-success btn-product" onclick="ProductBoard.addNewProductToCart(@product.Id)"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</button>
-                                    </div>
-                                </div>
 
-                                <p> </p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
 
+<div class="features_items">
+    <!--features_items-->
+    <h2 class="title text-center">Features Items</h2>
+    @foreach (var product in Model)
+    {
+        <div class="col-sm-4">
+            @Html.Partial("ProductItemPartial", product)
         </div>
-    </div>
-
-<!-- Modal -->
+    }
+</div><!--features_items-->
+<!-- Cart Modal popup -->
 <div class="modal fade" id="ProductPartialView_CartModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Your cart</h4>
-                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
+            </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
-                
+
                 <button type="button" class="btn btn-default" id="ProductBoard_ContinueShopping">
                     <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                 </button>
-   
+
                 @*<button type="button" class="btn btn-success" id="ProductBoard_CheckOut">
-                    Checkout <span class="glyphicon glyphicon-play"></span>
-                </button>*@
+                        Checkout <span class="glyphicon glyphicon-play"></span>
+                    </button>*@
                 <a href="/ProductBoard/CheckOutCart" class="btn btn-success">Checkout <span class="glyphicon glyphicon-play"></span></a>
             </div>
         </div>
@@ -66,3 +40,5 @@
 <script>
     ProductBoard.init();
 </script>
+
+

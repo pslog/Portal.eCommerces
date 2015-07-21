@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebApplication.Models.Models.product_Products>
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceOfUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoverImageID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product_Categories.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceOfUnit)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.CoverImageID)*@
+            @if (item.share_Images.Any())
+            {
+                <img src="@item.share_Images.First().ImagePath" height="70" width="70" alt="ảnh không tồn tại" />
+            }
+        </td>
+        @{
+            <td>
+                @*@Html.DisplayFor(model => model.Status)*@
+                @WebApplication.Admin.BusinessLogic.StatusProductViewModels.GetValueOfStatus(item.Status)
+            </td>
+        }
+        <td>
+            @Html.DisplayFor(modelItem => item.product_Categories.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

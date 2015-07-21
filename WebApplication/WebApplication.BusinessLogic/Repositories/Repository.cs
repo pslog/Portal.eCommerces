@@ -20,16 +20,19 @@ namespace Uow.Package.Data.Repositories
         public T GetById(int id)
         {
             return DbContext.Set<T>().Find(id);
+            //return DbSet.Find(id);
         }
 
         public IQueryable<T> GetAll()
         {
             return DbContext.Set<T>().AsQueryable();
+            //return DbSet.AsQueryable();
         }
 
         public void Create(T entity)
         {
             DbContext.Set<T>().Add(entity);
+            //DbSet.Add(entity);
         }
 
         public void Update(T entity)
@@ -40,6 +43,7 @@ namespace Uow.Package.Data.Repositories
         public void Delete(T entity)
         {
             DbContext.Set<T>().Remove(entity);
+            //DbSet.Remove(entity);
         }
     }
 }
