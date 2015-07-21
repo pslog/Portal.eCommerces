@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CustomHtml\CustomHtmlGenerator.cs" />
     <Compile Include="Delegates\Delegate.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\PagingExtension.cs" />
     <Compile Include="Extensions\CustomHtmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
