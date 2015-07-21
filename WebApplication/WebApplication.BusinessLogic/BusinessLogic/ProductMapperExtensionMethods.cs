@@ -26,9 +26,38 @@ namespace WebApplication.BusinessLogic.BusinessLogic
             productViewModel.Catagory = product.Catalog;
             productViewModel.Description = product.Description;
             productViewModel.Price = product.Price;
-            productViewModel.Image = "http://placehold.it/650x450&text=Lumia 1520";
+            productViewModel.Image = product.share_Images.Count() > 0 ? product.share_Images.First().ImagePath : "/Content/Images/404/404.png";
             productViewModel.Quantity = 1;
+            productViewModel.share_Images = product.share_Images;
             return productViewModel;
+        }
+
+        public static IList<ProductDetailsPartialViewModels> ConvertToProductDetailsPartialListViewModel(this IList<Product> products)
+        {
+            IList<ProductDetailsPartialViewModels> productDetailsViewModels = new List<ProductDetailsPartialViewModels>();
+            foreach (Product p in products)
+            {
+                productDetailsViewModels.Add(p.ConvertToProductDetailsPartialViewModels());
+            }
+            return productDetailsViewModels;
+        }
+        public static ProductDetailsPartialViewModels ConvertToProductDetailsPartialViewModels(this Product product)
+        {
+            ProductDetailsPartialViewModels productDetailsPartialViewModels = new ProductDetailsPartialViewModels();
+            productDetailsPartialViewModels.Id = product.Id;
+            productDetailsPartialViewModels.Name = product.Name;
+            productDetailsPartialViewModels.Catalog = product.Catalog;
+            productDetailsPartialViewModels.Description = product.Description;
+            productDetailsPartialViewModels.Price = product.Price;
+            productDetailsPartialViewModels.Image = product.share_Images.Count() > 0 ? product.share_Images.First().ImagePath : "/Content/Images/404/404.png";
+            productDetailsPartialViewModels.Quantity = 1;
+            productDetailsPartialViewModels.share_Images = product.share_Images;
+            productDetailsPartialViewModels.Status = StatusProductViewModels.GetValueOfStatus(product.Status);
+            productDetailsPartialViewModels.IsNewProduct = product.IsNewProduct;
+            productDetailsPartialViewModels.Tags = product.Tags;
+            productDetailsPartialViewModels.Description2 = product.Description2;
+            productDetailsPartialViewModels.IsAvailable = product.Status == 2 ? false : true;
+            return productDetailsPartialViewModels;
         }
     }
 }

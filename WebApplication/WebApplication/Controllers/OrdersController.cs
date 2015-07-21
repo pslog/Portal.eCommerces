@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private PortalEntities db = new PortalEntities();

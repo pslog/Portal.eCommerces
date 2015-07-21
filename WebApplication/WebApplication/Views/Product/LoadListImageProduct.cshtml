@@ -1,0 +1,39 @@
+﻿@model WebApplication.Models.ViewModels.LoadListImageProductPartialViewModels
+@if (Model != null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                Tên ảnh
+            </th>
+            <th>
+                Ảnh
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Images)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageName)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.ImagePath)*@
+                    <img src="@item.ImagePath" height="70" width="70" alt="ảnh không tồn tại" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <input type="button" id="deleteProductImage" onclick="ProductManager.RequestDeleteProductImage(@Model.ProductId,@item.ID)" value="Xóa" class="btn btn-danger">
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

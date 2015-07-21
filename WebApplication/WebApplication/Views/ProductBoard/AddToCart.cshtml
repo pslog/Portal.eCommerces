@@ -9,46 +9,49 @@
     }
     total = subtotal + shipping;
 }
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
+
+<section id="cart_items" style="width:100%;">
+    <div class="container">
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed tableSection" id="arrestedDevelopment">
                 <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Total</th>
-                        <th> </th>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description">Description</td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach (var product in Model)
-                   {
-                    <tr>
-                        <td class="col-sm-8 col-md-6">
-                            <div class="media">
-                                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><a href="#">@product.Name</a></h4>
-                                    <h5 class="media-heading"> by <a href="#">@product.Catagory</a></h5>
-                                    <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td class="cart_product">
+                                <a href=""><img src="@product.Image" height="70" width="70" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">@product.Name</a></h4>
+                                <p>@product.Description</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>$@product.Price</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <input type="number" class="cart_quantity_input" id="ProductBoard_Quantity" value="@product.Quantity" onchange="ProductBoard.UpdateQuantityProduct(this.value,@product.Id)" size="2">
                                 </div>
-                            </div>
-                        </td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <input type="number" class="form-control" id="ProductBoard_Quantity" value="@product.Quantity" onchange="ProductBoard.UpdateQuantityProduct(this.value,@product.Id)">
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$@product.Price</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$@(product.Price*product.Quantity)</strong></td>
-                        <td class="col-sm-1 col-md-1">
-                            <button type="button" class="btn btn-danger" onclick="ProductBoard.removeFromCart(@product.Id)">
-                                <span class="glyphicon glyphicon-remove"></span> Remove
-                            </button>
-                        </td>
-                    </tr>
-                   }
-                    
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">$@(product.Price * product.Quantity)</p>
+                            </td>
+                            <td class="cart_delete">
+                                <button class="cart_quantity_delete" onclick="ProductBoard.removeFromCart(@product.Id)"><i class="fa fa-times"></i></button>
+                            </td>
+                        </tr>
+                    }
+
                     <tr>
                         <td>   </td>
                         <td>   </td>
@@ -70,9 +73,15 @@
                         <td><h3>Total</h3></td>
                         <td class="text-right"><h3><strong>$@total</strong></h3></td>
                     </tr>
-          
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+</section> <!--/#cart_items-->
+@*<script type="text/javascript">
+    $(function () {
+        $('#arrestedDevelopment').scrollTableBody();
+    });
+</script>*@
+
+

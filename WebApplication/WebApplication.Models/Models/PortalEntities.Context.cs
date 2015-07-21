@@ -37,6 +37,5 @@ namespace WebApplication.Models.Models
         public virtual DbSet<product_Orders> product_Orders { get; set; }
         public virtual DbSet<product_Products> product_Products { get; set; }
         public virtual DbSet<share_Images> share_Images { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

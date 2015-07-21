@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.BusinessLogic.Repositories;
 using WebApplication.Models.ViewModels;
+using WebApplication.BusinessLogic;
+using WebApplication.BusinessLogic.BusinessLogic;
 
 namespace WebApplication.Controllers
 {
@@ -29,12 +31,12 @@ namespace WebApplication.Controllers
         /// <returns>updated view of Cart</returns>
         public ActionResult AddToCart(int Id)
         {
-            List<ProductPartialViewModel> productsInCart=new List<ProductPartialViewModel>();
+            List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
             if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
             {
                 productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
             }
-           // Check whether product is exist in cart or not
+            // Check whether product is exist in cart or not
             bool IsExist = false;
 
             foreach (var item in productsInCart)
@@ -56,7 +58,7 @@ namespace WebApplication.Controllers
                     Catagory = temp.Catalog,
                     Description = temp.Description,
                     Price = temp.Price,
-                    Image = "http://placehold.it/650x450&text=Lumia 1520",
+                    Image = temp.share_Images.Count() > 0 ? temp.share_Images.First().ImagePath : "/Content/Images/404/404.png",
                     Quantity = 1
                 };
                 productsInCart.Add(newProductInCart);
@@ -97,9 +99,9 @@ namespace WebApplication.Controllers
         /// <param name="quantity">product quantity</param>
         /// <returns>updated view of Cart</returns>
         /// 
-        public ActionResult UpdateQuantityOfProduct(int Id,int quantity)
+        public ActionResult UpdateQuantityOfProduct(int Id, int quantity)
         {
-            
+
             List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
             if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
             {
@@ -129,6 +131,13 @@ namespace WebApplication.Controllers
         public ActionResult CheckOutCart()
         {
             return View();
+        }
+
+        public ActionResult ProductDetails(int Id)
+        {
+            Product product = _productRepository.FindById(Id);
+            ProductDetailsPartialViewModels productDetailsPartialViewModels = product.ConvertToProductDetailsPartialViewModels();
+            return View(productDetailsPartialViewModels);
         }
     }
 }
