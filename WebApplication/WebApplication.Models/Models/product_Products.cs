@@ -18,7 +18,6 @@ namespace WebApplication.Models.Models
         {
             this.product_OrderDetails = new HashSet<product_OrderDetails>();
             this.share_Images = new HashSet<share_Images>();
-            this.GUID = Guid.NewGuid();
         }
     
         public int ID { get; set; }
