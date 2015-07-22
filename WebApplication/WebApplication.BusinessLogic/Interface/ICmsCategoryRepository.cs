@@ -13,6 +13,7 @@ namespace WebApplication.BusinessLogic.Interface
     {
         cms_Categories GetByGuid(Guid guid);
         IQueryable<cms_Categories> GetExcept(int id);
+        IQueryable<cms_Categories> GetChildren(int id);
         IEnumerable<cms_Categories> GetCmsCategories(int? parentId);
         CmsCategoryCreateView GetCreateView(int? parentID);
         CmsCategoryEditView GetEditView(int id);

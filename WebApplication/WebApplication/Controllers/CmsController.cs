@@ -175,7 +175,7 @@ namespace WebApplication.Controllers
             indexView.RouteValue.OptionValues = new { CategoryID = indexView.CategoryID };
             indexView.RouteValue.RouteValuePrefix = "RouteValue";
 
-            return View(await Task.FromResult<PagingView<cms_News>>(uow.CmsNews.GetPagingView(indexView)));
+            return View(await Task.FromResult<PagingView<cms_News>>(uow.CmsNews.GetPagingView(indexView, uow.CmsCategory)));
         }
 
         // GET: News/Details/5

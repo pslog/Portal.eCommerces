@@ -20,9 +20,26 @@ namespace WebApplication.BusinessLogic.Repositories
             : base(dbContext)
         {
         }
-        public PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView)
+
+        class Order
         {
-            var cmsNews = DbSet.Where(c => c.CategoryID == indexView.CategoryID).AsQueryable();
+            public bool OrderByAsc { get; set; }
+            public string OrderProperty { get; set; }
+        }
+
+        public PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView, ICmsCategoryRepository cmsCategoryRepository)
+        {
+            var cmsNews = DbSet.AsQueryable();
+
+            if(indexView.CategoryID == null)
+            {
+                cmsNews = DbSet.Where(c => c.CategoryID == indexView.CategoryID).AsQueryable();
+            }
+            else
+            {
+                var cmsCategoryIDs = cmsCategoryRepository.GetChildren((int)indexView.CategoryID).Select(c => c.ID);
+                cmsNews = DbSet.Where(c => c.CategoryID == indexView.CategoryID || cmsCategoryIDs.Contains((int)c.CategoryID)).AsQueryable();
+            }
 
             if (!string.IsNullOrEmpty(indexView.RouteValue.SearchKey))
             {
@@ -60,7 +77,7 @@ namespace WebApplication.BusinessLogic.Repositories
                     cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.ModifiedDate) : cmsNews.OrderBy(c => c.ModifiedDate);
                     break;
                 default:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.ID) : cmsNews.OrderBy(c => c.ID);
+                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.CreatedDate) : cmsNews.OrderBy(c => c.CreatedDate);
                     break;
             }
 

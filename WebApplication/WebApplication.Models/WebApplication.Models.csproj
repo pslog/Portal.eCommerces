@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelMetaData\CmsMetaData.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>PortalEntities.tt</DependentUpon>
     </Compile>

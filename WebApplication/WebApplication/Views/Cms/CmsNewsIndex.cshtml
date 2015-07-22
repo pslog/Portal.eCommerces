@@ -7,65 +7,88 @@
     ViewBag.Title = PageTitle.CmsNews.Index;
 }
 
-<h2>@PageTitle.CmsNews.Index</h2>
-
-
-<p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
-
-
-<div id="cms_categories_container" class="col-md-2">
-    @Html.Action("GetCmsCategories")
-</div>
-
-<div id="cms_news_container" class="col-md-10"></div>
-
 @section styles {
     @Styles.Render("~/Content/paging")
 
     <style>
-        #cms_news_view{
-            margin:0;
+        #cms_news_view {
+            margin: 0;
         }
+
         #cms_categories_container {
             border: 1px solid #CCC;
             padding: 5px;
         }
-        
+
         ul {
-            padding:5px;
+            padding: 5px;
         }
+
         li > a {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
         }
+
         li > ul {
             margin-left: 10px;
+            display:none;
         }
-        a.active{
-            background-color:#EEE;
+
+        a.active {
+            background-color: #EEE;
         }
+
     </style>
 }
+
+<br/>
+<p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
+
+<div id="cms_categories_container" class="col-md-2">
+    @Html.Action("GetCmsCategories")
+</div>
+
+<div class="col-md-10">
+    <div class="row">
+        <ul id="breadcrumb" class="breadcrumb"></ul>
+    </div>
+    <div id="cms_news_container" class="row"></div>
+</div>
+
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
     <script>
         $(document).ready(function () {
-            var categoryId = '@((int?)ViewBag.CategoryID)';
-
-            if (categoryId != '')
-            {
-                $('#category_' + categoryId).parents('ul').show();
-                $('#category_' + categoryId + ' > a').addClass('active').click();
-            }
-              
-
             $('#cms_categories_container li > a').click(function () {
                 $('li > a').removeClass('active');
                 $(this).addClass('active');
                 $(this).siblings('ul').toggle();
-            })
+                $('#breadcrumb').empty();
+
+                $($(this).parents('li').get().reverse()).find('> a').each(function () {
+                    var item = $(this).parent().clone();
+                    item.find('> ul').remove();
+
+                    $('#breadcrumb').append('<li>' + item.html() + '</li>');
+                });
+
+                $('#breadcrumb').find('li:last').html($('#breadcrumb').find('li:last > a').html()).find('a').remove();
+
+                $('#breadcrumb > li > a').click(function () {
+                    $(this).parent().nextAll().remove();
+                    $(this).parent().html($(this).html());
+                    $(this).remove();
+                });
+            });
+
+            var categoryId = '@((int?)ViewBag.CategoryID)';
+
+            if (categoryId != '') {
+                $('#category_' + categoryId).parents('ul').show();
+                $('#category_' + categoryId + ' > a').addClass('active').click();
+            }
         });
     </script>
 }

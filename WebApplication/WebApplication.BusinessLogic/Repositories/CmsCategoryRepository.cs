@@ -82,9 +82,6 @@ namespace WebApplication.BusinessLogic.Repositories
                     break;
             }
 
-            //routeValue.TotalPages = cmsCategories.Count();
-            //routeValue.TotalPages = routeValue.TotalPages % ConstValue.PageSize == 0 ? routeValue.TotalPages / ConstValue.PageSize : routeValue.TotalPages / ConstValue.PageSize + 1;
-
             routeValue.SetTotalPages(cmsCategories.Count());
 
             return new PagingView<cms_Categories>
@@ -132,7 +129,7 @@ namespace WebApplication.BusinessLogic.Repositories
         {
             var cmsCategories = DbSet.AsQueryable().Where(c => c.ParentID == parentId).OrderBy(c => c.ID).ToList();
 
-            if(parentId == null)
+            if(parentId == null && cmsCategories.Count > 0)
             {
                 cmsCategories.Add(new cms_Categories { ID = 0, Title = "khác", GUID = Guid.Empty});
             }
@@ -140,6 +137,9 @@ namespace WebApplication.BusinessLogic.Repositories
             return cmsCategories;
         }
 
-        
+        public IQueryable<cms_Categories> GetChildren(int id)
+        {
+            return DbSet.Where(c => c.ID == id || c.ParentID == id);
+        }
     }
 }
