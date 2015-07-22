@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels>
 
-<h2>Category</h2>
+<h2>Danh mục</h2>
 <div class="panel-group category-products" id="accordian">
     <!--category-productsr-->
     @foreach (var category in Model)
@@ -9,7 +9,7 @@
         {
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><a href="#">@category.Title</a></h4>
+                    <h4 class="panel-title"><a href="/Shop/Index?CatagoryGuid=@category.GUID">@category.Title</a></h4>
                 </div>
             </div>
         }
@@ -18,18 +18,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordian" href="#@category.GUID">
+                        <a data-toggle="collapse" data-parent="#accordian" href="/Shop/Index?CatagoryGuid=@category.GUID">
                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                             @category.Title
                         </a>
                     </h4>
                 </div>
-                <div id="@category.GUID" class="panel-collapse collapse">
+                <div id="@category.GUID" class="panel-collapse">
                     <div class="panel-body">
                         <ul>
                             @foreach (var child in category.Childs)
                             {
-                                <li><a href="#">@child.Title</a></li>
+                                <li><a href="/Shop/Index?CatagoryGuid=@child.GUID">@child.Title</a></li>
                             }
                         </ul>
                     </div>

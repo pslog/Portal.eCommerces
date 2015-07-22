@@ -1,0 +1,81 @@
+﻿@using WebApplication.Models.ViewModels;
+@using WebApplication.Libraries.Extensions;
+@using WebApplication.Models.Models;
+@model IEnumerable<WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels>
+
+<h2>Danh mục</h2>
+<div class="panel-group category-products" id="accordian">
+    <!--category-productsr-->
+    @foreach (WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels category in Model)
+    {
+        if (category.Childs.Count() == 0)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        @Ajax.ProductCategoryActionLink(category.Title,
+                        "ListProduct", "Shop",
+                        new { CatagoryGuid = category.GUID },
+                        new AjaxOptions
+                              {
+                                  HttpMethod = "POST",
+                                  InsertionMode = InsertionMode.Replace,
+                                  UpdateTargetId = "ProductBoard_ShopPage"
+                              },
+                        new { @class = "categoryAjax" })
+
+                    </h4>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        @Ajax.ProductCategoryActionLink(string.Format("<span class='badge pull-right'><i class='fa fa-plus'></i></span>{0}", category.Title),
+                                "ListProduct", "Shop",
+                                new { CatagoryGuid = category.GUID },
+                                new AjaxOptions
+                                      {
+                                          HttpMethod = "POST",
+                                          InsertionMode = InsertionMode.Replace,
+                                          UpdateTargetId = "ProductBoard_ShopPage"
+                                      },
+                                new { @class = "hasChildCategory",
+                                    data_toggle="collapse",
+                                    data_parent="#accordian" })
+                    </h4>
+                </div>
+                <div  class="panel-collapse">
+                    <div class="panel-body">
+                        <ul>
+                            @foreach (var child in category.Childs)
+                            {
+                                <li>
+                                    @Ajax.ProductCategoryActionLink(child.Title,
+                                        "ListProduct", "Shop",
+                                        new { CatagoryGuid = child.GUID },
+                                        new AjaxOptions
+                                          {
+                                              HttpMethod = "POST",
+                                              InsertionMode = InsertionMode.Replace,
+                                              UpdateTargetId = "ProductBoard_ShopPage"
+                                          },
+                                        new { @class = "categoryAjax" })
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div><!--/category-products-->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
+}
+

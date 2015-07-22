@@ -15,14 +15,28 @@ namespace WebApplication.Controllers
         private ProductBoard_Business _productBoard_Business = new ProductBoard_Business();
         #endregion
         // GET: Shop
-        public ActionResult Index(Guid catalog)
+        public ActionResult Index(Guid ?catalogGuid)
         {
-            return View(_productBoard_Business.GetProductAfterCategory(catalog));
+            if (catalogGuid == null)
+            {
+                return View(_productBoard_Business.GetAllProducts());
+            }
+            else
+            {
+                return View(_productBoard_Business.GetProductAfterCategory((Guid)catalogGuid));
+            }
         }
-
-        public ActionResult ListProduct()
+      [HttpPost]
+        public ActionResult ListProduct(Guid ?CatagoryGuid)
         {
-            return PartialView(_productBoard_Business.GetAllProducts());
+            if (CatagoryGuid == null)
+            {
+                return PartialView("ListProductPartialView",_productBoard_Business.GetAllProducts());
+            }
+            else
+            {
+                return PartialView("ListProductPartialView",_productBoard_Business.GetProductAfterCategory((Guid)CatagoryGuid));
+            }
         }
     }
 }

@@ -163,6 +163,7 @@
     <Compile Include="BusinessLogic\StatusProductViewModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CheckOutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -681,6 +682,7 @@
     <Content Include="Scripts\Common\main.js" />
     <Content Include="Scripts\Common\price-range.js" />
     <Content Include="Scripts\Common\underscore-1.5.2.min.js" />
+    <Content Include="Scripts\Home\CheckOutCartView.js" />
     <Content Include="Scripts\Home\ProductDetailsPartialView.js" />
     <Content Include="Scripts\Home\ProductManagerView.js" />
     <Content Include="Scripts\Home\ProductPartialView.js" />
@@ -822,7 +824,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\LoadListImageProduct.cshtml" />
     <Content Include="Views\Shared\_UploadImagePartial.cshtml" />
-    <Content Include="Views\Home\ProductItemPartial.cshtml" />
+    <Content Include="Views\Shared\ProductItemPartial.cshtml" />
     <Content Include="Views\ProductBoard\ProductDetails.cshtml" />
     <Content Include="Views\ProductBoard\_ProductDetails_Partial.cshtml" />
     <Content Include="Views\Shared\BrandProducts_LeftSideBar_Partial.cshtml" />
@@ -834,6 +836,8 @@
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Shop\ListProductPartialView.cshtml" />
+    <Content Include="Views\Shared\_CategoryProducts_LeftSideBar_AjaxPartial.cshtml" />
+    <Content Include="Views\CheckOut\_CartDetail_PartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Product\" />

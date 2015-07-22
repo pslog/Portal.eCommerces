@@ -3,12 +3,14 @@
     ViewBag.Title = "Shop Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery-2.1.4.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
 <!--slider-->
 <section id="advertisement">
     <div class="container">
-        <img src="../../Content/Images/home/advertisement.jpg" alt="" />
+        @*<img src="../Content/Images/home/advertisement.jpg" alt="" />*@
     </div>
 </section>
 
@@ -18,16 +20,15 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     @*@Html.Partial("_CategoryProducts_LeftSideBar_Partial")*@
-                    @Html.Action("ListCategoriesLeftMenu", "Category")
+                    @Html.Action("ListCategoriesLeftMenuByAjax", "Category")
                     @Html.Partial("BrandProducts_LeftSideBar_Partial")
                     @Html.Partial("PriceRange_LeftSideBar_Partial")
                     @Html.Partial("Shipping_LeftSideBar_Partial")
                 </div>
             </div>
 
-            <div class="col-sm-9 padding-right">
-                @Html.Action("Index","Shop",Model)
-
+            <div class="col-sm-9 padding-right" id="ProductBoard_ShopPage">
+                @Html.Partial("ListProductPartialView",@Model)
                 <!--/recommended_items-->
 
             </div>

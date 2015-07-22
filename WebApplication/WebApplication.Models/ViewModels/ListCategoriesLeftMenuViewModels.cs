@@ -23,6 +23,7 @@ namespace WebApplication.Models.ViewModels
         public Nullable<int> SortOrder { get; set; }
         [Display(Name = "Trạng thái")]
         public string Status { get; set; }
+        public bool isSelected { get; set; }
 
         public IList<ListCategoriesLeftMenuViewModels> Childs { get; set; }
     }

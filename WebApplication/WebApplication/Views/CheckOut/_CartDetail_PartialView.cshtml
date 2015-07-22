@@ -10,8 +10,6 @@
     total = subtotal + shipping;
 }
 
-<section id="cart_items" style="width:100%;">
-    <div class="container">
         <div class="table-responsive cart_info">
             <table class="table table-condensed tableSection" id="arrestedDevelopment">
                 <thead>
@@ -40,14 +38,14 @@
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <input type="number" class="cart_quantity_input" id="ProductBoard_Quantity" value="@product.Quantity" onchange="ProductBoard.UpdateQuantityProduct(this.value,@product.Id)" size="2">
+                                    <input type="number" class="cart_quantity_input" id="ProductBoard_Quantity" value="@product.Quantity" onchange="CheckOutCart.UpdateQuantityProduct(this.value,@product.Id)" size="2">
                                 </div>
                             </td>
                             <td class="cart_total">
                                 <p class="cart_total_price">$@(product.Price * product.Quantity)</p>
                             </td>
                             <td class="cart_delete">
-                                <button class="cart_quantity_delete" onclick="ProductBoard.removeFromCart(@product.Id)"><i class="fa fa-times"></i></button>
+                                <button class="cart_quantity_delete" onclick="CheckOutCart.removeFromCart(@product.Id)"><i class="fa fa-times"></i></button>
                             </td>
                         </tr>
                     }
@@ -76,12 +74,8 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</section> <!--/#cart_items-->
-@*<script type="text/javascript">
-    $(function () {
-        $('#arrestedDevelopment').scrollTableBody();
-    });
-</script>*@
+
+
+
 
 

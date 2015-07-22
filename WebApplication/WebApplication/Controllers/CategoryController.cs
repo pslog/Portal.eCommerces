@@ -208,5 +208,26 @@ namespace WebApplication.Admin.Controllers
 
             return PartialView("_CategoryProducts_LeftSideBar_Partial", listCategoriesLeftMenuViewModels);
         }
+        
+             public ActionResult ListCategoriesLeftMenuByAjax()
+        {
+            IList<ListCategoriesLeftMenuViewModels> listCategoriesLeftMenuViewModels = new List<ListCategoriesLeftMenuViewModels>();
+            var categories = _categoryRepository.GetAllRootCategory();
+            if (categories.Count > 0)
+            {
+                foreach (var category in categories)
+                {
+                    ListCategoriesLeftMenuViewModels cate = new ListCategoriesLeftMenuViewModels();
+                    cate = category.ConvertToCategoriesLeftMenuViewModels();
+                    IList<product_Categories> childCategories = _categoryRepository.GetChildCategory(category.GUID);
+                    IList<ListCategoriesLeftMenuViewModels> childsCate = new List<ListCategoriesLeftMenuViewModels>();
+                    childsCate = childCategories.ConvertToListCategoriesLeftMenuViewModels();
+                    cate.Childs = childsCate;
+                    listCategoriesLeftMenuViewModels.Add(cate);
+                }
+            }
+
+            return PartialView("_CategoryProducts_LeftSideBar_AjaxPartial", listCategoriesLeftMenuViewModels);
+        }
     }
 }
