@@ -663,6 +663,7 @@
     <Content Include="Content\Plugins\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Content\Plugins\ckeditor\skins\moono\images\spinner.gif" />
     <Content Include="Content\Plugins\ckeditor\styles.js" />
+    <Content Include="Content\Plugins\flat-flyout-menu.css" />
     <Content Include="Content\response\1.4.2\respond.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
