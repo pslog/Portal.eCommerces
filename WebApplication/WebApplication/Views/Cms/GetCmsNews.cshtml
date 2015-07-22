@@ -13,7 +13,7 @@
     @using (Ajax.BeginForm("GetCmsNews", null, new AjaxOptions { UpdateTargetId = "cms_news_container" }, new { @id = "get_cms_news" }))
     {
         @Html.HiddenFor(model => model.RouteValue.OrderBy);
-        @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID)
+        @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID);
         <div class="row">
             <div class="col-md-4">
                 <span>@Label.Paging.OrderBy</span>
@@ -30,7 +30,7 @@
     @if (Model.Items.Count() > 0)
     {
         <div id="cms_news_items">
-            <table class="table">
+            <table class="table table-bordered table-condensed table-responsive table-striped table-hover">
                 <tr>
                     <th>
                         @Html.DisplayName(Label.CmsNews.Title)
@@ -59,34 +59,17 @@
                 @foreach (var item in Model.Items)
                 {
                 <tr>
+                    <td><span>@Html.DisplayFor(modelItem => item.Title)</span></td>
+                    <td><span>@Html.DisplayFor(modelItem => item.Authors)</span></td>
+                    <td><span>@(item.TotalView ?? 0)</span></td>
+                    <td><span>@Html.DisplayFor(modelItem => item.CreatedBy)</span></td>
+                    <td><span>@Html.DisplayFor(modelItem => item.CreatedDate)</span></td>
+                    <td><span>@Html.DisplayFor(modelItem => item.ModifiedBy)</span></td>
+                    <td><span>@Html.DisplayFor(modelItem => item.ModifiedDate)</span></td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Authors)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tags)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalView)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifiedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifiedDate)
-                    </td>
-                    <td>
-                        @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsNewsAction.Edit, new { id = item.ID }) |
-                        @Html.ActionLink(Label.CRUD.Details, RouteName.CmsNewsAction.Details, new { id = item.ID }) |
-                        @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsNewsAction.Delete, new { id = item.ID })
+                        <span>@Html.ActionLink(Label.CRUD.Edit, RouteName.CmsNewsAction.Edit, new { id = item.ID }) |</span>
+                        <span>@Html.ActionLink(Label.CRUD.Details, RouteName.CmsNewsAction.Details, new { id = item.ID }) |</span>
+                        <span>@Html.ActionLink(Label.CRUD.Delete, RouteName.CmsNewsAction.Delete, new { id = item.ID })</span>
                     </td>
                 </tr>
                 }

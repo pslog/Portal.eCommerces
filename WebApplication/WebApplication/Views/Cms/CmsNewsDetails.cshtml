@@ -1,137 +1,70 @@
 ﻿@model WebApplication.Models.Models.cms_News
-
+@using WebApplication.Libraries.Extensions
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@section styles{
+    <style>
+        .cms-news-title  {
+            font-size:14px;
+            color:rgb(101,33,80);
+        }
 
-<div>
-    <h4>cms_News</h4>
-    <hr />
-    <dl class="dl-horizontal">
+        .cms-news-info {
+            font-size:12px;
+            color: #808080;
+            font-style:italic;
+        }
+        .cms-news-info .views{
+            float:right;
+            font-weight:bold;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.cms_Categories.Title)
-        </dt>
+        .cms-news-sub-title{
+            font-size:13px;
+            font-weight:bold;
+            color:#666666;
+            margin-top:10px;
+        }
+        .cms-news-author{
+            font-weight:bold;
+            color:black;
+            font-size:14px;
+            text-align:right;
+        }
+    </style>
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.cms_Categories.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.GUID)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GUID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SubTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Authors)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Authors)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tags)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tags)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalView)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalView)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ContentNews)
-        </dt>
-
-        <dd>
-            <button id="btn" data-true="Collapse" data-false="Expand">Expand</button>
-            <div id="html_content" style="display:none;">
-                @Html.Raw(Model.ContentNews);
-            </div>
-        </dd>
-
-    </dl>
-</div>
 <p>
+    <!-- if authentication && authorization -->
     @Html.ActionLink("Edit", "EditCmsNews", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "CmsNewsIndex")
+    <!-- end if -->
+    @Html.ActionLink("Back to List", "CmsNewsIndex", new { categoryID = Model.CategoryID ?? 0 })
 </p>
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('#btn').click(function () {
-                $('#html_content').toggle(1, function () {
-                    $('#btn').html($('#btn').attr('data-' + $(this).is(':visible')));
-                });
-            });
-        });
-    </script>
-}
+
+<div class="row">
+    <div class="cms-news-title">
+        <h3>@Html.DisplayFor(model => model.Title)</h3>
+    </div>
+    
+    <div class="cms-news-info">
+        <span>@Html.DisplayNameFor(model => model.CreatedBy): @Html.DisplayFor(model => model.CreatedBy) @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm tt")</span>
+        <span>@Html.DisplayNameFor(model => model.ModifiedBy): @Html.DisplayFor(model => model.ModifiedBy) @Model.ModifiedDate.ToString("dd/MM/yyyy HH:mm tt")</span>
+        <span class="views">@(Model.TotalView ?? 0) @Html.DisplayNameFor(model => model.TotalView)</span>
+    </div>
+
+    <div class="cms-news-sub-title">
+        <span>@Html.DisplayFor(model => model.SubTitle)</span>
+    </div>
+    
+    <div class="cms-news-content">
+        @Html.Raw(Model.ContentNews)
+    </div>
+
+    <div class="cms-news-author">
+        <span>@Html.DisplayFor(model => model.Authors)</span>
+    </div>
+</div>
