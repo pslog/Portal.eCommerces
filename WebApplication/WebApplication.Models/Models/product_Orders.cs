@@ -21,7 +21,7 @@ namespace WebApplication.Models.Models
     
         public int ID { get; set; }
         public System.Guid GUID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserID { get; set; }
         public string OrderCode { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal FeeShip { get; set; }
@@ -37,6 +37,7 @@ namespace WebApplication.Models.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<product_OrderDetails> product_OrderDetails { get; set; }
     }
 }

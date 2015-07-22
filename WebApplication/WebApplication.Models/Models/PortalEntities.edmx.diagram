@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="Portal.eCommerceModel.cms_News" Width="1.5" PointX="10" PointY="1" />
         <EntityTypeShape EntityType="Portal.eCommerceModel.product_Categories" Width="1.5" PointX="0.75" PointY="3.25" />
         <EntityTypeShape EntityType="Portal.eCommerceModel.product_OrderDetails" Width="1.5" PointX="5.25" PointY="3" />
-        <EntityTypeShape EntityType="Portal.eCommerceModel.product_Orders" Width="1.5" PointX="3" PointY="9.75" />
         <EntityTypeShape EntityType="Portal.eCommerceModel.product_Products" Width="1.5" PointX="3" PointY="2.125" />
         <EntityTypeShape EntityType="Portal.eCommerceModel.share_Images" Width="1.5" PointX="5.25" PointY="8.125" />
         <AssociationConnector Association="Portal.eCommerceModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
@@ -22,10 +21,12 @@
         <AssociationConnector Association="Portal.eCommerceModel.FK_cms_Categories_cms_Categories" />
         <AssociationConnector Association="Portal.eCommerceModel.FK_cms_News_cms_Categories" />
         <AssociationConnector Association="Portal.eCommerceModel.FK_product_Products_product_Categories" />
-        <AssociationConnector Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" />
         <AssociationConnector Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Products" />
         <AssociationConnector Association="Portal.eCommerceModel.AspNetUserRoles" />
         <AssociationConnector Association="Portal.eCommerceModel.product_Products_Images" />
+        <EntityTypeShape EntityType="Portal.eCommerceModel.product_Orders" Width="1.5" PointX="12.25" PointY="12.125" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_product_Orders_AspNetUsers" />
+        <AssociationConnector Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

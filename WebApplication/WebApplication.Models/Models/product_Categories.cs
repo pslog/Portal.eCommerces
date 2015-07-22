@@ -17,7 +17,6 @@ namespace WebApplication.Models.Models
         public product_Categories()
         {
             this.product_Products = new HashSet<product_Products>();
-            this.GUID = Guid.NewGuid();
         }
     
         public int ID { get; set; }

@@ -28,7 +28,7 @@ namespace WebApplication.Models.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual product_Orders product_Orders { get; set; }
         public virtual product_Products product_Products { get; set; }
+        public virtual product_Orders product_Orders { get; set; }
     }
 }

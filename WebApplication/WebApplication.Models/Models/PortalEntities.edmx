@@ -143,7 +143,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserID" Type="int" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" />
           <Property Name="OrderCode" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="TotalPrice" Type="money" Nullable="false" />
           <Property Name="FeeShip" Type="money" Nullable="false" />
@@ -312,6 +312,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_product_Orders_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="product_Orders" Type="Self.product_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_product_Products_Images_product_Products">
           <End Role="product_Products" Type="Self.product_Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -399,6 +411,10 @@
             <End Role="product_Products" EntitySet="product_Products" />
             <End Role="product_OrderDetails" EntitySet="product_OrderDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_product_Orders_AspNetUsers" Association="Self.FK_product_Orders_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="product_Orders" EntitySet="product_Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK_product_Products_Images_product_Products" Association="Self.FK_product_Products_Images_product_Products">
             <End Role="product_Products" EntitySet="product_Products" />
             <End Role="product_Products_Images" EntitySet="product_Products_Images" />
@@ -426,7 +442,6 @@
           <EntitySet Name="cms_News" EntityType="Portal.eCommerceModel.cms_News" />
           <EntitySet Name="product_Categories" EntityType="Portal.eCommerceModel.product_Categories" />
           <EntitySet Name="product_OrderDetails" EntityType="Portal.eCommerceModel.product_OrderDetails" />
-          <EntitySet Name="product_Orders" EntityType="Portal.eCommerceModel.product_Orders" />
           <EntitySet Name="product_Products" EntityType="Portal.eCommerceModel.product_Products" />
           <EntitySet Name="share_Images" EntityType="Portal.eCommerceModel.share_Images" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Portal.eCommerceModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -449,10 +464,6 @@
             <End Role="product_Categories" EntitySet="product_Categories" />
             <End Role="product_Products" EntitySet="product_Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_product_OrderDetails_product_Orders" Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders">
-            <End Role="product_Orders" EntitySet="product_Orders" />
-            <End Role="product_OrderDetails" EntitySet="product_OrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_product_OrderDetails_product_Products" Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Products">
             <End Role="product_Products" EntitySet="product_Products" />
             <End Role="product_OrderDetails" EntitySet="product_OrderDetails" />
@@ -464,6 +475,15 @@
           <AssociationSet Name="product_Products_Images" Association="Portal.eCommerceModel.product_Products_Images">
             <End Role="product_Products" EntitySet="product_Products" />
             <End Role="share_Images" EntitySet="share_Images" />
+          </AssociationSet>
+          <EntitySet Name="product_Orders" EntityType="Portal.eCommerceModel.product_Orders" />
+          <AssociationSet Name="FK_product_Orders_AspNetUsers" Association="Portal.eCommerceModel.FK_product_Orders_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="product_Orders" EntitySet="product_Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_OrderDetails_product_Orders" Association="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders">
+            <End Role="product_Orders" EntitySet="product_Orders" />
+            <End Role="product_OrderDetails" EntitySet="product_OrderDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
@@ -524,6 +544,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Portal.eCommerceModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Portal.eCommerceModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="AspNetRoles" Relationship="Portal.eCommerceModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="product_Orders" Relationship="Portal.eCommerceModel.FK_product_Orders_AspNetUsers" FromRole="AspNetUser" ToRole="product_Orders" />
         </EntityType>
         <EntityType Name="cms_Categories">
           <Key>
@@ -600,31 +621,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="product_Orders" Relationship="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" FromRole="product_OrderDetails" ToRole="product_Orders" />
           <NavigationProperty Name="product_Products" Relationship="Portal.eCommerceModel.FK_product_OrderDetails_product_Products" FromRole="product_OrderDetails" ToRole="product_Products" />
-        </EntityType>
-        <EntityType Name="product_Orders">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="TotalOrder" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
-          <Property Name="OrderNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="NameOfRecipient" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
-          <Property Name="PhoneOfRecipient" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AddressOfRecipient" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="product_OrderDetails" Relationship="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" FromRole="product_Orders" ToRole="product_OrderDetails" />
+          <NavigationProperty Name="product_Orders" Relationship="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" FromRole="product_OrderDetails" ToRole="product_Orders" />
         </EntityType>
         <EntityType Name="product_Products">
           <Key>
@@ -735,18 +733,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_product_OrderDetails_product_Orders">
-          <End Type="Portal.eCommerceModel.product_Orders" Role="product_Orders" Multiplicity="0..1" />
-          <End Type="Portal.eCommerceModel.product_OrderDetails" Role="product_OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product_Orders">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="product_OrderDetails">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_product_OrderDetails_product_Products">
           <End Type="Portal.eCommerceModel.product_Products" Role="product_Products" Multiplicity="0..1" />
           <End Type="Portal.eCommerceModel.product_OrderDetails" Role="product_OrderDetails" Multiplicity="*" />
@@ -766,6 +752,54 @@
         <Association Name="product_Products_Images">
           <End Type="Portal.eCommerceModel.product_Products" Role="product_Products" Multiplicity="*" />
           <End Type="Portal.eCommerceModel.share_Images" Role="share_Images" Multiplicity="*" />
+        </Association>
+        <EntityType Name="product_Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FeeShip" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TotalOrder" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+          <Property Name="OrderNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NameOfRecipient" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneOfRecipient" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressOfRecipient" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="Portal.eCommerceModel.FK_product_Orders_AspNetUsers" FromRole="product_Orders" ToRole="AspNetUser" />
+          <NavigationProperty Name="product_OrderDetails" Relationship="Portal.eCommerceModel.FK_product_OrderDetails_product_Orders" FromRole="product_Orders" ToRole="product_OrderDetails" />
+        </EntityType>
+        <Association Name="FK_product_Orders_AspNetUsers">
+          <End Type="Portal.eCommerceModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="Portal.eCommerceModel.product_Orders" Role="product_Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product_Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_OrderDetails_product_Orders">
+          <End Type="Portal.eCommerceModel.product_Orders" Role="product_Orders" Multiplicity="0..1" />
+          <End Type="Portal.eCommerceModel.product_OrderDetails" Role="product_OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="product_OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -903,29 +937,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="product_Orders">
-            <EntityTypeMapping TypeName="Portal.eCommerceModel.product_Orders">
-              <MappingFragment StoreEntitySet="product_Orders">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AddressOfRecipient" ColumnName="AddressOfRecipient" />
-                <ScalarProperty Name="PhoneOfRecipient" ColumnName="PhoneOfRecipient" />
-                <ScalarProperty Name="NameOfRecipient" ColumnName="NameOfRecipient" />
-                <ScalarProperty Name="OrderNote" ColumnName="OrderNote" />
-                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
-                <ScalarProperty Name="TotalOrder" ColumnName="TotalOrder" />
-                <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="product_Products">
             <EntityTypeMapping TypeName="Portal.eCommerceModel.product_Products">
               <MappingFragment StoreEntitySet="product_Products">
@@ -985,6 +996,29 @@
               <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="product_Orders">
+            <EntityTypeMapping TypeName="Portal.eCommerceModel.product_Orders">
+              <MappingFragment StoreEntitySet="product_Orders">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AddressOfRecipient" ColumnName="AddressOfRecipient" />
+                <ScalarProperty Name="PhoneOfRecipient" ColumnName="PhoneOfRecipient" />
+                <ScalarProperty Name="NameOfRecipient" ColumnName="NameOfRecipient" />
+                <ScalarProperty Name="OrderNote" ColumnName="OrderNote" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="TotalOrder" ColumnName="TotalOrder" />
+                <ScalarProperty Name="FeeShip" ColumnName="FeeShip" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

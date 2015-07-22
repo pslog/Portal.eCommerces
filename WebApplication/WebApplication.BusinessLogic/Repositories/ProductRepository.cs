@@ -50,8 +50,9 @@ namespace WebApplication.BusinessLogic.Repositories
 
         public IList<Product> FindProductAfterCategory(Guid categoryGuid)
         {
+            int categoryId = dc.product_Categories.FirstOrDefault(c => c.GUID == categoryGuid).ID;
             var products = (from p in dc.product_Products
-                            where p.GUID == categoryGuid
+                            where p.CategoryID == categoryId
                             join c in dc.product_Categories on p.CategoryID equals c.ID
                             select new Product()
                             {

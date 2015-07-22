@@ -5,19 +5,21 @@
 <div class="features_items">
     <!--features_items-->
     <h2 class="title text-center">Features Items</h2>
-    @foreach (var product in Model)
-    {
-        <div class="col-sm-4">
-            @Html.Partial("ProductItemPartial", product)
-        </div>
-    }
+    <div style="display:block;">
+        @foreach (var product in Model)
+        {
+            <div class="col-sm-4">
+                @Html.Partial("ProductItemPartial", product)
+            </div>
+        }
+    </div>
 
-    <ul class="pagination">
+    @*<ul class="pagination">
         <li class="active"><a href="">1</a></li>
         <li><a href="">2</a></li>
         <li><a href="">3</a></li>
         <li><a href="">&raquo;</a></li>
-    </ul>
+    </ul>*@
 </div><!--features_items-->
 <!-- Cart Modal popup -->
 <div class="modal fade" id="ProductPartialView_CartModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
