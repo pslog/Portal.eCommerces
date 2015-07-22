@@ -1,0 +1,154 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+/* Please Keep this font import at the very top of any CSS file */
+@charset "UTF-8";
+/* Starter CSS for Flyout Menu */
+
+#cms_categories_container a,
+#cms_categories_container ul,
+#cms_categories_container li {
+    border-radius: 0 !important;
+}
+
+#cms_categories_container a {
+    background: #1b9bff;
+    display: block;
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size:12px;
+    font-weight: normal;
+}
+
+
+#cms_categories_container a:focus,
+#cms_categories_container a:hover {
+    background: #4eb1ff;
+}
+
+#cms_categories_container {
+    min-height:600px;
+    border-radius: 0;
+    padding: 5px 0;
+    margin: 0;
+    border: 0;
+    line-height: 1;
+    background: #333;
+    zoom: 1;
+}
+
+#cms_categories_container ul,
+#cms_categories_container ul li,
+#cms_categories_container ul ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#cms_categories_container ul {
+    position: relative;
+    z-index: 597;
+    float: left;
+}
+
+#cms_categories_container ul li {
+    float: left;
+    min-height: 1px;
+    line-height: 1em;
+    vertical-align: middle;
+    position: relative;
+    float: none;
+}
+
+#cms_categories_container ul li.hover,
+#cms_categories_container ul li:hover {
+    position: relative;
+    z-index: 599;
+    cursor: default;
+}
+
+#cms_categories_container ul ul {
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 598;
+    width: 100%;
+    top: 0;
+    left: 100%;
+}
+
+#cms_categories_container ul ul li {
+    float: none;
+}
+
+#cms_categories_container ul ul ul {
+    right: 0;
+}
+
+#cms_categories_container ul li:hover > ul {
+    visibility: visible;
+}
+
+#cms_categories_container:before {
+    content: '';
+    display: block;
+}
+
+#cms_categories_container:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+#cms_categories_container > ul {
+    width: 100%;
+}
+
+#cms_categories_container li {
+    position: relative;
+}
+
+#cms_categories_container ul li.has-sub > a:after {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    margin-top: -6px;
+}
+
+
+#cms_categories_container.align-right > ul > li > a {
+    border-left: 4px solid #1b9bff;
+    border-right: none;
+}
+
+#cms_categories_container.align-right {
+    float: right;
+}
+
+#cms_categories_container.align-right li {
+    text-align: right;
+}
+
+#cms_categories_container.align-right ul li.has-sub > a:before {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    margin-top: -6px;
+}
+
+#cms_categories_container.align-right ul li.has-sub > a:after {
+    content: none;
+}
+
+#cms_categories_container.align-right ul ul {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    z-index: 598;
+    width: 100%;
+}
+

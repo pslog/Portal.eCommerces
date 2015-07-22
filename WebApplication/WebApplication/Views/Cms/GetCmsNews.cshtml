@@ -21,7 +21,7 @@
                 <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true, new { @onclick = "$('#get_cms_news').submit();" })@Label.Paging.OrderByDesc</label>
             </div>
             <div class="col-md-4 pull-right">
-                @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = Label.Paging.Search, @class = "form-control pull-right" })
+                @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = "Tìm tin tức", @class = "form-control pull-right" })
             </div>
         </div>
         <p></p>

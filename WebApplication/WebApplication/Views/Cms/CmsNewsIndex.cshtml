@@ -8,41 +8,30 @@
 }
 
 @section styles {
-    @Styles.Render("~/Content/paging")
-
+    <link href="~/Content/Plugins/flat-flyout-menu.css" rel="stylesheet" />
     <style>
-        #cms_news_view {
+        #cms_news_container,
+        #cms_news_container div {
+            padding: 0;
             margin: 0;
         }
 
-        #cms_categories_container {
-            border: 1px solid #CCC;
-            padding: 5px;
+        #breadcrumb.breadcrumb {
+            background: none;
+            border-bottom: 1px solid #c9c9c9;
+            padding: 0;
+            padding-bottom: 5px;
+            border-radius: 0;
         }
 
-        ul {
-            padding: 5px;
+        li.paging-active > a{
+            background:#FE980F;
+            color:white;
         }
-
-        li > a {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        li > ul {
-            margin-left: 10px;
-            display:none;
-        }
-
-        a.active {
-            background-color: #EEE;
-        }
-
     </style>
 }
 
-<br/>
+<br />
 <p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
 
 <div id="cms_categories_container" class="col-md-2">
@@ -50,21 +39,16 @@
 </div>
 
 <div class="col-md-10">
-    <div class="row">
-        <ul id="breadcrumb" class="breadcrumb"></ul>
-    </div>
+    <ul id="breadcrumb" class="breadcrumb"></ul>
     <div id="cms_news_container" class="row"></div>
 </div>
-
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
     <script>
         $(document).ready(function () {
+            $('#cms_categories_container li:has(ul)').addClass('has-sub');
             $('#cms_categories_container li > a').click(function () {
-                $('li > a').removeClass('active');
-                $(this).addClass('active');
-                $(this).siblings('ul').toggle();
                 $('#breadcrumb').empty();
 
                 $($(this).parents('li').get().reverse()).find('> a').each(function () {
@@ -74,7 +58,7 @@
                     $('#breadcrumb').append('<li>' + item.html() + '</li>');
                 });
 
-                $('#breadcrumb').find('li:last').html($('#breadcrumb').find('li:last > a').html()).find('a').remove();
+                $('#breadcrumb li:last').html($('#breadcrumb li:last > a').html()).find('a').remove();
 
                 $('#breadcrumb > li > a').click(function () {
                     $(this).parent().nextAll().remove();
@@ -83,12 +67,12 @@
                 });
             });
 
-            var categoryId = '@((int?)ViewBag.CategoryID)';
-
-            if (categoryId != '') {
-                $('#category_' + categoryId).parents('ul').show();
-                $('#category_' + categoryId + ' > a').addClass('active').click();
+            if ('@((int?)ViewBag.CategoryID)' == '') {
+                $('#cms_categories_container > ul > li:first > a').focus().click();
+            } else {
+                $('#category_' + '@((int?)ViewBag.CategoryID)' + '> a').focus().click();
             }
+
         });
     </script>
 }
