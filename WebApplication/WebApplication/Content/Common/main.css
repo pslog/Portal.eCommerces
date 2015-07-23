@@ -782,8 +782,8 @@ h2.title:before {
         }
 
 .shipping {
-    background-color: #F2F2F2;
-    margin-top: 40px;
+    /*background-color: #F2F2F2;*/
+    margin-top: 20px;
     overflow: hidden;
     padding-top: 20px;
     position: relative;
