@@ -123,7 +123,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="OrderID" Type="int" />
           <Property Name="ProductID" Type="int" />
@@ -141,7 +141,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="OrderCode" Type="nchar" MaxLength="100" Nullable="false" />
@@ -587,7 +587,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="OrderID" Type="Int32" />
           <Property Name="ProductID" Type="Int32" />
@@ -607,7 +607,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />

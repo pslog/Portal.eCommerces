@@ -130,12 +130,7 @@ namespace WebApplication.Controllers
 
         public ActionResult CheckOutCart()
         {
-            List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
-            if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
-            {
-                productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
-            }
-            return View(productsInCart);
+            return View();
         }
 
         public ActionResult ProductDetails(int Id)

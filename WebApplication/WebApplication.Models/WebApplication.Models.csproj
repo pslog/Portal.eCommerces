@@ -70,7 +70,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -140,6 +140,7 @@
     <Compile Include="ViewModels\ListCategoriesLeftMenuViewModels.cs" />
     <Compile Include="ViewModels\LoadListImageProductPartialViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\OrderProductViewModels.cs" />
     <Compile Include="ViewModels\Paging\PagingGeneratorOption.cs" />
     <Compile Include="ViewModels\Paging\PagingView.cs" />
     <Compile Include="ViewModels\Product.cs" />

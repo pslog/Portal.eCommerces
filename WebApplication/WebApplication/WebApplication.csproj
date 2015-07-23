@@ -838,6 +838,7 @@
     <Content Include="Views\Shop\ListProductPartialView.cshtml" />
     <Content Include="Views\Shared\_CategoryProducts_LeftSideBar_AjaxPartial.cshtml" />
     <Content Include="Views\CheckOut\_CartDetail_PartialView.cshtml" />
+    <Content Include="Views\CheckOut\OrderProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Product\" />

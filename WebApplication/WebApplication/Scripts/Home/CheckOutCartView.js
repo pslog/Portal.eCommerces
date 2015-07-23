@@ -80,18 +80,7 @@ CheckOutCart = {
         /// <param>N/A</param>
         /// <returns>N/A</returns>
 
-        //$.ajax({
-        //    url: CheckOutCart.options.path + "CheckOutCart/CheckOutCart",
-        //    dataType: "html",
-        //    type:"Get",
-        //    success: function (result) {
-        //        alert("check out cart show");
-        //    },
-        //    error: function (result) {
-        //        alert("cập nhật số lượng sản phẩm lỗi");
-        //    }
-        //});
-        $.get("ProductBoard/CheckOutCart");
+        $.get("CheckOut/OrderProduct");
     },
     options: {
         selectedUsers: 0,
