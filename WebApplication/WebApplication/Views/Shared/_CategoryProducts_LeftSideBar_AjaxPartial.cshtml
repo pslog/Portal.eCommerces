@@ -3,8 +3,8 @@
 @using WebApplication.Models.Models;
 @model IEnumerable<WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels>
 
-s<div class="panel-group category-products" id="accordian">
-    <!--category-productsr-->
+<div class="panel-group category-products" id="accordian">
+    <!--category-products-->
     @foreach (WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels category in Model)
     {
         if (category.Childs.Count() == 0)
@@ -76,25 +76,5 @@ s<div class="panel-group category-products" id="accordian">
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
-    @*<script>
-        $(document).on('click', '.accordion-toggle', function(event) {
-                event.stopPropagation();
-                var $this = $(this);
-
-                var parent = $this.data('parent');
-                var actives = parent && $(parent).find('.collapse.in');
-
-                // From bootstrap itself
-                if (actives && actives.length) {
-                    hasData = actives.data('collapse');
-                    //if (hasData && hasData.transitioning) return;
-                    actives.collapse('hide');
-                }
-
-                var target = $this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, ''); //strip for ie7
-
-                $(target).collapse('toggle');
-        });​
-    </script>*@
 }
 
