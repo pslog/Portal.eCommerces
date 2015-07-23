@@ -2,6 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 @Scripts.Render("~/bundles/jquery")
+@using WebApplication.Models.ViewModels
 <section id="slider">
     <!--slider-->
     <div class="container">
@@ -67,14 +68,21 @@
                 </div>
             </div>
 
-            <div class="col-sm-9 padding-right">
-                @Html.Action("ListProduct")
+            <div class="col-sm-9 padding-right" id="products">
+                @Html.Action("ListProduct", new PagingRouteValue("ListProduct", "Home"))
             </div>
         </div>
     </div>
 </section>
-@*<div class="row">
-        <div class="col-md-12">
-          @Html.Action("ListProduct");
-        </div>
-    </div>*@
+@section styles {
+    <style>
+        li.paging-active > a {
+            background: #FE980F;
+            color: white;
+        }
+    </style>
+}
+@section scripts {
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+}
+
