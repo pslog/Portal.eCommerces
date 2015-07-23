@@ -29,13 +29,14 @@ namespace WebApplication.Models.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<cms_Categories> cms_Categories { get; set; }
         public virtual DbSet<cms_News> cms_News { get; set; }
         public virtual DbSet<product_Categories> product_Categories { get; set; }
-        public virtual DbSet<product_OrderDetails> product_OrderDetails { get; set; }
         public virtual DbSet<product_Products> product_Products { get; set; }
         public virtual DbSet<share_Images> share_Images { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<product_OrderDetails> product_OrderDetails { get; set; }
         public virtual DbSet<product_Orders> product_Orders { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
