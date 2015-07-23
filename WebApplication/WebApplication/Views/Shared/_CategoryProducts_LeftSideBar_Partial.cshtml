@@ -1,41 +1,22 @@
 ﻿@model IEnumerable<WebApplication.Models.ViewModels.ListCategoriesLeftMenuViewModels>
 
-<h2>Danh mục</h2>
-<div class="panel-group category-products" id="accordian">
-    <!--category-productsr-->
-    @foreach (var category in Model)
-    {
-        if (category.Childs.Count() == 0)
+<div class="left-sidebar">
+    <h2>DANH MỤC</h2>
+    <ul id="nav-sidebox" class="category-items">
+        @foreach (var category in Model)
         {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><a href="/Shop/Index?CatagoryGuid=@category.GUID">@category.Title</a></h4>
-                </div>
-            </div>
+            <li class="level0 subcatemenu">
+                <a href="/Shop/Index?CatagoryGuid=@category.GUID">@category.Title</a>
+                @if (category.Childs.Count() > 0)
+                {
+                    <ul class="navigation-0a" style="width: 250px !important">
+                        @foreach (var child in category.Childs)
+                        {
+                            <li class="level1 subcatemenu"><a href="/Shop/Index?CatagoryGuid=@child.GUID">@child.Title</a></li>
+                        }
+                    </ul>
+                }
+            </li>
         }
-        else
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a href="/Shop/Index?CatagoryGuid=@category.GUID" >
-                            @category.Title
-                        </a>
-                        <a data-toggle="collapse" role="button" href="#category_@category.ID"><span class="badge pull-right"><i class="fa fa-plus"></i></span></a>
-                    </h4>
-                </div>
-                <div id="category_@category.ID" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul>
-                            @foreach (var child in category.Childs)
-                            {
-                                <li><a href="/Shop/Index?CatagoryGuid=@child.GUID">@child.Title</a></li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    
-</div><!--/category-products-->
+    </ul>
+</div>

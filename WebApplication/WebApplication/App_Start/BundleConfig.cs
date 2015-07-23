@@ -43,6 +43,7 @@ namespace WebApplication
                        "~/Content/Common/price-range.css",
                        "~/Content/Common/animate.css",
                        "~/Content/Common/main.css",
+                       "~/Content/Common/vertical-menu.css",
                        "~/Content/Common/responsive.css"));
             //Common javascript
 
