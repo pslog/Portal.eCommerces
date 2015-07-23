@@ -165,6 +165,8 @@ namespace WebApplication.Controllers
 
         public async Task<ActionResult> GetCmsNews(CmsNewsIndexViewDTO indexView)
         {
+            bool isAuthenticate = false;
+
             indexView.CategoryID = indexView.CategoryID == 0 ? null : indexView.CategoryID;
 
             if(indexView.RouteValue == null)
@@ -175,7 +177,9 @@ namespace WebApplication.Controllers
             indexView.RouteValue.OptionValues = new { CategoryID = indexView.CategoryID };
             indexView.RouteValue.RouteValuePrefix = "RouteValue";
 
-            return View(await Task.FromResult<PagingView<cms_News>>(uow.CmsNews.GetPagingView(indexView, uow.CmsCategory)));
+            var cmsNews = await Task.FromResult<PagingView<cms_News>>(uow.CmsNews.GetPagingView(indexView, uow.CmsCategory, isAuthenticate ? 0 : 5));
+
+            return isAuthenticate ? View(cmsNews) : View("GetCmsNewsForGuest", cmsNews);
         }
 
         // GET: News/Details/5

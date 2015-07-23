@@ -27,7 +27,7 @@ namespace WebApplication.BusinessLogic.Repositories
             public string OrderProperty { get; set; }
         }
 
-        public PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView, ICmsCategoryRepository cmsCategoryRepository)
+        public PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView, ICmsCategoryRepository cmsCategoryRepository, int pageSize = 0)
         {
             var cmsNews = DbSet.AsQueryable();
 
@@ -86,7 +86,7 @@ namespace WebApplication.BusinessLogic.Repositories
 
             return new PagingView<cms_News>
             {
-                Items = cmsNews.ToPageList(ConstValue.PageSize, indexView.RouteValue.PageNumber),
+                Items = cmsNews.ToPageList(pageSize > 0 ? pageSize : ConstValue.PageSize, indexView.RouteValue.PageNumber),
                 RouteValue = indexView.RouteValue
             };
         }
