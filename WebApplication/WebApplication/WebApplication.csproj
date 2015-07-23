@@ -823,6 +823,7 @@
     <Content Include="Views\Shared\_CategoryProducts_LeftSideBar_AjaxPartial.cshtml" />
     <Content Include="Views\CheckOut\_CartDetail_PartialView.cshtml" />
     <Content Include="Views\CheckOut\OrderProduct.cshtml" />
+    <Content Include="Views\Cms\GetCmsNewsForGuest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Product\" />

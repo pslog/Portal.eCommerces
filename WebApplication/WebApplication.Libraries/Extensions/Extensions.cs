@@ -17,5 +17,15 @@ namespace WebApplication.Libraries.Extensions
 
             return ((DateTime)dateTime).ToString(format);
         }
+
+        public static String ToEllipsis(this String str, int startIndex, int length, string suffix = "")
+        {
+            if (string.IsNullOrEmpty(str) || (startIndex + length) > str.Length)
+            {
+                return str;
+            }
+
+            return string.Format("{0}{1}", str.Substring(startIndex, length), suffix);
+        }
     }
 }

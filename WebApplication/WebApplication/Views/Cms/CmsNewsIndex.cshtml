@@ -5,15 +5,21 @@
 
 @{
     ViewBag.Title = PageTitle.CmsNews.Index;
+    bool isAuthenticate = false;
 }
 
 @section styles {
-    <link href="~/Content/Plugins/flat-flyout-menu.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Plugins/flat-flyout-menu.css")" rel="stylesheet" />
     <style>
         #cms_news_container,
         #cms_news_container div {
-            padding: 0;
-            margin: 0;
+            padding:0;
+            margin:0;
+        }
+
+        li.paging-active > a {
+            background: #FE980F;
+            color: white;
         }
 
         #breadcrumb.breadcrumb {
@@ -22,26 +28,44 @@
             padding: 0;
             padding-bottom: 5px;
             border-radius: 0;
+            font-size:14px;
         }
 
-        li.paging-active > a{
-            background:#FE980F;
-            color:white;
+        #breadcrumb.breadcrumb a {
+            color: #FE980F;
         }
+
+        #breadcrumb.breadcrumb a:hover{
+            text-decoration:underline;
+        }
+
     </style>
 }
 
 <br />
-<p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
 
-<div id="cms_categories_container" class="col-md-2">
-    @Html.Action("GetCmsCategories")
+@if (isAuthenticate)
+{
+    <p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
+}
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="left-sidebar">
+            <h2>TIN TỨC</h2>
+            <div id="cms_categories_container" ">
+                @Html.Action("GetCmsCategories")
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <ul id="breadcrumb" class="breadcrumb"></ul>
+        <div id="cms_news_container" class="row"></div>
+    </div>
 </div>
 
-<div class="col-md-10">
-    <ul id="breadcrumb" class="breadcrumb"></ul>
-    <div id="cms_news_container" class="row"></div>
-</div>
+
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
@@ -72,7 +96,6 @@
             } else {
                 $('#category_' + '@((int?)ViewBag.CategoryID)' + '> a').focus().click();
             }
-
         });
     </script>
 }
