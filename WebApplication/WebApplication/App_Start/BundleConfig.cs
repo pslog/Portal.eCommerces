@@ -86,6 +86,14 @@ namespace WebApplication
                       "~/Scripts/Home/ProductPartialView.js",
                       "~/Scripts/Home/ProductDetailsPartialView.js"));
 
+            //CheckOut css
+            bundles.Add(new StyleBundle("~/Content/CheckOut").Include(
+                      "~/Content/CheckOut/CheckOutCart.css"));
+
+            //CheckOut javascript
+            bundles.Add(new ScriptBundle("~/bundles/CheckOut").Include(
+                      "~/Scripts/Home/CheckOutCartView.js"));
+
             //Pagelist
 
             bundles.Add(new StyleBundle("~/Content/pagedlist").Include("~/Content/Common/PagedList.css"));

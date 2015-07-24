@@ -139,5 +139,15 @@ namespace WebApplication.Controllers
             ProductDetailsPartialViewModels productDetailsPartialViewModels = product.ConvertToProductDetailsPartialViewModels();
             return View(productDetailsPartialViewModels);
         }
+
+        public ActionResult CartDetails()
+        {
+            List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
+            if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
+            {
+                productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
+            }
+            return PartialView("AddToCart", productsInCart);
+        }
     }
 }

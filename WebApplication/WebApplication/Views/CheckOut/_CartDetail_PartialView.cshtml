@@ -14,12 +14,11 @@
             <table class="table table-condensed tableSection" id="arrestedDevelopment">
                 <thead>
                     <tr class="cart_menu">
-                        <td class="image">Item</td>
-                        <td class="description">Description</td>
-                        <td class="price">Price</td>
-                        <td class="quantity">Quantity</td>
-                        <td class="total">Total</td>
-                        <td></td>
+                        <td class="image">Sản phẩm</td>
+                        <td class="description">Mô tả</td>
+                        <td class="price">Giá</td>
+                        <td class="quantity">Số lượng</td>
+                        <td class="total">Tổng</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,9 +31,12 @@
                             <td class="cart_description">
                                 <h4><a href="">@product.Name</a></h4>
                                 <p>@product.Description</p>
+                                <p>
+                                    <button class="btn btn-link" onclick="CheckOutCart.removeFromCart(@product.Id)">Xóa</button>
+                                </p>
                             </td>
                             <td class="cart_price">
-                                <p>$@product.Price</p>
+                                <p>@product.Price Đ</p>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
@@ -42,11 +44,10 @@
                                 </div>
                             </td>
                             <td class="cart_total">
-                                <p class="cart_total_price">$@(product.Price * product.Quantity)</p>
+                                <p class="cart_total_price">@(product.Price * product.Quantity)Đ</p>
                             </td>
-                            <td class="cart_delete">
-                                <button class="cart_quantity_delete" onclick="CheckOutCart.removeFromCart(@product.Id)"><i class="fa fa-times"></i></button>
-                            </td>
+                            @*<td class="cart_delete">
+                            </td>*@
                         </tr>
                     }
 
@@ -54,22 +55,22 @@
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
-                        <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$@subtotal</strong></h5></td>
+                        <td><h5>Tạm tính</h5></td>
+                        <td class="text-right"><h5><strong>@subtotal Đ</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
-                        <td><h5>Estimated shipping</h5></td>
-                        <td class="text-right"><h5><strong>$@shipping</strong></h5></td>
+                        <td><h5>Phí vận chuyển</h5></td>
+                        <td class="text-right"><h5><strong>@shipping Đ</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
-                        <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$@total</strong></h3></td>
+                        <td><h4>Thành tiền</h4></td>
+                        <td class="text-right"><h4><strong>@total Đ</strong></h4></td>
                     </tr>
                 </tbody>
             </table>

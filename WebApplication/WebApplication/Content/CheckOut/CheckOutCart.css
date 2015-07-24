@@ -1,0 +1,17 @@
+﻿.shopper-informations{
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.textarea-checkout-page{
+    height:200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.cart_total{
+    width:150px;
+}
+@media screen and (max-width: 300px){
+
+}

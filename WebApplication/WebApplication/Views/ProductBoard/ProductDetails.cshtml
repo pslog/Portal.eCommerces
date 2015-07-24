@@ -1,7 +1,7 @@
 ﻿@model WebApplication.Models.ViewModels.ProductDetailsPartialViewModels
 @Scripts.Render("~/bundles/ProductDetails")
 @{
-    ViewBag.Title = "ProductDetails";
+    ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/Content/ProductDetails");
@@ -23,7 +23,7 @@
 
                 <div class="recommended_items">
                     <!--recommended_items-->
-                    <h2 class="title text-center">recommended items</h2>
+                    <h2 class="title text-center">Sản phẩm đang hot</h2>
 
                     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
@@ -130,7 +130,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
+                <h4 class="modal-title" id="myModalLabel">Giỏ hàng</h4>
             </div>
             <div class="modal-body">
 
@@ -138,13 +138,9 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-default" id="ProductBoard_ContinueShopping">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
                 </button>
-
-                @*<button type="button" class="btn btn-success" id="ProductBoard_CheckOut">
-                        Checkout <span class="glyphicon glyphicon-play"></span>
-                    </button>*@
-                <a href="/CheckOut/OrderProduct" class="btn btn-success">Checkout <span class="glyphicon glyphicon-play"></span></a>
+                <a href="/CheckOut/OrderProduct" class="btn btn-success">Thanh toán <span class="glyphicon glyphicon-play"></span></a>
             </div>
         </div>
     </div>

@@ -96,6 +96,9 @@ ProductBoard = {
             }
         });
     },
+    ShowCart:function(){
+        $('#ProductPartialView_CartModal').modal('show');
+    },
     ShowCheckOutCartView:function(){
         /// <summary>
         /// Load CheckOut View

@@ -4,7 +4,7 @@
 
 <div class="features_items">
     <!--features_items-->
-    <h2 class="title text-center">Features Items</h2>
+    <h2 class="title text-center">Sản phẩm</h2>
     @foreach (var product in Model)
     {
         <div class="col-sm-4">
@@ -18,21 +18,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
+                <h4 class="modal-title" id="myModalLabel">Giỏ hàng</h4>
             </div>
             <div class="modal-body">
-
+                @Html.Action("CartDetails", "ProductBoard")
             </div>
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-default" id="ProductBoard_ContinueShopping">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
                 </button>
 
-                @*<button type="button" class="btn btn-success" id="ProductBoard_CheckOut">
-                        Checkout <span class="glyphicon glyphicon-play"></span>
-                    </button>*@
-                <a href="/CheckOut/OrderProduct" class="btn btn-success">Checkout <span class="glyphicon glyphicon-play"></span></a>
+                <a href="/CheckOut/OrderProduct" class="btn btn-success">Thanh toán <span class="glyphicon glyphicon-play"></span></a>
             </div>
         </div>
     </div>
