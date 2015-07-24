@@ -1,53 +1,76 @@
-﻿@model WebApplication.Models.ViewModels.CmsCategoryEditView
-@using WebApplication.Common.Constants;
+﻿@model WebApplication.Models.Models.cms_Categories
 
-<h2>@PageTitle.CmsCategory.Edit</h2>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    string title = Model.ParentID == null ? "danh mục" : string.Format("loại {0}", ((string)ViewBag.ParentTitle).ToLower());
+}
 
+
+<style>
+    #edit_title {
+        margin: 20px 20px 40px 20px;
+    }
+</style>
+
+@section navItems
+{
+    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
+}
+
+<div class="row">
+    <h2 id="edit_title">Sửa @title</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CmsCategory.ID)
+    <div class="col-md-6 col-md-offset-2">
         
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsCategory.ParentID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CmsCategory.ParentID, Model.Parents, new { @class = "form-control" })
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+            <div class="form-group">
+                <div class="col-md-3 text-right">
+                    <h4>
+                        @Html.ActionLink("Thêm bài viết", "CreateCmsNews", "Cms", new { categoryID = Model.ID }, null)
+                    </h4>
+                </div>
             </div>
-        </div>
+            @if (Model.ParentID != null)
+            {
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tên danh mục</label>
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.ParentID, (SelectList)ViewBag.Parents, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsCategory.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsCategory.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsCategory.Title, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Tên @title</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsCategory.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsCategory.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsCategory.Description, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Mô tả</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-8 text-right">
+                    <input type="submit" value="Sửa" class="btn btn-primary" />
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategoryAction.Create, new { parentID = Model.CmsCategory.ID }) |
-    @Html.ActionLink(WebApplication.Common.Constants.PageTitle.CmsCategory.Index, WebApplication.Common.Constants.RouteName.CmsCategoryAction.Index)
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

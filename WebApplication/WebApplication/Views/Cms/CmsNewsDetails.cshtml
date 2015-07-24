@@ -17,7 +17,6 @@
             font-style:italic;
         }
         .cms-news-info .views{
-            float:right;
             font-weight:bold;
         }
 
@@ -36,24 +35,13 @@
     </style>
 }
 
-
-<p>
-    <!-- if authentication && authorization -->
-    @Html.ActionLink("Edit", "EditCmsNews", new { id = Model.ID }) |
-    <!-- end if -->
-    @Html.ActionLink("Back to List", "CmsNewsIndex", new { categoryID = Model.CategoryID ?? 0 })
-</p>
-
-
 <div class="row">
     <div class="cms-news-title">
         <h3>@Html.DisplayFor(model => model.Title)</h3>
     </div>
     
     <div class="cms-news-info">
-        <span>@Html.DisplayNameFor(model => model.CreatedBy): @Html.DisplayFor(model => model.CreatedBy) @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm tt")</span>
-        <span>@Html.DisplayNameFor(model => model.ModifiedBy): @Html.DisplayFor(model => model.ModifiedBy) @Model.ModifiedDate.ToString("dd/MM/yyyy HH:mm tt")</span>
-        <span class="views">@(Model.TotalView ?? 0) @Html.DisplayNameFor(model => model.TotalView)</span>
+        <span>Thêm bởi: <b>@Html.DisplayFor(model => model.Authors)</b> - Thêm ngày: @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm tt") - <b>@(Model.TotalView ?? 0)</b> Lượt xem</span>
     </div>
 
     <div class="cms-news-sub-title">

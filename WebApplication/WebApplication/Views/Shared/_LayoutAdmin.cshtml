@@ -8,7 +8,6 @@
     <title>@ViewBag.Title - Admin site</title>
     @Styles.Render("~/Content/cssAdminSite")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body class="sidebar-mini skin-green">
     <div class="wrapper">
@@ -71,20 +70,7 @@
                     </div>
                 </div>
                 <ul class="sidebar-menu">
-                    <li class="header">Navigation</li>
-                    <li class="treeview" id="naviLink">
-                        <a href="#"><i class='fa fa-link'></i><span>Link</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    </li>
-                    <li id="naviUsers"><a href="~/Users"><i class='fa fa-user'></i><span>Users</span></a></li>
-                    <li id="naviOrders"><a href="~/Orders"><i class='fa fa-user'></i><span>Orders</span></a></li>
-
-                    @*<li class="treeview" id="naviUsers">
-                            <a href="#"><i class='fa fa-user'></i><span>Users</span> <i class="fa fa-angle-left pull-right"></i></a>
-                            <ul class="treeview-menu">
-                                <li id="naviUsers"><a href="~/Users"><i class="fa fa-circle-o"></i>Users</a></li>
-                                <li><a href="#"><i class="fa fa-circle-o"></i>API logs</a></li>
-                            </ul>
-                        </li>*@
+                    @RenderSection("navItems", false)
                 </ul>
             </section>
         </aside>
