@@ -48,5 +48,12 @@ namespace WebApplication.BusinessLogic.BusinessLogic
             return products;
         }
 
+        public IList<ProductPartialViewModel> GetAllBestSellProduct()
+        {
+            IList<ProductPartialViewModel> products = new List<ProductPartialViewModel>();
+            IList<Product> listProducts = _productRepository.GetAllBestSellProduct();
+            products = listProducts.ConvertToProductListViewModel();
+            return products;
+        }
     }
 }

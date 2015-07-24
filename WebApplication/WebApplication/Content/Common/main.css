@@ -891,23 +891,29 @@ h2.title {
 
 .productinfo {
     position: relative;
+    width: 248px;
+    height: 246px;
+    overflow: hidden;
 }
 
 .product-overlay {
-    background: #FE980F;
+    background: transparent;
     top: 0;
     display: none;
     height: 0;
     position: absolute;
-    transition: height 500ms ease 0s;
+    -moz-transition: height 300ms linear 0s;
+    -o-transition: height 300ms linear 0s;
+    -webkit-transition: height 300ms linear 0s;
+    transition: height 300ms linear 0s;
     width: 100%;
-    display: block;
     opacity: 0.8;
 }
 
 .single-products:hover .product-overlay {
     display: block;
     height: 100%;
+    border:1px solid #FE980F;
 }
 
 
@@ -919,13 +925,13 @@ h2.title {
 }
 
 .product-overlay .add-to-cart {
-    background: #fff;
+    background: #FE980F;
     border: 0 none;
     border-radius: 0;
-    color: #FE980F;
+    color: #fff;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
-    margin-bottom: 75px;
+    margin-bottom: 110px;
 }
 
 .product-overlay .item-details {
@@ -935,11 +941,11 @@ h2.title {
     color: #fff;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
-    margin-bottom: 75px;
+    margin-bottom: 110px;
 }
 
 .product-overlay .add-to-cart:hover {
-    background: #fff;
+    background: #FE980F;
     color: #393b3b;
 }
 
@@ -1581,7 +1587,7 @@ h2.title {
                 border-color: transparent transparent transparent #FE980F;
                 position: absolute;
                 top: 11px;
-                left: 48px;
+                left: 78px;
             }
 
         .breadcrumbs .breadcrumb > li + li:before {
@@ -1633,7 +1639,7 @@ h2.title {
     #cart_items .cart_info .cart_description h4 a {
         color: #363432;
         font-family: 'Roboto',sans-serif;
-        font-size: 20px;
+        font-size: 14px;
         font-weight: normal;
     }
 
@@ -1644,13 +1650,13 @@ h2.title {
 
 #cart_items .cart_info .cart_price p {
     color: #696763;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 
 #cart_items .cart_info .cart_total_price {
     color: #FE980F;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .cart_product {
@@ -1658,7 +1664,7 @@ h2.title {
 }
 
 .cart_quantity {
-    width: 90px;
+    width: 120px;
 }
 
 .cart_quantity_button a {
@@ -1784,12 +1790,9 @@ h2.title {
         }
 
     .user_info input, select, textarea {
-        background: #F0F0E9;
-        border: 0;
-        color: #696763;
         padding: 5px;
         width: 100%;
-        border-radius: 0;
+        border-radius: 4px;
         resize: none;
     }
 

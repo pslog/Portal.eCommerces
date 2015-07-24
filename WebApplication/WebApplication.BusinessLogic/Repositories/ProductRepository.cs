@@ -69,5 +69,27 @@ namespace WebApplication.BusinessLogic.Repositories
                             }).ToList<Product>();
             return products;
         }
+
+        public IList<Product> GetAllBestSellProduct()
+        {
+            List<Product> ret = new List<Product>();
+            var products = (from p in dc.product_Products
+                            join c in dc.product_Categories on p.CategoryID equals c.ID
+                            where p.IsBestSellProduct == true
+                            select new Product()
+                            {
+                                Name = p.Title,
+                                Catalog = c.Description,
+                                Id = p.ID,
+                                Description = p.Description,
+                                Description2 = p.Description2,
+                                Price = p.PriceOfUnit,
+                                IsNewProduct = (bool)p.IsNewProduct,
+                                Status = p.Status == null ? 1 : (int)p.Status,
+                                Tags = p.Tags,
+                                share_Images = p.share_Images
+                            }).ToList<Product>();
+            return products;
+        }
     }
 }

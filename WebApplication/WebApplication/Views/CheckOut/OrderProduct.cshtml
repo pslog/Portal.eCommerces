@@ -2,89 +2,129 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Styles.Render("~/Content/CheckOut")
 @Scripts.Render("~/bundles/jquery")
-<script src="~/Scripts/Home/CheckOutCartView.js"></script>
-
+@Scripts.Render("~/bundles/CheckOut")
 
 <section id="cart_items">
-    <div class="container">
         <div class="breadcrumbs">
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li class="active">Check out</li>
+                <li><a href="/Home/Index">Trang chủ</a></li>
+                <li class="active">Đặt hàng</li>
             </ol>
         </div><!--/breadcrums-->
-        <div class="shopper-informations">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            @using (Html.BeginForm("OrderProduct", "CheckOut"))
-                            {
-                                @Html.AntiForgeryToken()
 
-                                <div class="form-horizontal">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="review-payment">
+        <h4>Địa chỉ nhận hàng</h4>
+    </div>
+            <div class="shopper-informations container">
+                <!--/Form for client fill information using for Order-->
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="box">
+                            <div class="box-body">
+                                @using (Html.BeginForm("OrderProduct", "CheckOut"))
+                                {
+                                    @Html.AntiForgeryToken()
 
-                                    @*<div class="form-group">
-                                        @Html.LabelFor(model => model.OrderCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.OrderCode, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.OrderCode, "", new { @class = "text-danger" })
-                                        </div>
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                        @*<div class="form-group">
+                                    @Html.LabelFor(model => model.OrderCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.OrderCode, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.OrderCode, "", new { @class = "text-danger" })
+                                    </div>
                                     </div>*@
 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.NameOfRecipient, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.NameOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.NameOfRecipient, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.Label("Họ và tên", htmlAttributes: new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.EditorFor(model => model.NameOfRecipient, new { htmlAttributes = new { @class = "form-control",@required =true }})
+                                                @Html.ValidationMessageFor(model => model.NameOfRecipient, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.PhoneOfRecipient, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.PhoneOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.PhoneOfRecipient, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.Label("Số điện thoại", htmlAttributes: new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.EditorFor(model => model.PhoneOfRecipient, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                                                @Html.ValidationMessageFor(model => model.PhoneOfRecipient, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.AddressOfRecipient, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.AddressOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.AddressOfRecipient, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.Label("Địa chỉ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.EditorFor(model => model.AddressOfRecipient, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                                                @Html.ValidationMessageFor(model => model.AddressOfRecipient, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.OrderNote, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.OrderNote, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.OrderNote, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.Label("Ghi Chú", htmlAttributes: new { @class = "control-label col-md-3" })
+                                            <div class="col-md-9">
+                                                @Html.TextAreaFor(model => model.OrderNote, new { @class = "form-control textarea-checkout-page", @required = true })
+                                                @Html.ValidationMessageFor(model => model.OrderNote, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Đặt hàng" class="btn btn-primary" />
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Đặt hàng" class="btn btn-primary" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div><!--/Form for client fill information using for Order-->
+            <div class="review-payment">
+                <h4>Danh sách sản phẩm đã đặt hàng</h4>
             </div>
-        </div>
-        <div class="review-payment">
-            <h2>Danh sách sản phẩm đã đặt hàng</h2>
-        </div>
-        <div id="ListProductInCart_CheckOutPage">
-            @Html.Action("CartDetails", "CheckOut")
-        </div>
+            <div id="ListProductInCart_CheckOutPage">
+                @Html.Action("CartDetails", "CheckOut")
+            </div>
 </section> <!--/#cart_items-->
 <script>
     CheckOutCart.init();
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#submit').click(function(){
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var message = $('#message').val();
+            if(name== ''){
+                $('#name').next().show();
+                return false;
+            }
+            if(email== ''){
+                $('#email').next().show();
+                return false;
+            }
+            if(IsEmail(email)==false){
+                $('#invalid_email').show();
+                return false;
+            }
+
+            if(phone== ''){
+                $('#phone').next().show();
+                return false;
+            }
+            if(message== ''){
+                $('#message').next().show();
+                return false;
+            }
+            
+            return false;
+        });
+    });
 </script>

@@ -4,16 +4,14 @@
     <div class="single-products">
         <div class="productinfo text-center">
             <img src="@Model.Image" alt="not image" />
-            <h2>$@Model.Price</h2>
+            <h2>@Model.Price Đ</h2>
+            <p>@Model.Name</p>
             <p>@Model.Description</p>
-            @*<button class="btn btn-default add-to-cart" onclick="ProductBoard.addNewProductToCart(@Model.Id)"><i class="fa fa-shopping-cart"></i>Add to cart</button>*@
         </div>
         <div class="product-overlay">
             <div class="overlay-content">
-                @*<h2>$@Model.Price</h2>
-                <p>@Model.Description</p>*@
-                <a class="btn btn-info item-details" href="/ProductBoard/ProductDetails?Id=@Model.Id"><i class="fa fa-detail-product"></i>Details</a>
-                <button class="btn btn-default add-to-cart" onclick="ProductBoard.addNewProductToCart(@Model.Id)"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                <a class="btn btn-info item-details" href="/ProductBoard/ProductDetails?Id=@Model.Id"><i class="fa fa-detail-product"></i>Chi tiết</a>
+                <button class="btn btn-default add-to-cart" onclick="ProductBoard.addNewProductToCart(@Model.Id)"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</button>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebApplication.BusinessLogic.BusinessLogic;
 using WebApplication.BusinessLogic.Repositories;
 using WebApplication.Models.Models;
+using WebApplication.Models.ViewModels;
 
 namespace WebApplication.Controllers
 {

@@ -36,7 +36,7 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">                           
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                            <li><a href="#" onclick="ShowCart()"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                             <li><a href="/Login"><i class="fa fa-lock"></i> Đăng nhập</a></li>
                         </ul>
                     </div>
@@ -77,3 +77,10 @@
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
+<script>
+    function ShowCart() {
+        if ($('#ProductPartialView_CartModal') != null) {
+            $('#ProductPartialView_CartModal').modal('show');
+        }
+    }
+</script>

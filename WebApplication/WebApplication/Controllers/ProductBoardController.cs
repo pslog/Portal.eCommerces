@@ -14,6 +14,7 @@ namespace WebApplication.Controllers
     {
         #region fields
         public ProductRepository _productRepository;
+        private ProductBoard_Business _productBoard_Business = new ProductBoard_Business();
         #endregion
         public ProductBoardController()
         {
@@ -91,7 +92,6 @@ namespace WebApplication.Controllers
 
             return PartialView("AddToCart", productsInCart);
         }
-
         /// <summary>
         /// Update quantity of product in Cart and reCalculate total price of order 
         /// </summary>
@@ -138,6 +138,22 @@ namespace WebApplication.Controllers
             Product product = _productRepository.FindById(Id);
             ProductDetailsPartialViewModels productDetailsPartialViewModels = product.ConvertToProductDetailsPartialViewModels();
             return View(productDetailsPartialViewModels);
+        }
+
+        public ActionResult CartDetails()
+        {
+            List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
+            if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
+            {
+                productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
+            }
+            return PartialView("AddToCart", productsInCart);
+        }
+        public ActionResult ListBestByProduct()
+        {
+            var products = _productBoard_Business.GetAllBestSellProduct();
+
+            return PartialView(products);
         }
     }
 }
