@@ -891,6 +891,9 @@ h2.title {
 
 .productinfo {
     position: relative;
+    width: 248px;
+    height: 246px;
+    overflow: hidden;
 }
 
 .product-overlay {
@@ -899,15 +902,18 @@ h2.title {
     display: none;
     height: 0;
     position: absolute;
-    transition: height 500ms linear 0s;
+    -moz-transition: height 300ms linear 0s;
+    -o-transition: height 300ms linear 0s;
+    -webkit-transition: height 300ms linear 0s;
+    transition: height 300ms linear 0s;
     width: 100%;
-    display: block;
     opacity: 0.8;
 }
 
 .single-products:hover .product-overlay {
     display: block;
     height: 100%;
+    border:1px solid #FE980F;
 }
 
 
