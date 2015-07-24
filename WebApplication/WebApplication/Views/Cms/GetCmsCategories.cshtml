@@ -1,41 +1,7 @@
 ﻿@model IEnumerable<WebApplication.Models.Models.cms_Categories>
-@using WebApplication.Models.ViewModels;
 @using WebApplication.Libraries.Extensions;
-@using WebApplication.Models.Models;
-
 @{
     Layout = null;
 }
 
 @Model.ToNavigation(Ajax)
-
-@*<ul class="nav nav-pills nav-stacked">
-    @foreach (var item in Model)
-    {
-        <li>
-            @Ajax.ActionLink(item.Title, "GetCmsCategories",
-                new
-                {
-                    parentID = item.GUID,
-                    categoryID = item.ID
-                },
-                new AjaxOptions
-                {
-                    OnBegin = string.Format("onBegin('{0}')",item.ID),
-                    OnComplete = "$('#cms_news_container').html($('#cms_news_view').show());",
-                    AllowCache = true,
-                    UpdateTargetId = string.Format("category_{0}", item.ID)
-                })
-            <div id="@string.Format("category_{0}", item.ID)"></div>
-        </li>
-    }
-</ul>
-
-@Html.Action("GetCmsNews", "Cms", new
-{
-    cmsNewsIndexView = new CmsNewsIndexView
-    {
-        CategoryID = (int?)ViewBag.CategoryID,
-        RouteValue = new PagingRouteValue("GetCmsNews", "Cms", new { CategoryID = (int?)ViewBag.CategoryID }, new AjaxOptions { UpdateTargetId = "cms_news_wrapper" })
-    }
-})*@

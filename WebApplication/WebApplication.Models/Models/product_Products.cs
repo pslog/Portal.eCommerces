@@ -16,8 +16,8 @@ namespace WebApplication.Models.Models
     {
         public product_Products()
         {
-            this.product_OrderDetails = new HashSet<product_OrderDetails>();
             this.share_Images = new HashSet<share_Images>();
+            this.product_OrderDetails = new HashSet<product_OrderDetails>();
         }
     
         public int ID { get; set; }
@@ -44,7 +44,7 @@ namespace WebApplication.Models.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual product_Categories product_Categories { get; set; }
-        public virtual ICollection<product_OrderDetails> product_OrderDetails { get; set; }
         public virtual ICollection<share_Images> share_Images { get; set; }
+        public virtual ICollection<product_OrderDetails> product_OrderDetails { get; set; }
     }
 }

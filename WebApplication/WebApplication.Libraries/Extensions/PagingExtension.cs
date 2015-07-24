@@ -40,14 +40,15 @@ namespace WebApplication.Libraries.Extensions
         }
         public static RouteValueDictionary ToRouteValueDictionary(this PagingRouteValue pagingRouteValue, string pageType, int pageNumber = 0)
         {
+            string prefix = string.IsNullOrEmpty(pagingRouteValue.RouteValuePrefix) ? string.Empty : string.Format("{0}.", pagingRouteValue.RouteValuePrefix);
 
             var routeValues = new RouteValueDictionary
             {
-                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.SearchKey), pagingRouteValue.SearchKey},
-                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.OrderBy), pagingRouteValue.OrderBy},
-                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.OrderByDesc), pagingRouteValue.OrderByDesc},
-                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.TotalPages), pagingRouteValue.TotalPages},
-                { string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber), pagingRouteValue.PageNumber},
+                { string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.SearchKey), pagingRouteValue.SearchKey},
+                { string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.OrderBy), pagingRouteValue.OrderBy},
+                { string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.OrderByDesc), pagingRouteValue.OrderByDesc},
+                { string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.TotalPages), pagingRouteValue.TotalPages},
+                { string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber), pagingRouteValue.PageNumber},
             };
 
             if (pagingRouteValue.OptionValues != null)
@@ -68,19 +69,19 @@ namespace WebApplication.Libraries.Extensions
             switch (pageType)
             {
                 case PagingOptConst.First:
-                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = 1;
+                    routeValues[string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber)] = 1;
                     break;
                 case PagingOptConst.Last:
-                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.TotalPages;
+                    routeValues[string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.TotalPages;
                     break;
                 case PagingOptConst.Prev:
-                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == 1 ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber - 1;
+                    routeValues[string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == 1 ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber - 1;
                     break;
                 case PagingOptConst.Next:
-                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == pagingRouteValue.TotalPages ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber + 1;
+                    routeValues[string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber)] = pagingRouteValue.PageNumber == pagingRouteValue.TotalPages ? pagingRouteValue.PageNumber : pagingRouteValue.PageNumber + 1;
                     break;
                 default:
-                    routeValues[string.Format("{0}.{1}", pagingRouteValue.RouteValuePrefix, ModelName.PagingRouteValue.PageNumber)] = pageNumber;
+                    routeValues[string.Format("{0}{1}", prefix, ModelName.PagingRouteValue.PageNumber)] = pageNumber;
                     break;
             }
 

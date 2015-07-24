@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication.BusinessLogic.BusinessLogic;
 using WebApplication.Models.ViewModels;
+using WebApplication.Libraries.Extensions;
 
 namespace WebApplication.Controllers
 {
@@ -32,9 +33,14 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public ActionResult ListProduct()
+        public ActionResult ListProduct(PagingRouteValue routeValue)
         {
-            return PartialView( _productBoard_Business.GetAllProducts());
+            var products = _productBoard_Business.GetAllProducts();
+
+            routeValue.SetTotalPages(products.Count);
+            ViewBag.RouteValue = routeValue;
+
+            return PartialView(products.ToPageList<ProductPartialViewModel>(6, routeValue.PageNumber));
         }
     }
 }

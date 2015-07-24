@@ -1,17 +1,21 @@
 ﻿<script src="~/Scripts/Home/ProductPartialView.js"></script>
 @model IEnumerable<WebApplication.Models.ViewModels.ProductPartialViewModel>
-
-
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.ViewModels
 <div class="features_items">
     <!--features_items-->
     <h2 class="title text-center">Sản phẩm</h2>
-    @foreach (var product in Model)
-    {
-        <div class="col-sm-4">
-            @Html.Partial("ProductItemPartial", product)
+    <div id="product_items">
+        <div id="product_items">
+            @foreach (var product in Model)
+            {
+            <div class="col-sm-4">
+                @Html.Partial("ProductItemPartial", product)
+            </div>
+            }
         </div>
-    }
-</div><!--features_items-->
+    </div><!--features_items-->
 <!-- Cart Modal popup -->
 <div class="modal fade" id="ProductPartialView_CartModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
@@ -33,6 +37,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="pull-right">
+    @Html.PagingGenerator(PagingGeneratorOption.DefaultOption, CustomHtmlGenerator.DefaultPagingHtml, ((PagingRouteValue)ViewBag.RouteValue).AddAjaxOptions(new AjaxOptions { UpdateTargetId = "products" }))
 </div>
 <script>
     ProductBoard.init();
