@@ -1030,9 +1030,14 @@ h2.title {
 .category-tab {
     overflow: hidden;
 }
+#details li{
+    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-position: outside;
+}
 
-    .category-tab ul {
-        background: #40403E;
+    .category-tab ul:first-child {
+        /*background: #40403E;*/
+        /*color:#FE980F;*/
         border-bottom: 1px solid #FE980F;
         list-style: none outside none;
         margin: 0 0 30px;
@@ -1043,7 +1048,7 @@ h2.title {
         .category-tab ul li a {
             border: 0 none;
             border-radius: 0;
-            color: #B3AFA8;
+            color: #FE980F;
             display: block;
             font-family: 'Roboto', sans-serif;
             font-size: 14px;

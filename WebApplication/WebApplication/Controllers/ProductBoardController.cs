@@ -127,19 +127,16 @@ namespace WebApplication.Controllers
 
             return PartialView("AddToCart", productsInCart);
         }
-
         public ActionResult CheckOutCart()
         {
             return View();
         }
-
         public ActionResult ProductDetails(int Id)
         {
             Product product = _productRepository.FindById(Id);
             ProductDetailsPartialViewModels productDetailsPartialViewModels = product.ConvertToProductDetailsPartialViewModels();
             return View(productDetailsPartialViewModels);
         }
-
         public ActionResult CartDetails()
         {
             List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();

@@ -71,7 +71,8 @@
         <div class="tab-pane fade in active" id="details">
             <div class="col-sm-12 col-md-12">
                 <h4>Tính năng sản phẩm</h4>
-                <p>@Model.Description2</p>
+                @Html.Raw(Model.Description2)
+                @*<p>@Model.Description2</p>*@
             </div>
         </div>
 
