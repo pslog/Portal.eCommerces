@@ -1,88 +1,84 @@
-﻿@model WebApplication.Models.ViewModels.CmsNewsDTO
+﻿@model WebApplication.Models.Models.cms_News
 
 @{
-    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    #create_title {
+        margin: 20px 20px 40px 20px;
+    }
+</style>
+@section navItems {
+
+    <li>@Html.ActionLink("Danh sách bài viết", "AdminCmsNewsIndex", new { categoryID = (int?)ViewBag.CategoryID })</li>
 }
 
-<h2>Edit</h2>
-
+<div class="row">
+    <h2 id="create_title">Sửa bài viết</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>cms_News</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CmsNews.ID)
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CmsNews.CategoryID, Model.Categories, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CmsNews.CategoryID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="col-md-6 col-md-offset-2">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsNews.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsNews.Title, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Tên danh mục</label>
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.CmsCategories, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.SubTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsNews.SubTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsNews.SubTitle, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Tên tác giả</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Authors, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Authors, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.Authors, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsNews.Authors, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsNews.Authors, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Tiêu đề</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CmsNews.Tags, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsNews.Tags, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Mô tả</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.SubTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SubTitle, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CmsNews.ContentNews, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.CmsNews.ContentNews, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CmsNews.ContentNews, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-3">Nội dung</label>
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.ContentNews, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ContentNews, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-8 text-right">
+                    <input type="submit" value="Thêm bài viết" class="btn btn-primary" />
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/ckeditor")
     <script>
         $(document).ready(function () {
-            CKEDITOR.replace('CmsNews.ContentNews');
+            CKEDITOR.replace('ContentNews');
         });
     </script>
 }

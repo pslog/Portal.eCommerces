@@ -92,7 +92,7 @@ namespace Uow.Package.Data.Repositories
             {
                 if (property.PropertyType.Name == typeof(ICollection<>).Name)
                 {
-                    dynamic navProp = entityType.GetProperty(property.Name).GetValue(entity);
+                    var navProp = (ICollection<T>)entityType.GetProperty(property.Name).GetValue(entity);
                     navProp.Clear();
                 }
             }

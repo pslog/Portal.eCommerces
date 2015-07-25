@@ -1,4 +1,7 @@
-﻿@model WebApplication.Models.ViewModels.PagingView<WebApplication.Models.Models.cms_Categories>
+﻿@model IPagedList<WebApplication.Models.Models.cms_Categories>
+
+@using PagedList;
+@using PagedList.Mvc
 
 @using WebApplication.Common.Constants
 @using WebApplication.Libraries.Extensions
@@ -6,95 +9,145 @@
 @using WebApplication.Models.ViewModels
 
 @{
-    ViewBag.Title = PageTitle.CmsCategory.Index;
-}
-
-<h2>@PageTitle.CmsCategory.Index</h2>
-@using (Html.BeginForm(RouteName.CmsCategoryAction.Index, RouteName.Controller.Cms))
-{
-    @Html.HiddenFor(model => model.RouteValue.OrderBy);
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int pageNumber = (int)ViewBag.PageNumber;
+    int? categoryID = (int?)ViewBag.CategoryID;
+    string searchKey = (string)ViewBag.SearchKey;
     
-    <div class="row">
-        <div class="col-md-4">
-            <p>@Html.ActionLink(PageTitle.CmsCategory.Create, RouteName.CmsCategoryAction.Create)</p>
-        </div>
-        <div class="col-md-4 text-right">
-            <span>@Label.Paging.OrderBy</span>
-            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, false)@Label.Paging.OrderByAsc</label>
-            <label class="radio-inline">@Html.RadioButtonFor(model => model.RouteValue.OrderByDesc, true)@Label.Paging.OrderByDesc</label>
-        </div>
-        <div class="col-md-4 pull-right">
-            @Html.TextBoxFor(model => model.RouteValue.SearchKey, new { @type = "search", @placeholder = Label.Paging.Search, @class = "form-control pull-right" })
-        </div>
-    </div>
+    IEnumerable<WebApplication.Models.Models.cms_Categories> rootCategories = (IEnumerable<WebApplication.Models.Models.cms_Categories>)ViewBag.RootCategories;
+    
+    string parentTitle = categoryID == null ? string.Empty : rootCategories.FirstOrDefault(c => c.ID == categoryID).Title.ToLower();
+}
 
-    <p></p>
+<style>
+    ul.sidebar-menu > li > a {
+        display: inline-block !important;
+    }
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.Title)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.ModifiedBy)
-            </th>
-            <th>
-                @Html.DisplayName(Label.CmsCategory.ModifiedDate)
-            </th>
-            <th></th>
-        </tr>
+    ul.sidebar-menu li:not(#add_root_category) > a:last-child{
+        float:right;
+    }
 
-        @foreach (var item in Model.Items)
+    ul.sidebar-menu li:not(#add_root_category) > span {
+        float: right;
+        color: white;
+    }
+
+    ul.sidebar-menu li:hover,
+    ul.sidebar-menu li.active {
+        background:#1e282c;
+    }
+
+    ul.sidebar-menu li:hover:not(#add_root_category) > a:last-child,
+    ul.sidebar-menu li.active:not(#add_root_category) > a:last-child {
+        border-left: 3px solid #1e282c;
+    }
+
+    #add_root_category > span {
+        padding: 12px 5px 12px 12px;
+        margin: 0;
+        color: #b8c7ce;
+        border-left: 3px solid #222d32;
+        top: 2px;
+    }
+
+    #add_root_category > a {
+        text-decoration: none;
+        display: inline-block;
+        padding-left: 0;
+        border: none;
+        font-weight: bold;
+    }
+
+
+    #add_root_category:hover > span {
+        border-left: 3px solid #00a65a;
+        color: white;
+    }
+
+    #add_root_category:hover,
+    #add_root_category:hover > span,
+    #add_root_category:hover > a {
+        background: #1e282c;
+    }
+
+    #index_title {
+        margin:20px 20px 0 20px;
+    }
+</style>
+@section navItems {
+    <li id="add_root_category"><span class="glyphicon glyphicon-plus"></span>@Html.ActionLink("Thêm danh mục", "CreateCmsCategory", "Cms", null, null)</li>
+    @if (ViewBag.RootCategories != null)
+    {
+        foreach (var category in rootCategories)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategoryAction.Create, new { parentID = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategoryAction.Edit, new { id = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Details, RouteName.CmsCategoryAction.Details, new { id = item.ID }) |
-                @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategoryAction.Delete, new { id = item.ID })
-            </td>
-        </tr>
+            <li @string.Format("{0}", categoryID == category.ID ? @"class=active" : string.Empty)>
+                @Html.ActionLink(category.Title, "CmsCategoryIndex", "Cms", new { id = category.ID, pageNumber = pageNumber, searchKey = searchKey }, null)
+                <a title="Sửa" href="@Url.Action("EditCmsCategory", "Cms", new { id = category.ID })"><span class="glyphicon glyphicon-edit"></span></a>
+            </li>
         }
-    </table>
+    }
+}
 
-    <div class="pull-right">
-        @Html.PagingGenerator(PagingGeneratorOption.DefaultOption, CustomHtmlGenerator.DefaultPagingHtml, Model.RouteValue)
+@if (Model != null && Model.Count > 0)
+{
+    <div class="row">
+        <h2 id="index_title">Danh sách @parentTitle</h2>
     </div>
 }
 
-@section styles {
-    @Styles.Render("~/Content/paging")
-}
+<div class="col-md-8 col-md-offset-2">
+    <p></p>
+    @using (Html.BeginForm("CmsCategoryIndex", "Cms"))
+    {
+        if (categoryID != null)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>
+                        @Html.ActionLink(string.Format("Thêm loại {0}", parentTitle), "CreateCmsCategory", "Cms", new { parentID = categoryID }, null)
+                    </h4>
+                </div>
+                <div class="col-md-4 pull-right">
+                    @Html.TextBox("searchKey", searchKey, new { @type = "search", @placeholder = "Tìm kiếm", @class = "form-control pull-right" })
+                </div>
+            </div>
+        }
 
-@section scripts {
+        if (Model != null && Model.Count > 0)
+        {
+            <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayName(Label.CmsCategory.Description)
+                    </th>
+                    <th></th>
+                </tr>
 
-    <script>
-        $(document).ready(function () {
-            $('input[type=radio]').click(function () {
-                $('form').submit();
-            });
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink(Label.CmsCategory.CreateSubCategory, RouteName.CmsCategoryAction.Create, new { parentID = item.ID }) |
+                            @Html.ActionLink(Label.CRUD.Edit, RouteName.CmsCategoryAction.Edit, new { id = item.ID }) |
+                            @Html.ActionLink(Label.CRUD.Delete, RouteName.CmsCategoryAction.Delete, new { id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
 
-        });
-    </script>
-}
+        <div class="pull-right">
+            @Html.PagedListPager(Model, page => Url.Action("CmsCategoryIndex", "Cms", new { id = categoryID, pageNumber = page, searchKey = searchKey }))
+        </div>
+    }
+</div>

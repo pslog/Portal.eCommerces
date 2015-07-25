@@ -5,7 +5,6 @@
 
 @{
     ViewBag.Title = PageTitle.CmsNews.Index;
-    bool isAuthenticate = false;
 }
 
 @section styles {
@@ -44,16 +43,10 @@
 
 <br />
 
-@if (isAuthenticate)
-{
-    <p>@Html.ActionLink("Thêm tin tức", "CreateCmsNews", "Cms", new { categoryID = (int?)ViewBag.CategoryID })</p>
-}
-
-
 <div class="row">
     <div class="col-md-3">
         <div class="left-sidebar">
-            <h2>TIN TỨC</h2>
+            <h2>@() TIN TỨC</h2>
             <div id="cms_categories_container" ">
                 @Html.Action("GetCmsCategories")
             </div>

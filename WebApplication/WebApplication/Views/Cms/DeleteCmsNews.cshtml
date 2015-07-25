@@ -1,128 +1,38 @@
 ﻿@model WebApplication.Models.Models.cms_News
 
 @{
-    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>cms_News</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.GUID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GUID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SubTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ContentNews)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ContentNews)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Authors)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Authors)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tags)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tags)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalView)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalView)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.cms_Categories.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.cms_Categories.Title)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<style>
+    #remove_title {
+        margin: 20px 20px 0 20px;
     }
+</style>
+
+@section navItems
+{
+    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
+}
+
+<div class="row">
+    <h2 id="remove_title">Xác nhận xóa bài viết</h2>
 </div>
+
+@using (Html.BeginForm())
+{
+    
+    @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID);
+    @Html.AntiForgeryToken()
+    <div>
+        <dl class="dl-horizontal">
+            <dt><span>Tên danh mục</span></dt>
+            <dd>@Html.DisplayFor(model => model.Title)</dd>
+            <dt><span>Mô tả</span></dt>
+            <dd>@Html.DisplayFor(model => model.SubTitle)</dd>
+            <dt>&nbsp;</dt>
+            <dd><input type="submit" value="Xóa" class="btn btn-primary" /></dd>
+        </dl>
+    </div>
+}
