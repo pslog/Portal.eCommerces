@@ -572,7 +572,7 @@ ul.sub-menu {
 
 
 #slider {
-    padding-bottom: 45px;
+    padding-bottom: 25px;
 }
 
 .carousel-indicators li {
@@ -838,7 +838,7 @@ h2.title {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    margin: 0 15px;
+    margin: 5px 15px;
     text-transform: uppercase;
     margin-bottom: 30px;
     position: relative;
