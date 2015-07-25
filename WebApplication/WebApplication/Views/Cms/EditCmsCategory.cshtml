@@ -7,6 +7,34 @@
 
 
 <style>
+    #add_root_category > span {
+        padding: 12px 5px 12px 12px;
+        margin: 0;
+        color: #b8c7ce;
+        border-left: 3px solid #222d32;
+        top: 2px;
+    }
+
+    #add_root_category > a {
+        text-decoration: none;
+        display: inline-block;
+        padding-left: 0;
+        border: none;
+        font-weight: bold;
+    }
+
+
+    #add_root_category:hover > span {
+        border-left: 3px solid #00a65a;
+        color: white;
+    }
+
+    #add_root_category:hover,
+    #add_root_category:hover > span,
+    #add_root_category:hover > a {
+        background: #1e282c;
+    }
+
     #edit_title {
         margin: 20px 20px 40px 20px;
     }
@@ -14,7 +42,9 @@
 
 @section navItems
 {
+    <li id="add_root_category"><span class="glyphicon glyphicon-plus"></span>@Html.ActionLink("Thêm bài viết", "CreateCmsNews", "Cms", new { categoryID = Model.ID }, null)</li>
     <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
+    <li>@Html.ActionLink("Danh sách bài viết", "AdminCmsNewsIndex", "Cms", new { categoryID = Model.ID }, null)</li>
 }
 
 <div class="row">
@@ -30,13 +60,7 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID)
-            <div class="form-group">
-                <div class="col-md-3 text-right">
-                    <h4>
-                        @Html.ActionLink("Thêm bài viết", "CreateCmsNews", "Cms", new { categoryID = Model.ID }, null)
-                    </h4>
-                </div>
-            </div>
+            
             @if (Model.ParentID != null)
             {
                 <div class="form-group">

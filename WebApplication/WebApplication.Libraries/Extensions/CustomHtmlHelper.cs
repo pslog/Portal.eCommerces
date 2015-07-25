@@ -29,18 +29,26 @@ namespace WebApplication.Libraries.Extensions
             return new MvcHtmlString(string.Format(generator(PagingOptConst.Wrapper), htmlElements.Item1, htmlElements.Item2, htmlElements.Item3, htmlElements.Item4, htmlElements.Item5));
         }
 
-        public static MvcHtmlString ToNavigation(this IEnumerable<cms_Categories> cmsCategories, AjaxHelper ajaxHelper)
+        public static MvcHtmlString ToNavigation(this IEnumerable<cms_Categories> cmsCategories, HtmlHelper htmlHelper, AjaxHelper ajaxHelper = null)
         {
             StringBuilder builder = new StringBuilder(string.Format(@"<ul class=""nav nav-pills nav-stacked"" {0}>", string.Empty));
 
             foreach (var cmsCategory in cmsCategories)
             {
                 builder.Append(string.Format(@"<li id=""category_{0}"">", cmsCategory.ID));
-                builder.Append(ajaxHelper.ActionLink(cmsCategory.Title, "GetCmsNews", "Cms", new { CategoryID = cmsCategory.ID }, new AjaxOptions { UpdateTargetId = "cms_news_container" }, new { title = cmsCategory.Title }));
+                if(ajaxHelper == null)
+                {
+                    builder.Append(htmlHelper.ActionLink(cmsCategory.Title, "GuestCmsNewsIndex", new { categoryID = cmsCategory.ID }));
+                }   
+                else
+                {
+                    builder.Append(ajaxHelper.ActionLink(cmsCategory.Title, "GetCmsNews", "Cms", new { CategoryID = cmsCategory.ID }, new AjaxOptions { UpdateTargetId = "cms_news_container" }, new { title = cmsCategory.Title }));
+                }
+                
 
                 if (cmsCategory.cms_Categories1 != null && cmsCategory.cms_Categories1.Count > 0)
                 {
-                    builder.Append(cmsCategory.cms_Categories1.ToNavigation(ajaxHelper).ToString());
+                    builder.Append(cmsCategory.cms_Categories1.ToNavigation(htmlHelper, ajaxHelper).ToString());
                 }
                 
 

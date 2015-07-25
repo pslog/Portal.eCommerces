@@ -27,5 +27,58 @@ namespace WebApplication.Libraries.Extensions
 
             return string.Format("{0}{1}", str.Substring(startIndex, length), suffix);
         }
+
+        public static List<T> GetParents<T>(this T entity, string parentPropertyName)
+        {
+            try
+            {
+                if(entity == null)
+                {
+                    return new List<T>();
+                }
+
+                var parents = new List<T> { entity };
+                var parent = (T)entity.GetType().GetProperty(parentPropertyName).GetValue(entity);
+
+                if(parent != null)
+                {
+                    parents.Add(parent);
+                    parents.AddRange(parent.GetParents<T>(parentPropertyName));    
+                }
+
+                return parents;
+            }
+            catch(Exception)
+            {
+                return new List<T>();
+            }
+        }
+
+        public static List<T> GetChildren<T>(this T entity, string childPropertyName)
+        {
+            try
+            {
+                var children = new List<T>();
+                var items = (ICollection<T>)entity.GetType().GetProperty(childPropertyName).GetValue(entity);
+
+                if (items.Count == 0)
+                {
+                    return children;
+                }
+
+                children.AddRange(items);
+
+                foreach (var item in items)
+                {
+                    children.AddRange(((T)item).GetChildren<T>(childPropertyName));
+                }
+
+                return children;
+            }
+            catch (Exception)
+            {
+                return new List<T>();
+            }
+        }
     }
 }

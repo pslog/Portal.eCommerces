@@ -8,9 +8,9 @@
         margin: 20px 20px 40px 20px;
     }
 </style>
-@section navItems
-{
-    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
+@section navItems {
+
+    <li>@Html.ActionLink("Danh sách bài viết", "AdminCmsNewsIndex", new { categoryID = (int?)ViewBag.CategoryID })</li>
 }
 
 <div class="row">

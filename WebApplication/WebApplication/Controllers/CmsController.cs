@@ -14,6 +14,7 @@ using WebApplication.Common.Constants;
 using WebApplication.Models.ViewModels;
 using System.Data.Entity.Validation;
 using PagedList;
+using WebApplication.Libraries.Extensions;
 
 namespace WebApplication.Controllers
 {
@@ -27,7 +28,7 @@ namespace WebApplication.Controllers
         {
             try
             {
-                ViewBag.RootCategories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetCmsCategories(null));
+                ViewBag.RootCategories = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategoriesByParentID(null).ToList());
                 ViewBag.CategoryID = id;
                 ViewBag.PageNumber = pageNumber;
                 ViewBag.SearchKey = searchKey;
@@ -37,11 +38,11 @@ namespace WebApplication.Controllers
                     return View(Enumerable.Empty<cms_Categories>().ToPagedList<cms_Categories>(pageNumber, Common.Constants.ConstValue.PageSize));
                 }
 
-                var cmsCategories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetCmsCategories(id));
+                var cmsCategories = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategoriesByParentID(id).ToList());
 
                 if(!string.IsNullOrEmpty(searchKey))
                 {
-                    cmsCategories = cmsCategories.Where(c => c.Title.ToLower().Contains(searchKey.ToLower()) || c.Description.ToLower().Contains(searchKey.ToLower()));
+                    cmsCategories = cmsCategories.Where(c => c.Title.ToLower().Contains(searchKey.ToLower()) || c.Description.ToLower().Contains(searchKey.ToLower())).ToList();
                 }
 
                 return View(cmsCategories.OrderByDescending(c => c.CreatedDate).ToPagedList<cms_Categories>(pageNumber, Common.Constants.ConstValue.PageSize));
@@ -118,7 +119,7 @@ namespace WebApplication.Controllers
 
                 if(category.ParentID != null)
                 {
-                    var parents = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategories(null).ToList());
+                    var parents = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategoriesByParentID(null).ToList());
                     ViewBag.ParentTitle = category.cms_Categories2.Title;
                     ViewBag.Parents = new SelectList(parents, "ID", "Title", category.ParentID);
                 }
@@ -205,39 +206,56 @@ namespace WebApplication.Controllers
       
     #endregion
 
+
+        public async Task<ActionResult> AdminCmsNewsIndex(int? categoryID, int pageNumber = 1, string searchKey = "")
+        {
+            try
+            {
+                string rootCagetoryTitle = string.Empty;
+                var cmsNews = await Task.FromResult<List<cms_News>>(uow.CmsNews.GetCmsNewsByCategoryID(categoryID, uow.CmsCategory, out rootCagetoryTitle, searchKey.ToLower()).ToList());
+
+                ViewBag.CategoryID = categoryID;
+                ViewBag.CategoryTitle = rootCagetoryTitle.ToLower();
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.SearchKey = searchKey;
+
+                return View(cmsNews.ToPagedList(pageNumber, Common.Constants.ConstValue.PageSize));
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        public async Task<ActionResult> GuestCmsNewsIndex(int? categoryID, int pageNumber = 1, string searchKey = "")
+        {
+            try
+            {
+                var cate = new cms_Categories();
+
+                string rootCagetoryTitle = string.Empty;
+                var cmsNews = await Task.FromResult<List<cms_News>>(uow.CmsNews.GetCmsNewsByCategoryID(categoryID ?? 0, uow.CmsCategory, out rootCagetoryTitle, searchKey.ToLower()).ToList());
+
+                ViewBag.CmsCategories = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategoriesByParentID(categoryID).ToList());
+                ViewBag.CategoryParents = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetById(categoryID ?? 0).GetParents<cms_Categories>("cms_Categories2"));
+                ViewBag.CategoryID = categoryID;
+                ViewBag.CategoryTitle = rootCagetoryTitle.ToUpper();
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.SearchKey = searchKey;
+
+                return View(cmsNews.ToPagedList(pageNumber, 5));
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
         public ActionResult CmsNewsIndex(int? categoryID)
         {
             ViewBag.CategoryID = categoryID;
 
             return View();
         }
-
-        public ActionResult GetCmsCategories(int? parentID)
-        {
-            var cmsCategories = uow.CmsCategory.GetCmsCategories(parentID);
-
-            return View(cmsCategories);
-        }
-
-        public async Task<ActionResult> GetCmsNews(CmsNewsIndexViewDTO indexView)
-        {
-            bool isAuthenticate = false;
-
-            indexView.CategoryID = indexView.CategoryID == 0 ? null : indexView.CategoryID;
-
-            if(indexView.RouteValue == null)
-            {
-                indexView.RouteValue = new PagingRouteValue("GetCmsNews", "Cms", new { CategoryID = indexView.CategoryID }, new System.Web.Mvc.Ajax.AjaxOptions { UpdateTargetId = "cms_news_wrapper" });
-            }
-
-            indexView.RouteValue.OptionValues = new { CategoryID = indexView.CategoryID };
-            indexView.RouteValue.RouteValuePrefix = "RouteValue";
-
-            var cmsNews = await Task.FromResult<PagingView<cms_News>>(uow.CmsNews.GetPagingView(indexView, uow.CmsCategory, isAuthenticate ? 0 : 5));
-
-            return isAuthenticate ? View(cmsNews) : View("GetCmsNewsForGuest", cmsNews);
-        }
-
 
         // GET: News/Create
         public async Task<ActionResult> CreateCmsNews(int? categoryID)
@@ -254,7 +272,6 @@ namespace WebApplication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
-
         // POST: News/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -308,7 +325,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Edit/5
-        public async Task<ActionResult> EditCmsNews(int? id)
+        public async Task<ActionResult> EditCmsNews(int? id, int? categoryID)
         {
             try
             {
@@ -326,7 +343,7 @@ namespace WebApplication.Controllers
 
                 var categories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetAll());
                 ViewBag.CmsCategories = new SelectList(categories, "ID", "Title", cmsNews.CategoryID);
-
+                ViewBag.CategoryID = categoryID;
                 return View(cmsNews);
             }
             catch(Exception)
@@ -350,7 +367,7 @@ namespace WebApplication.Controllers
                     if (uow.CmsNews.Update(uow.CmsNews.GetUpdateCmsNews(cmsNews, 1), "CategoryID", "Title", "SubTitle", "ContentNews", "Authors"))
                     {
                         await uow.CommitAsync();
-                        return RedirectToAction("CmsNewsIndex", new { categoryID = cmsNews.CategoryID });
+                        return RedirectToAction("EditCmsCategory", new { id = cmsNews.CategoryID });
                     }
                 }
 
@@ -366,7 +383,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Delete/5
-        public async Task<ActionResult> DeleteCmsNews(int? id)
+        public async Task<ActionResult> DeleteCmsNews(int? id, int? categoryID)
         {
             try
             {
@@ -382,6 +399,8 @@ namespace WebApplication.Controllers
                     return HttpNotFound();
                 }
 
+                ViewBag.CategoryID = categoryID;
+
                 return View(cmsNews);
             }
             catch(Exception)
@@ -393,18 +412,17 @@ namespace WebApplication.Controllers
         // POST: News/Delete/5
         [HttpPost, ActionName("DeleteCmsNews")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteCmsNewsConfirmed(int id)
+        public async Task<ActionResult> DeleteCmsNewsConfirmed(int id, int? categoryID)
         {
             try
             {
                 var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id));
-                int? categoryID = cmsNews.CategoryID;
 
                 uow.CmsNews.Delete(cmsNews);
 
                 await uow.CommitAsync();
 
-                return RedirectToAction("CmsNewsIndex", new { categoryID = categoryID });
+                return RedirectToAction("AdminCmsNewsIndex", new { categoryID = categoryID });
             }
             catch(Exception)
             {

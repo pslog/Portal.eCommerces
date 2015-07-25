@@ -786,8 +786,6 @@
     <Content Include="Views\Cms\CmsCategoryIndex.cshtml" />
     <Content Include="Views\ProductBoard\AddToCart.cshtml" />
     <Content Include="Views\ProductBoard\CheckOutCart.cshtml" />
-    <Content Include="Views\Cms\GetCmsCategories.cshtml" />
-    <Content Include="Views\Cms\GetCmsNews.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
@@ -833,8 +831,9 @@
     <Content Include="Views\CheckOut\OrderProduct.cshtml" />
     <Content Include="Views\Shared\Gadget_LeftPartial.cshtml" />
     <Content Include="Views\Shared\_HotlinePartial.cshtml" />
-    <Content Include="Views\Cms\GetCmsNewsForGuest.cshtml" />
     <Content Include="Views\ProductBoard\ListBestByProduct.cshtml" />
+    <Content Include="Views\Cms\AdminCmsNewsIndex.cshtml" />
+    <Content Include="Views\Cms\GuestCmsNewsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Product\" />
