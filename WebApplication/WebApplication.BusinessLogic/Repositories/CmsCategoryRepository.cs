@@ -11,6 +11,7 @@ using WebApplication.Common.Constants;
 using WebApplication.Models.Models;
 using WebApplication.Libraries.Extensions;
 using WebApplication.Models.ViewModels;
+using PagedList;
 
 namespace WebApplication.BusinessLogic.Repositories
 {
@@ -48,47 +49,18 @@ namespace WebApplication.BusinessLogic.Repositories
 
             return updateCmsCategory;
         }
-        public PagingView<cms_Categories> GetIndexView(PagingRouteValue routeValue = null)
+
+
+        public IEnumerable<cms_Categories> GetCmsCategories(int? parentId)
         {
-            var cmsCategories = DbSet.AsQueryable();
-          
-            if (!string.IsNullOrEmpty(routeValue.SearchKey))
-            {
-                cmsCategories = cmsCategories.Where(c => c.ID.ToString().Contains(routeValue.SearchKey) || c.Title.Contains(routeValue.SearchKey) || c.GUID.ToString().Contains(routeValue.SearchKey));
-            }
+            var cmsCategories = DbSet.AsQueryable().Where(c => c.ParentID == parentId).ToList();
 
-            switch (routeValue.OrderBy)
-            {
-                case ModelName.CmsCategory.ID:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.ID) : cmsCategories.OrderBy(c => c.ID);
-                    break;
-                case ModelName.CmsCategory.Title:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.Title) : cmsCategories.OrderBy(c => c.Title);
-                    break;
-                case ModelName.CmsCategory.CreatedBy:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.CreatedBy) : cmsCategories.OrderBy(c => c.CreatedBy);
-                    break;
-                case ModelName.CmsCategory.CreatedDate:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.CreatedDate) : cmsCategories.OrderBy(c => c.CreatedDate);
-                    break;
-                case ModelName.CmsCategory.ModifiedBy:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.ModifiedBy) : cmsCategories.OrderBy(c => c.ModifiedBy);
-                    break;
-                case ModelName.CmsCategory.ModifiedDate:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.ModifiedDate) : cmsCategories.OrderBy(c => c.ModifiedDate);
-                    break;
-                default:
-                    cmsCategories = routeValue.OrderByDesc ? cmsCategories.OrderByDescending(c => c.ID) : cmsCategories.OrderBy(c => c.ID);
-                    break;
-            }
+            //if (parentId == null && cmsCategories.Count > 0)
+            //{
+            //    cmsCategories.Add(new cms_Categories { ID = 0, Title = "khác", GUID = Guid.Empty });
+            //}
 
-            routeValue.SetTotalPages(cmsCategories.Count());
-
-            return new PagingView<cms_Categories>
-            {
-                Items = cmsCategories.ToPageList(ConstValue.PageSize, routeValue.PageNumber),
-                RouteValue = routeValue
-            };
+            return cmsCategories;
         }
 
         public CmsCategoryCreateView GetCreateView(int? parentID)
@@ -125,21 +97,10 @@ namespace WebApplication.BusinessLogic.Repositories
             return null;
         }
 
-        public IEnumerable<cms_Categories> GetCmsCategories(int? parentId)
-        {
-            var cmsCategories = DbSet.AsQueryable().Where(c => c.ParentID == parentId).OrderBy(c => c.ID).ToList();
-
-            if(parentId == null && cmsCategories.Count > 0)
-            {
-                cmsCategories.Add(new cms_Categories { ID = 0, Title = "khác", GUID = Guid.Empty});
-            }
-
-            return cmsCategories;
-        }
 
         public IQueryable<cms_Categories> GetChildren(int id)
         {
-            return DbSet.Where(c => c.ID == id || c.ParentID == id);
+            return DbSet.Where(c => c.ParentID == id);
         }
     }
 }

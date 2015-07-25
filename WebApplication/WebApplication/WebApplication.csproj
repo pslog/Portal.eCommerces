@@ -40,6 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -334,6 +340,7 @@
     <Content Include="Content\Images\shop\product8.jpg" />
     <Content Include="Content\Images\shop\product9.jpg" />
     <Content Include="Content\ionicons\2.0.1\css\ionicons.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Plugins\ckeditor\build-config.js" />
     <Content Include="Content\Plugins\ckeditor\ckeditor.js" />
     <Content Include="Content\Plugins\ckeditor\config.js" />
@@ -731,6 +738,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Views\Home\index.html" />
     <Content Include="Views\Shop\shop.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -774,7 +782,6 @@
     <Content Include="Views\Cms\CmsNewsIndex.cshtml" />
     <Content Include="Views\Cms\CreateCmsCategory.cshtml" />
     <Content Include="Views\Cms\DeleteCmsCategory.cshtml" />
-    <Content Include="Views\Cms\CmsCategoryDetails.cshtml" />
     <Content Include="Views\Cms\EditCmsCategory.cshtml" />
     <Content Include="Views\Cms\CmsCategoryIndex.cshtml" />
     <Content Include="Views\ProductBoard\AddToCart.cshtml" />
@@ -826,6 +833,8 @@
     <Content Include="Views\CheckOut\OrderProduct.cshtml" />
     <Content Include="Views\Shared\Gadget_LeftPartial.cshtml" />
     <Content Include="Views\Shared\_HotlinePartial.cshtml" />
+    <Content Include="Views\Cms\GetCmsNewsForGuest.cshtml" />
+    <Content Include="Views\ProductBoard\ListBestByProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Product\" />

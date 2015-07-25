@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             @Html.Label("Họ và tên", htmlAttributes: new { @class = "control-label col-md-3" })
                                             <div class="col-md-9">
-                                                @Html.EditorFor(model => model.NameOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.NameOfRecipient, new { htmlAttributes = new { @class = "form-control",@required =true }})
                                                 @Html.ValidationMessageFor(model => model.NameOfRecipient, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             @Html.Label("Số điện thoại", htmlAttributes: new { @class = "control-label col-md-3" })
                                             <div class="col-md-9">
-                                                @Html.EditorFor(model => model.PhoneOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.PhoneOfRecipient, new { htmlAttributes = new { @class = "form-control", @required = true } })
                                                 @Html.ValidationMessageFor(model => model.PhoneOfRecipient, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             @Html.Label("Địa chỉ", htmlAttributes: new { @class = "control-label col-md-3" })
                                             <div class="col-md-9">
-                                                @Html.EditorFor(model => model.AddressOfRecipient, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.EditorFor(model => model.AddressOfRecipient, new { htmlAttributes = new { @class = "form-control", @required = true } })
                                                 @Html.ValidationMessageFor(model => model.AddressOfRecipient, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                         <div class="form-group">
                                             @Html.Label("Ghi Chú", htmlAttributes: new { @class = "control-label col-md-3" })
                                             <div class="col-md-9">
-                                                @Html.TextAreaFor(model => model.OrderNote, new { @class = "form-control textarea-checkout-page" })
+                                                @Html.TextAreaFor(model => model.OrderNote, new { @class = "form-control textarea-checkout-page", @required = true })
                                                 @Html.ValidationMessageFor(model => model.OrderNote, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -92,4 +92,39 @@
 </section> <!--/#cart_items-->
 <script>
     CheckOutCart.init();
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#submit').click(function(){
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var message = $('#message').val();
+            if(name== ''){
+                $('#name').next().show();
+                return false;
+            }
+            if(email== ''){
+                $('#email').next().show();
+                return false;
+            }
+            if(IsEmail(email)==false){
+                $('#invalid_email').show();
+                return false;
+            }
+
+            if(phone== ''){
+                $('#phone').next().show();
+                return false;
+            }
+            if(message== ''){
+                $('#message').next().show();
+                return false;
+            }
+            
+            return false;
+        });
+    });
 </script>

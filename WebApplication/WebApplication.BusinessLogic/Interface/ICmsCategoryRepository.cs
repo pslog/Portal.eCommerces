@@ -17,7 +17,6 @@ namespace WebApplication.BusinessLogic.Interface
         IEnumerable<cms_Categories> GetCmsCategories(int? parentId);
         CmsCategoryCreateView GetCreateView(int? parentID);
         CmsCategoryEditView GetEditView(int id);
-        PagingView<cms_Categories> GetIndexView(PagingRouteValue routeValue = null);
         cms_Categories GetNewCmsCategory(cms_Categories cmsCategory, int creatorId, int modiferId);
         cms_Categories GetUpdateCmsCategory(cms_Categories updateCmsCategory, int modiferId);
     }

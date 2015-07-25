@@ -93,25 +93,28 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                decimal Total = 0;
-                decimal FeeShip = 0;
-                string OrderCode = "abc";
-                int OrderStatus = 1;
-                int Status = 1;
-                int DiscountRate = 0;
-                int StatusOrderDetail = 1;
-                List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
-                if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
+                try
                 {
-                    productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
-                }
-                product_Orders.product_OrderDetails = new List<product_OrderDetails>();
-                if(productsInCart.Count>0){
-                    foreach (var item in productsInCart)
-	                {
-                        Total += item.Price * item.Quantity;
-                        
-                        product_OrderDetails orderDetails = new product_OrderDetails();
+                    decimal Total = 0;
+                    decimal FeeShip = 0;
+                    string OrderCode = "abc";
+                    int OrderStatus = 1;
+                    int Status = 1;
+                    int DiscountRate = 0;
+                    int StatusOrderDetail = 1;
+                    List<ProductPartialViewModel> productsInCart = new List<ProductPartialViewModel>();
+                    if (HttpContext.Session != null && HttpContext.Session["ASPNETShoppingCart"] != null)
+                    {
+                        productsInCart = (List<ProductPartialViewModel>)HttpContext.Session["ASPNETShoppingCart"];
+                    }
+                    product_Orders.product_OrderDetails = new List<product_OrderDetails>();
+                    if (productsInCart.Count > 0)
+                    {
+                        foreach (var item in productsInCart)
+                        {
+                            Total += item.Price * item.Quantity;
+
+                            product_OrderDetails orderDetails = new product_OrderDetails();
                             orderDetails.GUID = Guid.NewGuid();
                             orderDetails.OrderID = product_Orders.ID;
                             orderDetails.ProductID = item.Id;
@@ -121,26 +124,32 @@ namespace WebApplication.Controllers
                             orderDetails.TotalOrder = item.Price * item.Quantity;
                             orderDetails.Status = StatusOrderDetail;
                             orderDetails.CreatedDate = DateTime.Now;
-                        product_Orders.product_OrderDetails.Add(orderDetails);
-	                }
-                }
-                product_Orders.GUID = System.Guid.NewGuid();
-                product_Orders.OrderCode = OrderCode;
-                product_Orders.FeeShip = FeeShip;
-                product_Orders.TotalOrder = Total + FeeShip;
-                product_Orders.OrderStatus = OrderStatus;
-                product_Orders.Status = Status;
-                product_Orders.CreatedDate = DateTime.Now;
+                            product_Orders.product_OrderDetails.Add(orderDetails);
+                        }
+                    }
+                    product_Orders.GUID = System.Guid.NewGuid();
+                    product_Orders.OrderCode = OrderCode;
+                    product_Orders.FeeShip = FeeShip;
+                    product_Orders.TotalOrder = Total + FeeShip;
+                    product_Orders.OrderStatus = OrderStatus;
+                    product_Orders.Status = Status;
+                    product_Orders.CreatedDate = DateTime.Now;
 
-                db.product_Orders.Add(product_Orders);
-                db.SaveChanges();
-                if (HttpContext.Session != null)
+                    db.product_Orders.Add(product_Orders);
+                    db.SaveChanges();
+                    if (HttpContext.Session != null)
+                    {
+                        HttpContext.Session["ASPNETShoppingCart"] = null;
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+
+                catch (Exception e)
                 {
-                    HttpContext.Session["ASPNETShoppingCart"] = null;
+                    return View(product_Orders);
                 }
-                return RedirectToAction("Index","Home");
-            }
 
+            }
             return View(product_Orders);
         }
     }

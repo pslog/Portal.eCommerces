@@ -14,15 +14,15 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     @Html.Action("ListCategoriesLeftMenuByAjax", "Category")
-                    @*@Html.Partial("BrandProducts_LeftSideBar_Partial")
-                    @Html.Partial("PriceRange_LeftSideBar_Partial")*@
                     @Html.Partial("_HotlinePartial")
                     @Html.Partial("Gadget_LeftPartial")
                 </div>
             </div>
-
-            <div class="col-sm-9 padding-right" id="ProductBoard_ShopPage">
-                @Html.Partial("ListProductPartialView",@Model)
+            <div class="col-sm-9 padding-right" >
+                <div id="ProductBoard_ShopPage" style="min-height:585px;">
+                    @Html.Partial("ListProductPartialView", @Model)
+                </div>
+                @Html.Action("ListBestByProduct", "ProductBoard");
             </div>
         </div>
     </div>

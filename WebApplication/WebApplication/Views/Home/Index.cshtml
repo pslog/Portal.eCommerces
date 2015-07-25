@@ -69,8 +69,11 @@
                 </div>
             </div>
 
-            <div class="col-sm-9 padding-right" id="products">
-                @Html.Action("ListProduct", new PagingRouteValue("ListProduct", "Home"))
+            <div class="col-sm-9 padding-right" >
+                <div id="products">
+                    @Html.Action("ListProduct", new PagingRouteValue("ListProduct", "Home"))
+                </div>
+                @Html.Action("ListBestByProduct", "ProductBoard") ;
             </div>
         </div>
     </div>

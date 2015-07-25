@@ -13,6 +13,7 @@ using Uow.Package.Data;
 using WebApplication.Common.Constants;
 using WebApplication.Models.ViewModels;
 using System.Data.Entity.Validation;
+using PagedList;
 
 namespace WebApplication.Controllers
 {
@@ -20,44 +21,56 @@ namespace WebApplication.Controllers
     {
         private IUnitOfWork uow = UnitOfWork.Begin();
 
+        #region CmsCategory
         // GET: Category
-        public async Task<ActionResult> CmsCategoryIndex(PagingRouteValue routeValue = null)
+        public async Task<ActionResult> CmsCategoryIndex(int? id, int pageNumber = 1, string searchKey = "")
         {
-            if (string.IsNullOrEmpty(routeValue.ActionName) || string.IsNullOrEmpty(routeValue.ControllerName))
+            try
             {
-                routeValue.ActionName = RouteName.CmsCategoryAction.Index;
-                routeValue.ControllerName = RouteName.Controller.Cms;
+                ViewBag.RootCategories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetCmsCategories(null));
+                ViewBag.CategoryID = id;
+                ViewBag.PageNumber = pageNumber;
+                ViewBag.SearchKey = searchKey;
+
+                if(id == null)
+                {
+                    return View(Enumerable.Empty<cms_Categories>().ToPagedList<cms_Categories>(pageNumber, Common.Constants.ConstValue.PageSize));
+                }
+
+                var cmsCategories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetCmsCategories(id));
+
+                if(!string.IsNullOrEmpty(searchKey))
+                {
+                    cmsCategories = cmsCategories.Where(c => c.Title.ToLower().Contains(searchKey.ToLower()) || c.Description.ToLower().Contains(searchKey.ToLower()));
+                }
+
+                return View(cmsCategories.OrderByDescending(c => c.CreatedDate).ToPagedList<cms_Categories>(pageNumber, Common.Constants.ConstValue.PageSize));
             }
-
-            return View(await Task.FromResult<PagingView<cms_Categories>>(uow.CmsCategory.GetIndexView(routeValue)));
-        }
-
-        // GET: Category/Details/5
-        public async Task<ActionResult> CmsCategoryDetails(int? id)
-        {
-            if (id == null)
+            catch(Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            cms_Categories cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id ?? 0));
-
-            if (cmsCategory == null)
-            {
-                return HttpNotFound();
-            }
-
-            //var parent = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetByGuid(cmsCategory.ParentID));
-            var parent = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(cmsCategory.ParentID ?? 0));
-
-            ViewBag.ParentTitle = parent == null ? string.Empty : parent.Title;
-
-            return View(cmsCategory);
         }
-
         // GET: Category/Create
         public async Task<ActionResult> CreateCmsCategory(int? parentID = null)
         {
-            return View(await Task.FromResult<CmsCategoryCreateView>(uow.CmsCategory.GetCreateView(parentID)));
+            try
+            {
+                var parent = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(parentID ?? 0));
+
+                if (parent != null)
+                {
+                    ViewBag.ParentTitle = parent.Title;
+                }
+
+                ViewBag.ParentID = parentID;
+
+                return View();
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         // POST: Category/Create
@@ -65,37 +78,57 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = "CmsCategory.ID, ParentID")]CmsCategoryCreateView createView)
+        public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = "ID")]cms_Categories cmsCategory)
         {
-            if (ModelState.IsValid)
+            try
             {
-                uow.CmsCategory.Create(uow.CmsCategory.GetNewCmsCategory(createView.CmsCategory, 0, 0));
+                if (ModelState.IsValid)
+                {
+                    uow.CmsCategory.Create(uow.CmsCategory.GetNewCmsCategory(cmsCategory, 0, 0));
 
-                await uow.CommitAsync();
-                
-                return RedirectToAction(RouteName.CmsCategoryAction.Index);
+                    await uow.CommitAsync();
+
+                    return RedirectToAction(RouteName.CmsCategoryAction.Index);
+                }
+
+                return View(cmsCategory);
             }
-
-            return View(createView);
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); ;
+            }
         }
 
         // GET: Category/Edit/5
         public async Task<ActionResult> EditCmsCategory(int? id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var category = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById((int)id));
+
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if(category.ParentID != null)
+                {
+                    var parents = await Task.FromResult<List<cms_Categories>>(uow.CmsCategory.GetCmsCategories(null).ToList());
+                    ViewBag.ParentTitle = category.cms_Categories2.Title;
+                    ViewBag.Parents = new SelectList(parents, "ID", "Title", category.ParentID);
+                }
+
+                return View(category);
+            }
+            catch
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var editView = await Task.FromResult<CmsCategoryEditView>(uow.CmsCategory.GetEditView(id ?? 0));
-
-            if (editView == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(editView);
         }
 
         // POST: Category/Edit/5
@@ -103,36 +136,50 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public async Task<ActionResult> EditCmsCategory(CmsCategoryEditView editView)
+        public async Task<ActionResult> EditCmsCategory(cms_Categories cmsCategory)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (uow.CmsCategory.Update(uow.CmsCategory.GetUpdateCmsCategory(editView.CmsCategory, 1), "ParentID", "Title", "Description", "ModifiedBy", "ModifiedDate"))
+                if (ModelState.IsValid)
                 {
-                    await uow.CommitAsync();
-                    return RedirectToAction(RouteName.CmsCategoryAction.Index);
+                    if (uow.CmsCategory.Update(uow.CmsCategory.GetUpdateCmsCategory(cmsCategory, 1), "ParentID", "Title", "Description", "ModifiedBy", "ModifiedDate"))
+                    {
+                        await uow.CommitAsync();
+                        return RedirectToAction(RouteName.CmsCategoryAction.Index);
+                    }
                 }
-            }
 
-            return View(editView);
+                return View(cmsCategory);
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         // GET: Category/Delete/5
         public async Task<ActionResult> DeleteCmsCategory(int? id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id ?? 0));
+
+                if (cmsCategory == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cmsCategory);
+            }
+            catch(Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id ?? 0));
-
-            if (cmsCategory == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cmsCategory);
+           
         }
 
         // POST: Category/Delete/5
@@ -140,15 +187,24 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteCmsCategoryConfirmed(int id)
         {
-            var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id));
-            
-            uow.CmsCategory.Delete(cmsCategory);
+            try
+            {
+                var cmsCategory = await Task.FromResult<cms_Categories>(uow.CmsCategory.GetById(id));
 
-            await uow.CommitAsync();
-            
-            return RedirectToAction(RouteName.CmsCategoryAction.Index);
+                uow.CmsCategory.Delete(cmsCategory);
+
+                await uow.CommitAsync();
+
+                return RedirectToAction(RouteName.CmsCategoryAction.Index);
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
       
+    #endregion
+
         public ActionResult CmsNewsIndex(int? categoryID)
         {
             ViewBag.CategoryID = categoryID;
@@ -182,29 +238,21 @@ namespace WebApplication.Controllers
             return isAuthenticate ? View(cmsNews) : View("GetCmsNewsForGuest", cmsNews);
         }
 
-        // GET: News/Details/5
-        public async Task<ActionResult> CmsNewsDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById((int)id));
-
-            if (cmsNews == null)
-            {
-                return HttpNotFound();
-            }
-
-
-            return View(cmsNews);
-        }
 
         // GET: News/Create
         public async Task<ActionResult> CreateCmsNews(int? categoryID)
         {
-            return View(await Task.FromResult<CmsNewsDTO>(uow.CmsNews.GetCmsNewsDTO(categoryID, uow.CmsCategory)));
+            try
+            {
+                var categories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetAll());
+                ViewBag.CmsCategories = new SelectList(categories, "ID", "Title", categoryID ?? 0);
+                return View();
+
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         // POST: News/Create
@@ -213,38 +261,78 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public async Task<ActionResult> CreateCmsNews([Bind(Exclude = "CmsNews.ID, CmsNews.GUID")] CmsNewsDTO cmsNewsDTO)
+        public async Task<ActionResult> CreateCmsNews([Bind(Exclude = "ID, GUID")] cms_News cmsNews)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var cmsNews = uow.CmsNews.GetNewCmsNews(cmsNewsDTO.CmsNews, 0, 0);
+                if (ModelState.IsValid)
+                {
+                    uow.CmsNews.Create(uow.CmsNews.GetNewCmsNews(cmsNews, 0, 0));
+                    await uow.CommitAsync();
+                    return RedirectToAction("EditCmsCategory", new { id = cmsNews.CategoryID });
+                }
 
-                uow.CmsNews.Create(cmsNews);
-
-                await uow.CommitAsync();
-
-                return RedirectToAction("CmsNewsIndex", new { categoryID = cmsNews.CategoryID });
+                var categories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetAll());
+                ViewBag.CmsCategories = new SelectList(categories, "ID", "Title", cmsNews.CategoryID);
+                return View(cmsNews);
             }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
 
-            return View(await Task.FromResult<CmsNewsDTO>(uow.CmsNews.GetCmsNewsDTO(cmsNewsDTO.CmsNews.CategoryID ?? 0, uow.CmsCategory, cmsNewsDTO.CmsNews)));
+        // GET: News/Details/5
+        public async Task<ActionResult> CmsNewsDetails(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById((int)id));
+
+                if (cmsNews == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(cmsNews);
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         // GET: News/Edit/5
         public async Task<ActionResult> EditCmsNews(int? id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id ?? 0));
+
+                if (cmsNews == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var categories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetAll());
+                ViewBag.CmsCategories = new SelectList(categories, "ID", "Title", cmsNews.CategoryID);
+
+                return View(cmsNews);
+            }
+            catch(Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id ?? 0));
-
-            if (cmsNews == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(await Task.FromResult<CmsNewsDTO>(uow.CmsNews.GetCmsNewsDTO(cmsNews.CategoryID, uow.CmsCategory, cmsNews)));
         }
 
         // POST: News/Edit/5
@@ -253,36 +341,53 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public async Task<ActionResult> EditCmsNews(CmsNewsDTO cmsNewsDTO)
+        public async Task<ActionResult> EditCmsNews(cms_News cmsNews)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (uow.CmsNews.Update(uow.CmsNews.GetUpdateCmsNews(cmsNewsDTO.CmsNews, 1), "CategoryID", "Title", "SubTitle", "Authors", "Tags", "ContentNews", "ModifiedBy", "ModifiedDate"))
+                if (ModelState.IsValid)
                 {
-                    await uow.CommitAsync();
-                    return RedirectToAction("CmsNewsIndex", new { categoryID = cmsNewsDTO.CmsNews.CategoryID });
+                    if (uow.CmsNews.Update(uow.CmsNews.GetUpdateCmsNews(cmsNews, 1), "CategoryID", "Title", "SubTitle", "ContentNews", "Authors"))
+                    {
+                        await uow.CommitAsync();
+                        return RedirectToAction("CmsNewsIndex", new { categoryID = cmsNews.CategoryID });
+                    }
                 }
-            }
 
-            return View(await Task.FromResult<CmsNewsDTO>(uow.CmsNews.GetCmsNewsDTO(cmsNewsDTO.CmsNews.CategoryID ?? 0, uow.CmsCategory, cmsNewsDTO.CmsNews)));
+                var categories = await Task.FromResult<IEnumerable<cms_Categories>>(uow.CmsCategory.GetAll());
+                ViewBag.CmsCategories = new SelectList(categories, "ID", "Title", cmsNews.CategoryID);
+
+                return View(cmsNews);
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         // GET: News/Delete/5
         public async Task<ActionResult> DeleteCmsNews(int? id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id ?? 0));
+
+                if (cmsNews == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(cmsNews);
+            }
+            catch(Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id ?? 0));
-
-            if (cmsNews == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(cmsNews);
         }
 
         // POST: News/Delete/5
@@ -290,14 +395,21 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteCmsNewsConfirmed(int id)
         {
-            var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id));
-            int? categoryID = cmsNews.CategoryID;
+            try
+            {
+                var cmsNews = await Task.FromResult<cms_News>(uow.CmsNews.GetById(id));
+                int? categoryID = cmsNews.CategoryID;
 
-            uow.CmsNews.Delete(cmsNews);
+                uow.CmsNews.Delete(cmsNews);
 
-            await uow.CommitAsync();
+                await uow.CommitAsync();
 
-            return RedirectToAction("CmsNewsIndex", new { categoryID = categoryID });
+                return RedirectToAction("CmsNewsIndex", new { categoryID = categoryID });
+            }
+            catch(Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         protected override void Dispose(bool disposing)
