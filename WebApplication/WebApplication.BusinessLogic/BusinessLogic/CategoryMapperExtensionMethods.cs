@@ -23,21 +23,21 @@ namespace WebApplication.BusinessLogic.BusinessLogic
         }
         public static DetailsCategoryViewModels ConvertToDetailsCategoryViewModels(this product_Categories category)
         {
-            DetailsCategoryViewModels detailsCategoryViewModels = new DetailsCategoryViewModels()
-            {
-                ID = category.ID,
-                GUID = category.GUID,
-                Description = category.Description,
-                Title = category.Title,
-                Url = category.Url,
-                ModifiedBy = category.ModifiedBy,
-                ModifiedDate = category.ModifiedDate,
-                CreatedBy = category.CreatedBy,
-                CreatedDate = category.CreatedDate,
-                SortOrder = category.SortOrder,
-                Status = StatusCategoryViewModel.GetValueOfStatus(category.Status),
-                Parent = _categoryRepository.FindByGuid(category.ParentID).Title
-            };
+            DetailsCategoryViewModels detailsCategoryViewModels = new DetailsCategoryViewModels();
+            //{
+                detailsCategoryViewModels.ID = category.ID;
+                detailsCategoryViewModels.GUID = category.GUID;
+                detailsCategoryViewModels.Description = category.Description;
+                detailsCategoryViewModels.Title = category.Title;
+                detailsCategoryViewModels.Url = category.Url;
+                detailsCategoryViewModels.ModifiedBy = category.ModifiedBy;
+                detailsCategoryViewModels.ModifiedDate = category.ModifiedDate;
+                detailsCategoryViewModels.CreatedBy = category.CreatedBy;
+                detailsCategoryViewModels.CreatedDate = category.CreatedDate;
+                detailsCategoryViewModels.SortOrder = category.SortOrder;
+                detailsCategoryViewModels.Status = StatusCategoryViewModel.GetValueOfStatus(category.Status);
+                detailsCategoryViewModels.Parent = _categoryRepository.FindByGuid(category.ParentID) == null ? "Danh mục" : _categoryRepository.FindByGuid(category.ParentID).Title;
+            //};
 
             return detailsCategoryViewModels;
         }

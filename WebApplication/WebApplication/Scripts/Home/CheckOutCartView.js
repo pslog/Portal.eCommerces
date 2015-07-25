@@ -18,7 +18,7 @@ CheckOutCart = {
         /// <returns>N/A</returns>
 
         $.ajax({
-            url: CheckOutCart.options.path + "CheckOut/RemoveFromCart",
+            url:"/CheckOut/RemoveFromCart",
             dataType: "html",
             data: { Id: productId },
             success: function (result) {
@@ -61,7 +61,7 @@ CheckOutCart = {
             alert("số lượng sản phẩm phải lớn hơn 0");
         }
         $.ajax({
-            url: CheckOutCart.options.path + "CheckOut/UpdateQuantityOfProduct",
+            url:"CheckOut/UpdateQuantityOfProduct",
             dataType: "html",
             data: { Id: productId, quantity: quantity },
             success: function (result) {
@@ -80,10 +80,9 @@ CheckOutCart = {
         /// <param>N/A</param>
         /// <returns>N/A</returns>
 
-        $.get("CheckOut/OrderProduct");
+        $.get("/CheckOut/OrderProduct");
     },
     options: {
-        selectedUsers: 0,
-        path: "http://localhost:11111/"
+        selectedUsers: 0
     }
 };

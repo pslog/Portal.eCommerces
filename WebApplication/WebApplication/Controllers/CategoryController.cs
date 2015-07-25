@@ -112,19 +112,18 @@ namespace WebApplication.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,GUID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
+        public ActionResult Edit([Bind(Include = "ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
         {
             if (ModelState.IsValid)
             {
-                if (ParentID.Trim().Equals(""))
-                {
-                    product_Categories.ParentID = Guid.Empty;
-                }
-                else
-                {
-                    product_Categories.ParentID = Guid.Parse(ParentID);
-                }
-                db.Entry(product_Categories).State = EntityState.Modified;
+                //if (ParentID.Trim().Equals(""))
+                //{
+                //    product_Categories.ParentID = Guid.Empty;
+                //}
+                //else
+                //{
+                //    product_Categories.ParentID = Guid.Parse(ParentID);
+                //}
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

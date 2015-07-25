@@ -16,15 +16,15 @@ namespace WebApplication.Controllers
         private ProductBoard_Business _productBoard_Business = new ProductBoard_Business();
         #endregion
         // GET: Shop
-        public ActionResult Index(Guid ?catalogGuid)
+        public ActionResult Index(Guid? CatagoryGuid)
         {
-            if (catalogGuid == null)
+            if (CatagoryGuid == null)
             {
                 return View(_productBoard_Business.GetAllProducts());
             }
             else
             {
-                return View(_productBoard_Business.GetProductAfterCategory((Guid)catalogGuid));
+                return View(_productBoard_Business.GetProductAfterCategory((Guid)CatagoryGuid));
             }
         }
       [HttpPost]

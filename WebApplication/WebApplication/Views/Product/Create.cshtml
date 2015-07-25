@@ -96,23 +96,21 @@
         </div>
 
         @{
-    bool IsNew = Model.IsNewProduct == null ? false : (bool)Model.IsNewProduct;
     <div class="form-group">
         @Html.LabelFor(model => model.IsNewProduct, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.CheckBox("IsNewProduct", IsNew)
+                @Html.CheckBox("IsNewProduct", false)
             </div>
         </div>
     </div>
         }
         @{
-    bool IsBestSell = Model.IsBestSellProduct == null ? false : (bool)Model.IsBestSellProduct;
     <div class="form-group">
         @Html.LabelFor(model => model.IsBestSellProduct, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.CheckBox("IsBestSellProduct", IsBestSell)
+                @Html.CheckBox("IsBestSellProduct", false)
             </div>
         </div>
     </div>

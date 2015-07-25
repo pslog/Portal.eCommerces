@@ -28,7 +28,7 @@ ProductManager = {
         /// <returns>N/A</returns>
 
         $.ajax({
-            url: ProductManager.options.path + "Product/DeleteImage",
+            url: "/Product/DeleteImage",
             dataType: "html",
             data: { productId: productId, imageId: imageId },
             success: function (result) {
@@ -42,7 +42,6 @@ ProductManager = {
         });
     },
     options: {
-        selectedUsers: 0,
-        path: "http://localhost:22222/"
+        selectedUsers: 0
     }
 };
