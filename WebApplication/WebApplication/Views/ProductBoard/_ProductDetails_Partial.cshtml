@@ -40,18 +40,20 @@
                 <img src="~/Content/Images/product-details/new.jpg" class="newarrival" alt="" />
             }
             <h2>@Model.Name</h2>
-            <p>Description: @Model.Description</p>
+            <p><b>Mô tả:</b> @Model.Description</p>
             <img src="~/Content/Images/product-details/rating.png" alt="" />
-            <span>
-                <span>@Model.Price Đ</span>
-                @if (Model.IsAvailable)
-                {
-                    <button type="button" class="btn btn-fefault cart" onclick="ProductBoard.addNewProductToCart(@Model.Id)">
-                        <i class="fa fa-shopping-cart"></i>
-                        Thêm vào giỏ
-                    </button>
-                }
-            </span>
+            <p>
+                <span>
+                    <span>@Model.Price Đ</span>
+                    @if (Model.IsAvailable)
+                    {
+                        <button type="button" class="btn btn-fefault cart" onclick="ProductBoard.addNewProductToCart(@Model.Id)">
+                            <i class="fa fa-shopping-cart"></i>
+                            Thêm vào giỏ
+                        </button>
+                    }
+                </span>
+            </p>
             <p><b>Trạng thái:</b> @Model.Status</p>
             <p><b>Danh mục:</b> @Model.Catalog</p>
         </div><!--/product-information-->
