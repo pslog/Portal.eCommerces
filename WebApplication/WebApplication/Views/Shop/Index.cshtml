@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
-                <div class="left-sidebar">
+                <div class="left-sidebar" style="padding-bottom: 25px;">
                     @Html.Action("ListCategoriesLeftMenuByAjax", "Category")
                     @Html.Partial("_HotlinePartial")
                     @Html.Partial("Gadget_LeftPartial")
@@ -22,7 +22,7 @@
                 <div id="ProductBoard_ShopPage" style="min-height:585px;">
                     @Html.Partial("ListProductPartialView", @Model)
                 </div>
-                @Html.Action("ListBestByProduct", "ProductBoard");
+                @Html.Action("ListBestByProduct", "ProductBoard")
             </div>
         </div>
     </div>

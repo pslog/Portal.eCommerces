@@ -918,7 +918,7 @@ h2.title {
 
 
 .product-overlay .overlay-content {
-    bottom: 0;
+    bottom: -4px;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -2523,8 +2523,7 @@ h2.title {
         line-height: 25px;
     }
 
-.social-networks {
-    overflow: hidden;
+.social-networks {    
     text-align: center;
 }
 

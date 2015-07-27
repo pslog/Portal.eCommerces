@@ -9,12 +9,12 @@
 }
 
 @section styles {
-    <link href="@Url.Content("~/Content/Plugins/flat-flyout-menu.css")" rel="stylesheet" />
+    @*<link href="@Url.Content("~/Content/Plugins/flat-flyout-menu.css")" rel="stylesheet" />*@
     <style>
         #cms_news_container,
         #cms_news_container div {
-            padding:0;
-            margin:0;
+            padding: 0;
+            margin: 0;
         }
 
         li.paging-active > a {
@@ -28,17 +28,16 @@
             padding: 0;
             padding-bottom: 5px;
             border-radius: 0;
-            font-size:14px;
+            font-size: 14px;
         }
 
-        #breadcrumb.breadcrumb a {
-            color: #FE980F;
-        }
+            #breadcrumb.breadcrumb a {
+                color: #FE980F;
+            }
 
-        #breadcrumb.breadcrumb a:hover{
-            text-decoration:underline;
-        }
-
+                #breadcrumb.breadcrumb a:hover {
+                    text-decoration: underline;
+                }
     </style>
 }
 
@@ -69,6 +68,7 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
+
     <script>
         $(document).ready(function () {
             $('#cms_categories_container li:has(ul)').addClass('has-sub');
