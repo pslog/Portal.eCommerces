@@ -7,6 +7,7 @@ using WebApplication.BusinessLogic.BusinessLogic;
 using WebApplication.BusinessLogic.Repositories;
 using WebApplication.Models.Models;
 using WebApplication.Models.ViewModels;
+using PagedList;
 
 namespace WebApplication.Controllers
 {
@@ -16,27 +17,32 @@ namespace WebApplication.Controllers
         private ProductBoard_Business _productBoard_Business = new ProductBoard_Business();
         #endregion
         // GET: Shop
-        public ActionResult Index(Guid? CatagoryGuid)
+        public ActionResult Index(Guid? CategoryGuid, int pageNumber = 1)
         {
-            if (CatagoryGuid == null)
+            ViewBag.CategoryGuid = CategoryGuid;
+            ViewBag.PageNumber = pageNumber;
+
+            if (CategoryGuid == null)
             {
-                return View(_productBoard_Business.GetAllProducts());
+                return View(_productBoard_Business.GetAllProducts().ToPagedList(pageNumber, 9));
             }
             else
             {
-                return View(_productBoard_Business.GetProductAfterCategory((Guid)CatagoryGuid));
+                return View(_productBoard_Business.GetProductAfterCategory((Guid)CategoryGuid).ToPagedList(pageNumber, 9));
             }
         }
-      [HttpPost]
-        public ActionResult ListProduct(Guid ?CatagoryGuid)
+        [HttpPost]
+        public ActionResult ListProduct(Guid? CategoryGuid, int pageNumber = 1)
         {
-            if (CatagoryGuid == null)
+            ViewBag.PageNumber = pageNumber;
+
+            if (CategoryGuid == null)
             {
-                return PartialView("ListProductPartialView",_productBoard_Business.GetAllProducts());
+                return PartialView("ListProductPartialView", _productBoard_Business.GetAllProducts().ToPagedList(pageNumber, 9));
             }
             else
             {
-                return PartialView("ListProductPartialView",_productBoard_Business.GetProductAfterCategory((Guid)CatagoryGuid));
+                return PartialView("ListProductPartialView", _productBoard_Business.GetProductAfterCategory((Guid)CategoryGuid).ToPagedList(pageNumber, 9));
             }
         }
     }

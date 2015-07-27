@@ -6,13 +6,13 @@
         @foreach (var category in Model)
         {
             <li class="level0 subcatemenu">
-                <a href="/Shop/Index?CatagoryGuid=@category.GUID">@category.Title</a>
+                <a href="/Shop/Index?CategoryGuid=@category.GUID">@category.Title</a>
                 @if (category.Childs.Count() > 0)
                 {
                     <ul class="navigation-0a" style="width: 250px !important">
                         @foreach (var child in category.Childs)
                         {
-                            <li class="level1 subcatemenu"><a href="/Shop/Index?CatagoryGuid=@child.GUID">@child.Title</a></li>
+                            <li class="level1 subcatemenu"><a href="/Shop/Index?CategoryGuid=@child.GUID">@child.Title</a></li>
                         }
                     </ul>
                 }

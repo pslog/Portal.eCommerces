@@ -15,6 +15,7 @@ using WebApplication.Models.ViewModels;
 using System.Data.Entity.Validation;
 using PagedList;
 using WebApplication.Libraries.Extensions;
+using WebApplication.CustomAttributes;
 
 namespace WebApplication.Controllers
 {
@@ -23,7 +24,11 @@ namespace WebApplication.Controllers
         private IUnitOfWork uow = UnitOfWork.Begin();
 
         #region CmsCategory
+
+
+        
         // GET: Category
+        [RequiredLogin]
         public async Task<ActionResult> CmsCategoryIndex(int? id, int pageNumber = 1, string searchKey = "")
         {
             try
@@ -52,7 +57,9 @@ namespace WebApplication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+
         // GET: Category/Create
+        [RequiredLogin]
         public async Task<ActionResult> CreateCmsCategory(int? parentID = null)
         {
             try
@@ -79,6 +86,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequiredLogin]
         public async Task<ActionResult> CreateCmsCategory([Bind(Exclude = "ID")]cms_Categories cmsCategory)
         {
             try
@@ -101,6 +109,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Category/Edit/5
+        [RequiredLogin]
         public async Task<ActionResult> EditCmsCategory(int? id)
         {
             try
@@ -137,6 +146,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequiredLogin]
         public async Task<ActionResult> EditCmsCategory(cms_Categories cmsCategory)
         {
             try
@@ -159,6 +169,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Category/Delete/5
+        [RequiredLogin]
         public async Task<ActionResult> DeleteCmsCategory(int? id)
         {
             try
@@ -186,6 +197,7 @@ namespace WebApplication.Controllers
         // POST: Category/Delete/5
         [HttpPost, ActionName("DeleteCmsCategory")]
         [ValidateAntiForgeryToken]
+        [RequiredLogin]
         public async Task<ActionResult> DeleteCmsCategoryConfirmed(int id)
         {
             try
@@ -206,7 +218,7 @@ namespace WebApplication.Controllers
       
     #endregion
 
-
+        [RequiredLogin]
         public async Task<ActionResult> AdminCmsNewsIndex(int? categoryID, int pageNumber = 1, string searchKey = "")
         {
             try
@@ -250,14 +262,9 @@ namespace WebApplication.Controllers
             }
         }
 
-        public ActionResult CmsNewsIndex(int? categoryID)
-        {
-            ViewBag.CategoryID = categoryID;
-
-            return View();
-        }
 
         // GET: News/Create
+        [RequiredLogin]
         public async Task<ActionResult> CreateCmsNews(int? categoryID)
         {
             try
@@ -278,6 +285,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
+        [RequiredLogin]
         public async Task<ActionResult> CreateCmsNews([Bind(Exclude = "ID, GUID")] cms_News cmsNews)
         {
             try
@@ -325,6 +333,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Edit/5
+        [RequiredLogin]
         public async Task<ActionResult> EditCmsNews(int? id, int? categoryID)
         {
             try
@@ -358,6 +367,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
+        [RequiredLogin]
         public async Task<ActionResult> EditCmsNews(cms_News cmsNews)
         {
             try
@@ -383,6 +393,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: News/Delete/5
+        [RequiredLogin]
         public async Task<ActionResult> DeleteCmsNews(int? id, int? categoryID)
         {
             try
@@ -412,6 +423,7 @@ namespace WebApplication.Controllers
         // POST: News/Delete/5
         [HttpPost, ActionName("DeleteCmsNews")]
         [ValidateAntiForgeryToken]
+        [RequiredLogin]
         public async Task<ActionResult> DeleteCmsNewsConfirmed(int id, int? categoryID)
         {
             try

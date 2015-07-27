@@ -129,7 +129,7 @@
                                     @Html.ActionLink(item.Title, "CmsNewsDetails", "Cms", new { id = item.ID }, null)
                                 </div>
                                 <div class="cms-news-info">
-                                    <span class="cms-news-date">@Html.DisplayFor(modelItem => item.CreatedDate) - @(item.TotalView ?? 0) Lượt xem</span>
+                                    <span class="cms-news-date">@Html.DisplayFor(modelItem => item.CreatedDate)</span>
                                 </div>
                                 <div class="cms-news-content">
                                     <span>@((item.SubTitle + item.SubTitle + item.SubTitle).ToEllipsis(0, 250, "..."))</span>

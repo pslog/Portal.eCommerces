@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebApplication.Models.ViewModels.ProductPartialViewModel>
+﻿@model IPagedList<WebApplication.Models.ViewModels.ProductPartialViewModel>
+@using PagedList;
+@using PagedList.Mvc;
+
 @{
     ViewBag.Title = "Shop Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +23,7 @@
             </div>
             <div class="col-sm-9 padding-right" >
                 <div id="ProductBoard_ShopPage" style="min-height:585px;">
-                    @Html.Partial("ListProductPartialView", @Model)
+                    @Html.Partial("ListProductPartialView", Model)
                 </div>
                 @Html.Action("ListBestByProduct", "ProductBoard");
             </div>

@@ -1,5 +1,8 @@
 ﻿<script src="~/Scripts/Home/ProductPartialView.js"></script>
-@model IEnumerable<WebApplication.Models.ViewModels.ProductPartialViewModel>
+@model IPagedList<WebApplication.Models.ViewModels.ProductPartialViewModel>
+
+@using PagedList;
+@using PagedList.Mvc;
 
 <div class="features_items">
     <!--features_items-->
@@ -33,6 +36,12 @@
         </div>
     </div>
 </div>
+
+
+<div class="pull-right">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Shop", new { CategoryGuid = (Guid?)ViewBag.CategoryGuid, pageNumber = page }))
+</div>
+
 <script>
     ProductBoard.init();
 </script>
