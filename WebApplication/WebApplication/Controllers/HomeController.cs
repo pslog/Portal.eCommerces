@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WebApplication.BusinessLogic.BusinessLogic;
 using WebApplication.Models.ViewModels;
 using WebApplication.Libraries.Extensions;
+using PagedList;
 
 namespace WebApplication.Controllers
 {
@@ -14,8 +15,10 @@ namespace WebApplication.Controllers
         #region fields
         private ProductBoard_Business _productBoard_Business = new ProductBoard_Business();
         #endregion
-        public ActionResult Index()
+        public ActionResult Index(int pageNumber = 1)
         {
+            ViewBag.PageNumber = pageNumber;
+
             return View();
         }
 
@@ -33,14 +36,13 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public ActionResult ListProduct(PagingRouteValue routeValue)
+        public ActionResult ListProduct(int pageNumber = 1)
         {
-            var products = _productBoard_Business.GetAllProducts();
+            pageNumber = pageNumber  < 1 ? 1 : pageNumber;
+            var products = _productBoard_Business.GetAllProducts().ToPagedList(pageNumber, 6);
+            ViewBag.PageNumber = pageNumber;
 
-            routeValue.SetTotalPages(products.Count);
-            ViewBag.RouteValue = routeValue;
-
-            return PartialView(products.ToPageList<ProductPartialViewModel>(6, routeValue.PageNumber));
+            return PartialView(products);
         }
     }
 }

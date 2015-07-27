@@ -22,6 +22,8 @@
 
 @using (Html.BeginForm())
 {
+    
+    @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID);
     @Html.AntiForgeryToken()
     <div>
         <dl class="dl-horizontal">

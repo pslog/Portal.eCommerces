@@ -38,17 +38,22 @@
 
 #nav-sidebox {
     margin: 0;
-    padding: 5px 0 10px 0;
+    padding: 0 0 1px 0;
     text-align: left;
     background: #fff;
     position: relative;
     z-index: 1;
     border: 1px solid #F7F7F0;
     margin-bottom: 5px;
+    background-color:#ccc;
 }
+    #nav-sidebox:hover {
+        /*background-color:#FC960F;*/
+    }
 
     #nav-sidebox li, .feature-items li {
         padding: 4px;
+        margin-top:1px;
     }
 
         #nav-sidebox li:hover, #nav-sidebox li.active {
@@ -68,6 +73,7 @@
             padding: 10px 0;
             margin: 0 10px;
             border-bottom: 1px solid #F4F4F4;
+            border-bottom:none;
         }
 
         #nav-sidebox li.active span, #nav-sidebox li.current span {
@@ -97,9 +103,25 @@
     border: none;
 }
 
+#nav-sidebox li.subcatemenu.level0{
+    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-position: inside;
+    background-color:#fff;
+}
+
+#nav-sidebox li.subcatemenu{
+    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-position: inside;
+}
+
+#nav-sidebox li.subcatemenu:hover{
+    /*background: url('/content/images/icons/2level_bullet_nav.png') no-repeat;*/
+     /*list-style-image:none;*/
+}
+
 #nav-sidebox li.subcatemenu:hover, #nav-sidebox li.subcatemenu:hover > .navigation-1 > .subcatemenu {
-    background: url('/content/images/icons/2level_bullet_nav.gif') 95% 13px no-repeat;
     position: relative;
+    background-color:#dfdfdf;
 }
 
 #nav-sidebox li ul li.active:hover, li.subcatemenu.active:hover {
@@ -121,7 +143,8 @@
 
 #nav-sidebox li a:hover, #nav-sidebox li a.active, .feature-items li a:hover {
     text-decoration: none !important;
-    color: #fdb45e !important;
+    color: #F60 !important;
+    border-bottom:none;
 }
 
 #nav-sidebox li ol {
@@ -274,8 +297,14 @@ ul.navigation-0a li {
 }
 
     ul.navigation-0a li a {
-        background: #fff !important;
+        /*background: #ccc !important;*/
     }
+
+    li.subcatemenu.level1 {
+    position: relative;
+    border: none !important;
+    background-color:#ccc;
+}
 
 li.subcatemenu {
     position: relative;
@@ -298,9 +327,9 @@ li.subcatemenu {
         display: block !important;
         position: absolute;
         right: 100px;
-        padding-left: 25px;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-left: 0;
+        /*padding-top: 15px;*/
+        /*padding-bottom: 15px;*/
     }
 
         li.subcatemenu:hover ul.navigation-0a li:hover {

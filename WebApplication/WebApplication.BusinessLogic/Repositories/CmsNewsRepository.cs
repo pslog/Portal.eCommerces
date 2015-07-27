@@ -21,90 +21,40 @@ namespace WebApplication.BusinessLogic.Repositories
         {
         }
 
-        class Order
-        {
-            public bool OrderByAsc { get; set; }
-            public string OrderProperty { get; set; }
-        }
-
-        public PagingView<cms_News> GetPagingView(CmsNewsIndexViewDTO indexView, ICmsCategoryRepository cmsCategoryRepository, int pageSize = 0)
+        public IQueryable<cms_News> GetCmsNewsByCategoryID(int? categoryID, ICmsCategoryRepository cmsCategoryRepository, out string rootCategoryTitle, string searchKey = "")
         {
             var cmsNews = DbSet.AsQueryable();
-
-            if(indexView.CategoryID == null)
+            
+            if(categoryID == null)
             {
-                cmsNews = DbSet.Where(c => c.CategoryID == indexView.CategoryID).AsQueryable();
+                rootCategoryTitle = string.Empty;
+                cmsNews = DbSet.AsQueryable().Where(n => n.CategoryID == categoryID);
             }
             else
             {
-                var cmsCategoryIDs = cmsCategoryRepository.GetChildren((int)indexView.CategoryID).Select(c => c.ID);
-                cmsNews = DbSet.Where(c => c.CategoryID == indexView.CategoryID || cmsCategoryIDs.Contains((int)c.CategoryID)).AsQueryable();
+                var category = cmsCategoryRepository.GetById((int)categoryID);
+
+                if (category == null)
+                {
+                    rootCategoryTitle = string.Empty;
+                    return Enumerable.Empty<cms_News>().AsQueryable();
+                }
+
+                var categoryIds = new List<int>() { category.ID };
+
+                categoryIds.AddRange(category.GetChildren<cms_Categories>("cms_Categories1").Select(c => c.ID).ToList());
+                
+                cmsNews = DbSet.AsQueryable().Where(n => categoryIds.Contains((int)n.CategoryID));
+                rootCategoryTitle = category.Title;
             }
 
-            if (!string.IsNullOrEmpty(indexView.RouteValue.SearchKey))
+            
+            if(!string.IsNullOrEmpty(searchKey))
             {
-                cmsNews = cmsNews.Where(c => c.ID.ToString().Contains(indexView.RouteValue.SearchKey) 
-                                          || c.Title.Contains(indexView.RouteValue.SearchKey) 
-                                          || c.SubTitle.Contains(indexView.RouteValue.SearchKey)
-                                          || c.Authors.Contains(indexView.RouteValue.SearchKey) 
-                                          || c.GUID.ToString().Contains(indexView.RouteValue.SearchKey));
+                cmsNews = cmsNews.Where(c => c.Title.ToLower().Contains(searchKey) || c.SubTitle.ToLower().Contains(searchKey));
             }
 
-            switch (indexView.RouteValue.OrderBy)
-            {
-                case ModelName.CmsNews.ID:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.ID) : cmsNews.OrderBy(c => c.ID);
-                    break;
-                case ModelName.CmsNews.Title:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.Title) : cmsNews.OrderBy(c => c.Title);
-                    break;
-                case ModelName.CmsNews.Authors:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.Authors) : cmsNews.OrderBy(c => c.Authors);
-                    break;
-                case ModelName.CmsNews.TotalView:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.Authors) : cmsNews.OrderBy(c => c.Authors);
-                    break;
-                case ModelName.CmsNews.CreatedBy:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.CreatedBy) : cmsNews.OrderBy(c => c.CreatedBy);
-                    break;
-                case ModelName.CmsNews.CreatedDate:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.CreatedDate) : cmsNews.OrderBy(c => c.CreatedDate);
-                    break;
-                case ModelName.CmsNews.ModifiedBy:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.ModifiedBy) : cmsNews.OrderBy(c => c.ModifiedBy);
-                    break;
-                case ModelName.CmsNews.ModifiedDate:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.ModifiedDate) : cmsNews.OrderBy(c => c.ModifiedDate);
-                    break;
-                default:
-                    cmsNews = indexView.RouteValue.OrderByDesc ? cmsNews.OrderByDescending(c => c.CreatedDate) : cmsNews.OrderBy(c => c.CreatedDate);
-                    break;
-            }
-
-            indexView.RouteValue.TotalPages = cmsNews.Count();
-            indexView.RouteValue.TotalPages = indexView.RouteValue.TotalPages % ConstValue.PageSize == 0 ? indexView.RouteValue.TotalPages / ConstValue.PageSize : indexView.RouteValue.TotalPages / ConstValue.PageSize + 1;
-
-            return new PagingView<cms_News>
-            {
-                Items = cmsNews.ToPageList(pageSize > 0 ? pageSize : ConstValue.PageSize, indexView.RouteValue.PageNumber),
-                RouteValue = indexView.RouteValue
-            };
-        }
-        public CmsNewsDTO GetCmsNewsDTO(int? categoryID, IRepository<cms_Categories> cmsCategoryRepository, cms_News cmsNews = null)
-        {
-            var categories = cmsCategoryRepository.GetAll().ToList();
-
-            categories.Insert(0, new cms_Categories
-            {
-                ID = 0,
-                Title = string.Empty
-            });
-
-            return new CmsNewsDTO
-            {
-                CmsNews = cmsNews,
-                Categories = new SelectList(categories, "ID", "Title", categoryID)
-            };
+            return cmsNews.OrderByDescending(c => c.CreatedDate);
         }
 
         public cms_News GetNewCmsNews(cms_News cmsNews, int creatorId, int modifierId)

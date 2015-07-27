@@ -112,19 +112,18 @@ namespace WebApplication.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,GUID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
+        public ActionResult Edit([Bind(Include = "ParentID,Title,Description,Url,SortOrder,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] product_Categories product_Categories, string ParentID)
         {
             if (ModelState.IsValid)
             {
-                if (ParentID.Trim().Equals(""))
-                {
-                    product_Categories.ParentID = Guid.Empty;
-                }
-                else
-                {
-                    product_Categories.ParentID = Guid.Parse(ParentID);
-                }
-                db.Entry(product_Categories).State = EntityState.Modified;
+                //if (ParentID.Trim().Equals(""))
+                //{
+                //    product_Categories.ParentID = Guid.Empty;
+                //}
+                //else
+                //{
+                //    product_Categories.ParentID = Guid.Parse(ParentID);
+                //}
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -157,7 +156,7 @@ namespace WebApplication.Admin.Controllers
             temp = db.product_Categories.Where(c => c.ParentID == product_Categories.GUID).ToList();
             List<product_Products> temp2 = new List<product_Products>();
             temp2 = db.product_Products.Where(p => p.CategoryID == id).ToList();
-            if (temp.Count == 0 && temp2.Count()==0)
+            if (temp.Count == 0 && temp2.Count() == 0)
             {
                 db.product_Categories.Remove(product_Categories);
                 db.SaveChanges();
@@ -208,8 +207,8 @@ namespace WebApplication.Admin.Controllers
 
             return PartialView("_CategoryProducts_LeftSideBar_Partial", listCategoriesLeftMenuViewModels);
         }
-        
-             public ActionResult ListCategoriesLeftMenuByAjax()
+
+        public ActionResult ListCategoriesLeftMenuByAjax()
         {
             IList<ListCategoriesLeftMenuViewModels> listCategoriesLeftMenuViewModels = new List<ListCategoriesLeftMenuViewModels>();
             var categories = _categoryRepository.GetAllRootCategory();

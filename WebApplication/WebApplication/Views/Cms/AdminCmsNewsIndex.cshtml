@@ -1,0 +1,82 @@
+﻿@model IPagedList<WebApplication.Models.Models.cms_News>
+
+@using PagedList;
+@using PagedList.Mvc
+
+@using WebApplication.Common.Constants
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.ViewModels
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int pageNumber = (int)ViewBag.PageNumber;
+    int? categoryID = (int?)ViewBag.CategoryID;
+    string searchKey = (string)ViewBag.SearchKey;
+}
+
+
+@section navItems {
+    
+    @if (categoryID == null)
+    {
+        <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex", "Cms", null, null)</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink(string.Format("Quay về {0}", (string)ViewBag.CategoryTitle), "EditCmsCategory", "Cms", new { id = (int)categoryID }, null)</li>
+    }
+}
+
+<div class="col-md-8 col-md-offset-2">
+    <p></p>
+    @using (Html.BeginForm("CmsCategoryIndex", "Cms"))
+    {
+        @Html.Hidden("CategoryID", (int?)ViewBag.CategoryID)
+        if (categoryID != null)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>
+                        @Html.ActionLink("Thêm bài viết", "CreateCmsNews", "Cms", new { categoryID = categoryID }, null)
+                    </h4>
+                </div>
+                <div class="col-md-4 pull-right">
+                    @Html.TextBox("searchKey", searchKey, new { @type = "search", @placeholder = "Tìm kiếm", @class = "form-control pull-right" })
+                </div>
+            </div>
+        }
+
+        if (Model != null && Model.Count > 0)
+        {
+            <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                <tr>
+                    <th>@Html.DisplayName(Label.CmsNews.Title)</th>
+                    <th>@Html.DisplayName(Label.CmsNews.Authors)</th>
+                    <th>@Html.DisplayName(Label.CmsCategory.CreatedDate)</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Authors)
+                        </td>
+                        <td>
+                            @Html.ActionLink(Label.CRUD.Edit, "EditCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID }) |
+                            @Html.ActionLink(Label.CRUD.Delete, "DeleteCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID })
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+
+        <div class="pull-right">
+            @Html.PagedListPager(Model, page => Url.Action("AdminCmsNewsIndex", "Cms", new { categoryID = categoryID, pageNumber = page, searchKey = searchKey }))
+        </div>
+    }
+</div>

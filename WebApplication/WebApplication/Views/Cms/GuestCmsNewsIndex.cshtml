@@ -1,0 +1,158 @@
+﻿@model IPagedList<WebApplication.Models.Models.cms_News>
+
+@using WebApplication.Common.Constants
+@using WebApplication.Libraries.Extensions
+@using WebApplication.Libraries.CustomHtml
+@using WebApplication.Models.Models
+
+@using PagedList.Mvc
+@using PagedList;
+
+@{
+    int pageNumber = (int)ViewBag.PageNumber;
+    int? categoryID = (int?)ViewBag.CategoryID;
+    string searchKey = (string)ViewBag.SearchKey;
+    string title = string.IsNullOrEmpty((string)ViewBag.CategoryTitle) ? "DANH MỤC" : (string)ViewBag.CategoryTitle;
+    var cmsCategories = ViewBag.CmsCategories == null ? Enumerable.Empty<cms_Categories>().ToList() : (List<cms_Categories>)ViewBag.CmsCategories;
+    var categoryParents = ViewBag.CategoryParents == null ? Enumerable.Empty<cms_Categories>().ToList() : (List<cms_Categories>)ViewBag.CategoryParents;
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Plugins/flat-flyout-menu.css")" rel="stylesheet" />
+    <style>
+        #cms_news_container,
+        #cms_news_container div {
+            padding: 0;
+            margin: 0;
+        }
+
+        li.paging-active > a {
+            background: #FE980F;
+            color: white;
+        }
+
+        #breadcrumb.breadcrumb {
+            background: none;
+            border-bottom: 1px solid #c9c9c9;
+            padding: 0;
+            padding-bottom: 5px;
+            border-radius: 0;
+            font-size: 14px;
+        }
+
+        #breadcrumb.breadcrumb a {
+            color: #FE980F;
+        }
+
+        #breadcrumb.breadcrumb a:hover {
+            text-decoration: underline;
+        }
+         #cms_news_items .cms-news-item-header {
+            font-size:15px;
+            font-weight:bold;
+        }
+        #cms_news_items  a{
+            color:#FE980F;
+        
+        }
+        #cms_news_items  a:hover{
+            text-decoration:underline;
+        }
+
+        #cms_news_items .cms-news-info,
+        #cms_news_items .cms-news-content a {
+            font-style:italic;
+        }
+        #cms_news_items .cms-news-content a {
+            float:right;
+        }
+
+        #cms_news_items > div {
+            margin:5px 0;
+            padding:5px 0;
+        }
+
+        #cms_news_items {
+            height:525px;
+        }
+        #cms_news_view .pagination{
+            margin:0;
+        }
+    </style>
+}
+
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="left-sidebar">
+            <h2>@title</h2>
+            <div id="cms_categories_container">
+                @cmsCategories.ToNavigation(Html)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <ul id="breadcrumb" class="breadcrumb">
+            @if (categoryParents.Count > 0)
+            {
+                for (int i = categoryParents.Count - 2; i > 0; i--)
+                {
+                    var parent = categoryParents.ElementAt(i);
+
+                    <li>@Html.ActionLink(parent.Title, "GuestCmsNewsIndex", "Cms", new { categoryID = parent.ID }, null)</li>
+                }
+
+                <li><span>@categoryParents.ElementAt(0).Title</span></li>
+            }
+        </ul>
+        <div id="cms_news_container" class="row">
+            @using (Html.BeginForm("GuestCmsNewsIndex", "Cms"))
+            {
+                @Html.Hidden("categoryID", (int?)ViewBag.CategoryID)
+                <div class="row">
+                    <div class="col-md-4 pull-right">
+                        @Html.TextBox("searchKey", searchKey, new { @type = "search", @placeholder = "Tìm kiếm", @class = "form-control pull-right" })
+                    </div>
+                </div>
+                <p></p>
+
+                if (Model != null && Model.Count > 0)
+                {
+                    <div id="cms_news_items">
+                        
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="row">
+                                <div class="cms-news-item-header">
+                                    @Html.ActionLink(item.Title, "CmsNewsDetails", "Cms", new { id = item.ID }, null)
+                                </div>
+                                <div class="cms-news-info">
+                                    <span class="cms-news-date">@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                                </div>
+                                <div class="cms-news-content">
+                                    <span>@((item.SubTitle + item.SubTitle + item.SubTitle).ToEllipsis(0, 250, "..."))</span>
+                                    <span>@Html.ActionLink("Chi tiết", "CmsNewsDetails", "Cms", new { id = item.ID }, null)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="pull-right">
+                    @Html.PagedListPager(Model, page => Url.Action("GuestCmsNewsIndex", "Cms", new { categoryID = categoryID, pageNumber = page, searchKey = searchKey }))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryunobtrusiveajax")
+    <script>
+        $(document).ready(function () {
+            $('#cms_categories_container li:has(ul)').addClass('has-sub');
+        });
+    </script>
+}

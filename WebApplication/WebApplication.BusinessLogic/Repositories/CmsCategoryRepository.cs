@@ -22,15 +22,6 @@ namespace WebApplication.BusinessLogic.Repositories
         {
         }
 
-        public cms_Categories GetByGuid(Guid guid)
-        {
-            return DbSet.FirstOrDefault(c => c.GUID == guid);
-        }
-        public IQueryable<cms_Categories> GetExcept(int id)
-        {
-            return DbSet.Where(nc => nc.ID != id);
-        }
-
         public cms_Categories GetNewCmsCategory(cms_Categories cmsCategory, int creatorId, int modifierId)
         {
             cmsCategory.CreatedBy = creatorId;
@@ -49,55 +40,10 @@ namespace WebApplication.BusinessLogic.Repositories
 
             return updateCmsCategory;
         }
-
-
-        public IEnumerable<cms_Categories> GetCmsCategories(int? parentId)
+        public IQueryable<cms_Categories> GetCmsCategoriesByParentID(int? parentId)
         {
-            var cmsCategories = DbSet.AsQueryable().Where(c => c.ParentID == parentId).ToList();
-
-            //if (parentId == null && cmsCategories.Count > 0)
-            //{
-            //    cmsCategories.Add(new cms_Categories { ID = 0, Title = "khác", GUID = Guid.Empty });
-            //}
-
-            return cmsCategories;
+            return DbSet.AsQueryable().Where(c => c.ParentID == parentId);
         }
-
-        public CmsCategoryCreateView GetCreateView(int? parentID)
-        {
-            var parent = this.GetById(parentID ?? 0);
-            
-            if (parent != null)
-            {
-                return new CmsCategoryCreateView
-                {
-                    ParentID = parent.ID,
-                    ParentTitle = parent.Title
-                };
-            }
-
-            return new CmsCategoryCreateView();
-        }
-        public CmsCategoryEditView GetEditView(int id) 
-        {
-            var cmsCategory = this.GetById(id);
-            var parents = this.GetExcept(id).ToList();
-
-            parents.Insert(0, new cms_Categories { ID = 0, Title = Label.CmsCategory.RootCategory });
-
-            if (cmsCategory != null)
-            {
-                return new CmsCategoryEditView
-                {
-                    CmsCategory = cmsCategory,
-                    Parents = new SelectList(parents, ModelName.CmsCategory.ID, ModelName.CmsCategory.Title, cmsCategory.ParentID ?? 0)
-                };
-            }
-
-            return null;
-        }
-
-
         public IQueryable<cms_Categories> GetChildren(int id)
         {
             return DbSet.Where(c => c.ParentID == id);

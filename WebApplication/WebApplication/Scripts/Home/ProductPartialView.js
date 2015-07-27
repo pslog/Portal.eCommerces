@@ -18,7 +18,7 @@ ProductBoard = {
         /// <returns>N/A</returns>
 
         $.ajax({
-            url: ProductBoard.options.path+"ProductBoard/AddToCart",
+            url:"/ProductBoard/AddToCart",
             dataType: "html",
             data: { Id: productId },
             success: function (result) {
@@ -39,7 +39,7 @@ ProductBoard = {
         /// <returns>N/A</returns>
 
         $.ajax({
-            url: ProductBoard.options.path + "ProductBoard/RemoveFromCart",
+            url:"/ProductBoard/RemoveFromCart",
             dataType: "html",
             data: { Id: productId },
             success: function (result) {
@@ -83,7 +83,7 @@ ProductBoard = {
             alert("số lượng sản phẩm phải lớn hơn 0");
         }
         $.ajax({
-            url: ProductBoard.options.path + "ProductBoard/UpdateQuantityOfProduct",
+            url:"/ProductBoard/UpdateQuantityOfProduct",
             dataType: "html",
             data: { Id: productId, quantity: quantity },
             success: function (result) {
@@ -110,6 +110,5 @@ ProductBoard = {
     },
     options: {
         selectedUsers: 0,
-        path: "http://localhost:11111/"
     }
 };

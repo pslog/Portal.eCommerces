@@ -11,6 +11,7 @@ namespace WebApplication.Models.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
     
     public partial class product_Products
     {
@@ -30,6 +31,7 @@ namespace WebApplication.Models.Models
         public decimal PriceOfUnit { get; set; }
         public Nullable<int> CoverImageID { get; set; }
         public string Description { get; set; }
+        [AllowHtml]
         public string Description2 { get; set; }
         public Nullable<int> TotalView { get; set; }
         public Nullable<int> TotalBuy { get; set; }

@@ -46,17 +46,32 @@
                 }
                 if (NumberLastGroup > 0)
                 {
-                    <div class="item ">
-                        @for (int i = 0; i < NumberLastGroup; i++)
-                        {
-                            <div class="col-sm-4">
-                                @Html.Partial("ProductItemPartial", Model.ElementAt(Count * 3 + i))
-                            </div>
-                        }
-                    </div>
+                    if (NumberGroups == 0)
+                    {
+                        <div class="item active">
+                            @for (int i = 0; i < NumberLastGroup; i++)
+                            {
+                                <div class="col-sm-4">
+                                    @Html.Partial("ProductItemPartial", Model.ElementAt(Count * 3 + i))
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            @for (int i = 0; i < NumberLastGroup; i++)
+                            {
+                                <div class="col-sm-4">
+                                    @Html.Partial("ProductItemPartial", Model.ElementAt(Count * 3 + i))
+                                </div>
+                            }
+                        </div>
+                    }
+
                 }
 
-            }
+}
 
         </div>
         <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
@@ -67,6 +82,3 @@
         </a>
     </div>
 </div><!--/recommended_items-->
-<script>
-    $(".carousel-inner .item").first().addClass("active");
-</script>

@@ -114,7 +114,6 @@ ProductDetailsPartialView = {
         }); // end click
     },
     options: {
-        path: "http://localhost:11111/"
     }
 };
 

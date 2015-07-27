@@ -1,5 +1,8 @@
 ﻿<script src="~/Scripts/Home/ProductPartialView.js"></script>
-@model IEnumerable<WebApplication.Models.ViewModels.ProductPartialViewModel>
+@model IPagedList<WebApplication.Models.ViewModels.ProductPartialViewModel>
+
+@using PagedList;
+@using PagedList.Mvc;
 
 <div class="features_items">
     <!--features_items-->
@@ -28,11 +31,17 @@
                 <button type="button" class="btn btn-default" id="ProductBoard_ContinueShopping">
                     <span class="glyphicon glyphicon-shopping-cart"></span> Tiếp tục mua sắm
                 </button>
-                <a href="/ProductBoard/CheckOutCart" class="btn btn-success">Thanh toán<span class="glyphicon glyphicon-play"></span></a>
+                <a href="/CheckOut/OrderProduct" class="btn btn-success">Thanh toán<span class="glyphicon glyphicon-play"></span></a>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="pull-right">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Shop", new { CategoryGuid = (Guid?)ViewBag.CategoryGuid, pageNumber = page }))
+</div>
+
 <script>
     ProductBoard.init();
 </script>
