@@ -188,7 +188,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\trungkienkaka.sql" />
     <Content Include="Content\BoardProduct\AddToCart_PartialView.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -692,10 +691,10 @@
     <Content Include="Content\Plugins\ckeditor\styles.js" />
     <Content Include="Content\Plugins\flat-flyout-menu.css" />
     <Content Include="Content\response\1.4.2\respond.min.js" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Common\bootstrap.min.js" />
@@ -736,7 +735,6 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js.map">
       <DependentUpon>jquery.unobtrusive-ajax.min.js</DependentUpon>
     </Content>
-    <Content Include="App_Data\Portal.eCommerce.bak" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -773,8 +771,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Views\Home\index.html" />
-    <Content Include="Views\Shop\shop.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -851,10 +847,8 @@
     <Content Include="Views\Shared\ProductItemPartial.cshtml" />
     <Content Include="Views\ProductBoard\ProductDetails.cshtml" />
     <Content Include="Views\ProductBoard\_ProductDetails_Partial.cshtml" />
-    <Content Include="Views\Shared\BrandProducts_LeftSideBar_Partial.cshtml" />
     <Content Include="Views\Shared\PriceRange_LeftSideBar_Partial.cshtml" />
     <Content Include="Views\Shared\Shipping_LeftSideBar_Partial.cshtml" />
-    <Content Include="Views\Shared\Test.cshtml" />
     <Content Include="Views\Shared\_CategoryProducts_LeftSideBar_Partial.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
     <Content Include="Views\Shared\_HeaderPartial.cshtml" />
@@ -870,6 +864,7 @@
     <Content Include="Views\Cms\GuestCmsNewsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Content\Product\" />
   </ItemGroup>
   <ItemGroup>

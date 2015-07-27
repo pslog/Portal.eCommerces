@@ -4,7 +4,7 @@
     ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Content/ProductDetails");
+@Styles.Render("~/Content/ProductDetails")
 <section>
     <div class="container">
         <div class="row">
@@ -12,7 +12,9 @@
                 <div class="left-sidebar">
                     @*@Html.Partial("_CategoryProducts_LeftSideBar_Partial")*@
                     @Html.Action("ListCategoriesLeftMenu", "Category")
-                    @Html.Partial("Shipping_LeftSideBar_Partial")
+                    @*@Html.Partial("Shipping_LeftSideBar_Partial")*@
+                    @Html.Partial("_HotlinePartial")
+                    @Html.Partial("Gadget_LeftPartial")
                 </div>
             </div>
 
@@ -21,7 +23,7 @@
                     @Html.Partial("_ProductDetails_Partial", @Model)
                 </div>
                 <div>
-                    @Html.Action("ListBestByProduct", "ProductBoard") ;
+                    @Html.Action("ListBestByProduct", "ProductBoard")
                 </div>
             </div>
         </div>
