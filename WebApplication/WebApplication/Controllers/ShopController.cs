@@ -20,7 +20,6 @@ namespace WebApplication.Controllers
         public ActionResult Index(Guid? CategoryGuid, int pageNumber = 1)
         {
             ViewBag.CategoryGuid = CategoryGuid;
-            ViewBag.PageNumber = pageNumber;
 
             if (CategoryGuid == null)
             {
@@ -34,7 +33,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         public ActionResult ListProduct(Guid? CategoryGuid, int pageNumber = 1)
         {
-            ViewBag.PageNumber = pageNumber;
+            ViewBag.CategoryGuid = CategoryGuid;
 
             if (CategoryGuid == null)
             {
