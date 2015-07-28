@@ -61,7 +61,7 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="/Home" class="active">Trang chủ</a></li>                            
-                            <li><a href="#">Giới thiệu</a></li>
+                            <li>@Html.ActionLink("Giới thiệu", "GuestCmsNewsIndex", "Cms", new { categoryID = 95 }, null)</li>
                             <li>@Html.ActionLink("Khuyến mãi", "GuestCmsNewsIndex", "Cms", new { categoryID = 92 }, null)</li>
                             <li>@Html.ActionLink("Tin tức", "GuestCmsNewsIndex", "Cms", new { categoryID = 91 }, null)</li>
                             <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
