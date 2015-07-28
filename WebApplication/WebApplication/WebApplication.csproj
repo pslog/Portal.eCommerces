@@ -200,8 +200,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
     <Content Include="Content\Common\animate.css" />
-    <Content Include="Content\Common\bootstrap.min.css" />
-    <Content Include="Content\Common\font-awesome.min.css" />
+    <Content Include="Content\Common\font-awesome.css" />
     <Content Include="Content\Common\main.css" />
     <Content Include="Content\Common\PagedList.css" />
     <Content Include="Content\Common\prettyPhoto.css" />
@@ -314,57 +313,6 @@
     <Content Include="Content\Images\product-details\similar1.jpg" />
     <Content Include="Content\Images\product-details\similar2.jpg" />
     <Content Include="Content\Images\product-details\similar3.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_11165_tu-lanh-2-canh-sanyo-sr-s185pnsn-170-lit.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_11257_may-giat-toshiba-aw-9791sv-wb-9kg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_130718069197846199-MSZ802D-EX.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_1312677282_RINNAI RV-4600GLT.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_1338685116Samsungs3reviewiphonemacworldaustralia.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_164-cheap-washing-machine.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_529_958.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_7-at121504ap-msaw1.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_757909.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_8394.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_9x71-460.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_bep-ga-am-rinnai-rb-3cg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_bep-gas-2087GEG-1500x572.png" />
-    <Content Include="Content\Images\ProductImages\item_0_Bep-gas-am-kinh-Sakura-SG-2365G.jpeg" />
-    <Content Include="Content\Images\ProductImages\item_0_binh-nong-lanh-hien-thi-nhiet-do-olympic-nova-30l.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_binh_gas_petro.png" />
-    <Content Include="Content\Images\ProductImages\item_0_c04b4be2-f112-4ea4-8b0c-98065d5a995d_tu-lanh-333l-panasonic-nr-bk346gsvn-2-canh-ngan-da-tren.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_c229af93-222b-4686-b3bb-2d18684fa931_binh-nong-lanh-truc-tiep-ferroli-divo-ssp-cs4500w.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_casaunam-1.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_dien-thoai-samsung-galaxy-siii-galaxy-s3-shv-e210-2g-3g-4g-hdh-android-16gb-4-8-inch-2100mah5.png" />
-    <Content Include="Content\Images\ProductImages\item_0_holister-do-590x800.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_iphone-6-plus-reachability.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_iphone6-plus-specs-hero-2014.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_iphone6plus-folder-portrait.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_lxx1289550410.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_May-giatTeka-TKX1-1000T-giam-gia-tai-besthome.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_may-nuoc-nong-bi-ri-nuoc.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_ntm_Product_full_03042014_110424.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_polo_s777.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_qbh1406778911.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_quan-jean-nam-khong-co-gian-mau-xanh-nhat-ipxi5981e0w0h0.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_samsung-galaxy-s3-front-back-angle.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_thumbnail.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_tran-anh-tu-lanh-lg-2-cua--185-lit-chan-de-gn-185mg-%281%29.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_tulanh1.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_Tu_lanh_Funiki_FR-132.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_uhp1421312476.jpg" />
-    <Content Include="Content\Images\ProductImages\item_0_zil1436847622.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_11165_tu-lanh-2-canh-sanyo-sr-s185pnsn-170-lit.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_11257_may-giat-toshiba-aw-9791sv-wb-9kg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_529_958.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_bep-ga-am-rinnai-rb-3cg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_bep-gas-2087GEG-1500x572.png" />
-    <Content Include="Content\Images\ProductImages\item_1_Bep-gas-am-kinh-Sakura-SG-2365G.jpeg" />
-    <Content Include="Content\Images\ProductImages\item_1_c04b4be2-f112-4ea4-8b0c-98065d5a995d_tu-lanh-333l-panasonic-nr-bk346gsvn-2-canh-ngan-da-tren.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_qbh1406778911.jpg" />
-    <Content Include="Content\Images\ProductImages\item_1_tulanh1.jpg" />
-    <Content Include="Content\Images\ProductImages\item_2_11257_may-giat-toshiba-aw-9791sv-wb-9kg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_2_bep-ga-am-rinnai-rb-3cg.jpg" />
-    <Content Include="Content\Images\ProductImages\item_2_bep-gas-2087GEG-1500x572.png" />
-    <Content Include="Content\Images\ProductImages\item_3_bep-gas-2087GEG-1500x572.png" />
     <Content Include="Content\Images\shop\advertisement.jpg" />
     <Content Include="Content\Images\shop\product10.jpg" />
     <Content Include="Content\Images\shop\product11.jpg" />
@@ -770,6 +718,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\Official.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -865,6 +814,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\ProductImages\" />
     <Folder Include="Content\Product\" />
   </ItemGroup>
   <ItemGroup>

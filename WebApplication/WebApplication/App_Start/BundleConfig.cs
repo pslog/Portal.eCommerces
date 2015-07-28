@@ -33,18 +33,27 @@ namespace WebApplication
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                       "~/Content/Home/product_Home.css"));
+                       "~/Content/Home/product_Home.css",
 
-            //Common css
-            bundles.Add(new StyleBundle("~/Content/Common").Include(
-                      "~/Content/Common/bootstrap.min.css",
-                      "~/Content/Common/font-awesome.min.css",
+                       "~/Content/Common/font-awesome.css",
                        "~/Content/Common/prettyPhoto.css",
                        "~/Content/Common/price-range.css",
                        "~/Content/Common/animate.css",
                        "~/Content/Common/main.css",
                        "~/Content/Common/vertical-menu.css",
-                       "~/Content/Common/responsive.css"));
+                       "~/Content/Common/responsive.css"
+                       ));
+
+            //Common css
+            //bundles.Add(new StyleBundle("~/Content/cssCommon").Include(                      
+                       //"~/Content/Common/font-awesome.css"
+                       //"~/Content/Common/prettyPhoto.css",
+                       //"~/Content/Common/price-range.css",
+                       //"~/Content/Common/animate.css",
+                       //"~/Content/Common/main.css",
+                       //"~/Content/Common/vertical-menu.css",
+                       //"~/Content/Common/responsive.css"
+                       //));
             //Common javascript
 
             bundles.Add(new ScriptBundle("~/bundles/Common").Include(
