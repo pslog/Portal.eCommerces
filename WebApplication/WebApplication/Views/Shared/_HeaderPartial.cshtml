@@ -23,7 +23,6 @@
             </div>
         </div>
     </div><!--/header_top-->
-
     <div class="header-middle">
         <!--header-middle-->
         <div class="container">
@@ -31,20 +30,21 @@
                 <div class="col-sm-4">
                     <div class="logo pull-left">
                         <a href="index.html"><img src="../../Content/Images/home/logo.png" alt="" /></a>
-                    </div>                   
+                    </div>
                 </div>
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
-                        <ul class="nav navbar-nav">                           
+                        <ul class="nav navbar-nav">
                             <li><a href="#" onclick="ShowCart()"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-                            <li><a href="/Login"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                            <li>
+                                @Html.Partial("_LoginPartial")
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div><!--/header-middle-->
-
     <div class="header-bottom">
         <!--header-bottom-->
         <div class="container">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="/Home" class="active">Trang chủ</a></li>                            
+                            <li><a href="/Home" class="active">Trang chủ</a></li>
                             <li>@Html.ActionLink("Giới thiệu", "GuestCmsNewsIndex", "Cms", new { categoryID = 95 }, null)</li>
                             <li>@Html.ActionLink("Khuyến mãi", "GuestCmsNewsIndex", "Cms", new { categoryID = 92 }, null)</li>
                             <li>@Html.ActionLink("Tin tức", "GuestCmsNewsIndex", "Cms", new { categoryID = 91 }, null)</li>
