@@ -214,9 +214,9 @@
                             @using (Ajax.BeginForm("UploadImage", "Product", new AjaxOptions() { UpdateTargetId = "EditProduct_ListProductImages", HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
-                                    <input type="file" name="files">
-                                    <input type="hidden" value=@Model.ID name="IdProduct" />
-                                    <input type="submit" value="upload" />
+                                    <input type="file" name="files" class="btn btn-info" style="display:inline-block;margin-right:10px;">
+                                    <input type="hidden" value=@Model.ID name="IdProduct"/>
+                                    <input type="submit" value="upload" class="btn btn-danger" style="display:inline-block;width:100px;"/>
                                 }
 </div>
                     </div>
