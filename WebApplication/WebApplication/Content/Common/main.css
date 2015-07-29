@@ -913,7 +913,10 @@ h2.title {
 .single-products:hover .product-overlay {
     display: block;
     height: 100%;
+    width:99%;
+    margin-left:1px;
     border:1px solid #FE980F;
+    
 }
 
 
