@@ -89,8 +89,13 @@
             <h2>@title</h2>
             <div id="cms_categories_container">
                 @cmsCategories.ToNavigation(Html)
+                <div>
+                    @Html.Partial("_HotlinePartial")
+                    @Html.Partial("Gadget_LeftPartial")
+                </div>
             </div>
-        </div>
+            
+        </div>        
     </div>
     <div class="col-md-9">
         <ul id="breadcrumb" class="breadcrumb">
