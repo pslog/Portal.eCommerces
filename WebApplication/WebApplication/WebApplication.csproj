@@ -271,8 +271,7 @@
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\font-awesome\4.3.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\4.3.0\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Home\ProductDetailsView.css" />
     <Content Include="Content\Home\product_Home.css" />
     <Content Include="Content\html5shiv\3.7.2\html5shiv.min.js" />
@@ -850,11 +849,7 @@
     <Content Include="Content\font-awesome\4.3.0\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-awesome\4.3.0\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\font-awesome\4.3.0\fonts\FontAwesome.otf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\Official.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />

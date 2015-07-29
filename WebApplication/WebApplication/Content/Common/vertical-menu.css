@@ -104,13 +104,13 @@
 }
 
 #nav-sidebox li.subcatemenu.level0{
-    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-image: url('../Content/Images/Icons/list-style-icon.png');
     list-style-position: inside;
     background-color:#fff;
 }
 
 #nav-sidebox li.subcatemenu{
-    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-image: url('../Content/Images/Icons/list-style-icon.png');
     list-style-position: inside;
 }
 

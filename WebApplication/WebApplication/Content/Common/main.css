@@ -1031,7 +1031,7 @@ h2.title {
     overflow: hidden;
 }
 #details li{
-    list-style-image: url('../Images/Icons/list-style-icon.png');
+    list-style-image: url('../Content/Images/Icons/list-style-icon.png');
     list-style-position: outside;
 }
 
