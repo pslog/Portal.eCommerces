@@ -104,19 +104,7 @@
 }
 
 #nav-sidebox li.subcatemenu.level0{
-    list-style-image: url('../Content/Images/Icons/list-style-icon.png');
-    list-style-position: inside;
     background-color:#fff;
-}
-
-#nav-sidebox li.subcatemenu{
-    list-style-image: url('../Content/Images/Icons/list-style-icon.png');
-    list-style-position: inside;
-}
-
-#nav-sidebox li.subcatemenu:hover{
-    /*background: url('/content/images/icons/2level_bullet_nav.png') no-repeat;*/
-     /*list-style-image:none;*/
 }
 
 #nav-sidebox li.subcatemenu:hover, #nav-sidebox li.subcatemenu:hover > .navigation-1 > .subcatemenu {
