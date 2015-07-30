@@ -31,11 +31,11 @@ namespace WebApplication.Libraries.Extensions
 
         public static MvcHtmlString ToNavigation(this IEnumerable<cms_Categories> cmsCategories, HtmlHelper htmlHelper, AjaxHelper ajaxHelper = null)
         {
-            StringBuilder builder = new StringBuilder(string.Format(@"<ul class=""nav nav-pills nav-stacked"" {0}>", string.Empty));
+            StringBuilder builder = new StringBuilder(string.Format(@"<ul id='nav-sidebox' class='category-items'>"));
 
             foreach (var cmsCategory in cmsCategories)
             {
-                builder.Append(string.Format(@"<li id=""category_{0}"">", cmsCategory.ID));
+                builder.Append(string.Format(@"<li class='level0 subcatemenu'>"));
                 if(ajaxHelper == null)
                 {
                     builder.Append(htmlHelper.ActionLink(cmsCategory.Title, "GuestCmsNewsIndex", new { categoryID = cmsCategory.ID }));

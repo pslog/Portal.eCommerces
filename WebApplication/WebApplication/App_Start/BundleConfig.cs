@@ -35,7 +35,7 @@ namespace WebApplication
                       "~/Content/site.css",
                        "~/Content/Home/product_Home.css",
 
-                       "~/Content/Common/font-awesome.css",
+                       "~/Content/font-awesome/4.3.0/css/font-awesome.min.css",
                        "~/Content/Common/prettyPhoto.css",
                        "~/Content/Common/price-range.css",
                        "~/Content/Common/animate.css",
