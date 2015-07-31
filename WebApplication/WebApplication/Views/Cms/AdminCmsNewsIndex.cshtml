@@ -54,6 +54,7 @@
                     <th>@Html.DisplayName(Label.CmsNews.Title)</th>
                     <th>@Html.DisplayName(Label.CmsNews.Authors)</th>
                     <th>@Html.DisplayName(Label.CmsCategory.CreatedDate)</th>
+                    <th>Lượt xem</th>
                     <th></th>
                 </tr>
 
@@ -69,6 +70,9 @@
                         <td>
                             @Html.ActionLink(Label.CRUD.Edit, "EditCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID }) |
                             @Html.ActionLink(Label.CRUD.Delete, "DeleteCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalView ?? 0)
                         </td>
                     </tr>
                 }

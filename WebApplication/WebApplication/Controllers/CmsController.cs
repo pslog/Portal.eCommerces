@@ -324,6 +324,10 @@ namespace WebApplication.Controllers
                     return HttpNotFound();
                 }
 
+                cmsNews.TotalView = cmsNews.TotalView ?? 0 + 1;
+
+                await uow.CommitAsync();
+
                 return View(cmsNews);
             }
             catch(Exception)

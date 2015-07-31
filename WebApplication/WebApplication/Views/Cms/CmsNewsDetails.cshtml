@@ -41,7 +41,7 @@
     </div>
     
     <div class="cms-news-info">
-        <span>Thêm bởi: <b>@Html.DisplayFor(model => model.Authors)</b> - Thêm ngày: @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm tt")</span>
+        <span>Thêm bởi: <b>@Html.DisplayFor(model => model.Authors)</b> - Thêm ngày: @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm tt") - @string.Format("{0} Lượt xem", Model.TotalView ?? 0)</span>
     </div>
 
     <div class="cms-news-sub-title">
