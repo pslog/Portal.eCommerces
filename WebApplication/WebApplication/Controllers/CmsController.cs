@@ -218,7 +218,7 @@ namespace WebApplication.Controllers
       
     #endregion
 
-        [RequiredLogin]
+        //[RequiredLogin]
         public async Task<ActionResult> AdminCmsNewsIndex(int? categoryID, int pageNumber = 1, string searchKey = "")
         {
             try
@@ -324,7 +324,7 @@ namespace WebApplication.Controllers
                     return HttpNotFound();
                 }
 
-                cmsNews.TotalView = cmsNews.TotalView ?? 0 + 1;
+                cmsNews.TotalView = (cmsNews.TotalView ?? 0) + 1;
 
                 await uow.CommitAsync();
 
