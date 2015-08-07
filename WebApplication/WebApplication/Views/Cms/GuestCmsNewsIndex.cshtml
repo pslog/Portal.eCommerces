@@ -26,7 +26,7 @@
         }
 
         li.paging-active > a {
-            background: #FE980F;
+            background: #40AAD6;
             color: white;
         }
 
@@ -40,7 +40,7 @@
         }
 
         #breadcrumb.breadcrumb a {
-            color: #FE980F;
+            color: #40AAD6;
         }
 
         #breadcrumb.breadcrumb a:hover {
@@ -51,7 +51,7 @@
             font-weight:bold;
         }
         #cms_news_items  a{
-            color:#FE980F;
+            color:#40AAD6;
         
         }
         #cms_news_items  a:hover{
@@ -124,8 +124,6 @@
                 if (Model != null && Model.Count > 0)
                 {
                     <div id="cms_news_items">
-                        
-
                         @foreach (var item in Model)
                         {
                             <div class="row">
@@ -133,7 +131,8 @@
                                     @Html.ActionLink(item.Title, "CmsNewsDetails", "Cms", new { id = item.ID }, null)
                                 </div>
                                 <div class="cms-news-info">
-                                    <span class="cms-news-date">@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                                    <span class="cms-news-date">Thêm ngày: @Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                                    <span class="pull-right">@string.Format("{0} Lượt xem", item.TotalView ?? 0)</span>
                                 </div>
                                 <div class="cms-news-content">
                                     <span>@((item.SubTitle + item.SubTitle + item.SubTitle).ToEllipsis(0, 250, "..."))</span>

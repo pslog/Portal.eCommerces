@@ -54,7 +54,7 @@
                     <th>@Html.DisplayName(Label.CmsNews.Title)</th>
                     <th>@Html.DisplayName(Label.CmsNews.Authors)</th>
                     <th>@Html.DisplayName(Label.CmsCategory.CreatedDate)</th>
-                    <th></th>
+                    <th>Lượt xem</th>
                 </tr>
 
                 @foreach (var item in Model)
@@ -69,6 +69,9 @@
                         <td>
                             @Html.ActionLink(Label.CRUD.Edit, "EditCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID }) |
                             @Html.ActionLink(Label.CRUD.Delete, "DeleteCmsNews", new { id = item.ID, categoryID = (int?)ViewBag.CategoryID })
+                        </td>
+                        <td>
+                            @(item.TotalView ?? 0)
                         </td>
                     </tr>
                 }
