@@ -249,7 +249,7 @@ a#scrollUp {
 
         .mainmenu ul li a:hover, .mainmenu ul li a.active, .shop-menu ul li a.active {
             background: none;
-            color: #fdb45e;
+            color: #40aad6;
         }
 
 .search_box input {
@@ -928,7 +928,7 @@ h2.title {
 }
 
 .product-overlay .add-to-cart {
-    background: #40AAD6;
+    background: #fdb45e;
     border: 0 none;
     border-radius: 0;
     color: #fff;
@@ -948,7 +948,7 @@ h2.title {
 }
 
 .product-overlay .add-to-cart:hover {
-    background: #40AAD6;
+    background: #fdb45e;
     color: #393b3b;
 }
 

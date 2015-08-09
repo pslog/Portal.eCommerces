@@ -1,34 +1,17 @@
 ﻿@model IPagedList<WebApplication.Models.Models.cms_News>
-
 @using PagedList;
 @using PagedList.Mvc
-
 @using WebApplication.Common.Constants
 @using WebApplication.Libraries.Extensions
 @using WebApplication.Libraries.CustomHtml
 @using WebApplication.Models.ViewModels
-
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     int pageNumber = (int)ViewBag.PageNumber;
     int? categoryID = (int?)ViewBag.CategoryID;
     string searchKey = (string)ViewBag.SearchKey;
 }
-
-
-@section navItems {
-    
-    @if (categoryID == null)
-    {
-        <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex", "Cms", null, null)</li>
-    }
-    else
-    {
-        <li>@Html.ActionLink(string.Format("Quay về {0}", (string)ViewBag.CategoryTitle), "EditCmsCategory", "Cms", new { id = (int)categoryID }, null)</li>
-    }
-}
-
-<div class="col-md-8 col-md-offset-2">
+<div class="row">
     <p></p>
     @using (Html.BeginForm("CmsCategoryIndex", "Cms"))
     {
@@ -56,7 +39,6 @@
                     <th>@Html.DisplayName(Label.CmsCategory.CreatedDate)</th>
                     <th>Lượt xem</th>
                 </tr>
-
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -81,5 +63,14 @@
         <div class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("AdminCmsNewsIndex", "Cms", new { categoryID = categoryID, pageNumber = page, searchKey = searchKey }))
         </div>
+    }
+
+    @if (categoryID == null)
+    {
+        @Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex", "Cms", null, null)
+    }
+    else
+    {
+        @Html.ActionLink(string.Format("Quay về {0}", (string)ViewBag.CategoryTitle), "EditCmsCategory", "Cms", new { id = (int)categoryID }, null)
     }
 </div>

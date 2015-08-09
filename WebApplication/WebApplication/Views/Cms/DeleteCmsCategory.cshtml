@@ -11,27 +11,23 @@
     }
 </style>
 
-@section navItems
-{
-    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
-}
-
 <div class="row">
-    <h2 id="remove_title">Xác nhận xóa danh mục</h2>
+    <h4 id="remove_title">Xác nhận xóa danh mục</h4>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <dl class="dl-horizontal">
+                <dt><span>Tên danh mục</span></dt>
+                <dd>@Html.DisplayFor(model => model.Title)</dd>
+                <dt><span>Mô tả</span></dt>
+                <dd>@Html.DisplayFor(model => model.Description)</dd>
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="Xóa" class="btn btn-primary" /></dd>
+            </dl>
+        </div>
+    }
 </div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div>
-        <dl class="dl-horizontal">
-            <dt><span>Tên danh mục</span></dt>
-            <dd>@Html.DisplayFor(model => model.Title)</dd>
-            <dt><span>Mô tả</span></dt>
-            <dd>@Html.DisplayFor(model => model.Description)</dd>
-            <dt>&nbsp;</dt>
-            <dd><input type="submit" value="Xóa" class="btn btn-primary" /></dd>
-
-        </dl>
-    </div>
-}
+@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")

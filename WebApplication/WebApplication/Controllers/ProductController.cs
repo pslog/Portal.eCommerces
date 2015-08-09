@@ -14,6 +14,8 @@ using WebApplication.Models.ViewModels;
 
 namespace WebApplication.Admin.Controllers
 {
+    //[Authorize(Roles = "Administrator")]
+    [Authorize]
     public class ProductController : Controller
     {
         private PortalEntities db = new PortalEntities();
@@ -152,19 +154,19 @@ namespace WebApplication.Admin.Controllers
                .Include(i => i.share_Images)
                .Where(i => i.ID == id)
                .Single();
-            if (TryUpdateModel(productToUpdate, null, new string[] { "ProductCode","CategoryID","Title","Quantity","Unit","PriceOfUnit","Description","Description2","Tags","IsNewProduct","IsBestSellProduct","SortOrder","Status"}))
+            if (TryUpdateModel(productToUpdate, null, new string[] { "ProductCode", "CategoryID", "Title", "Quantity", "Unit", "PriceOfUnit", "Description", "Description2", "Tags", "IsNewProduct", "IsBestSellProduct", "SortOrder", "Status" }))
             {
-                    try
-                    {
-                        db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
 
-                        return RedirectToAction("Index");
-                    }
-                    catch (RetryLimitExceededException /* dex */)
-                    {
-                        //Log the error (uncomment dex variable name and add a line here to write a log.
-                        ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                    }
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
             }
             PopulateCategoriesDropDownList(productToUpdate.CategoryID);
             PopulateStatusDropDownList(productToUpdate.Status);
@@ -174,8 +176,8 @@ namespace WebApplication.Admin.Controllers
         private void PopulateCategoriesDropDownList(object selectedDepartment = null)
         {
             var CategoriesQuery = from c in db.product_Categories
-                                   orderby c.Title
-                                   select c;
+                                  orderby c.Title
+                                  select c;
             ViewBag.CategoryID = new SelectList(CategoriesQuery, "ID", "Title", selectedDepartment);
         }
 
@@ -183,7 +185,7 @@ namespace WebApplication.Admin.Controllers
         {
             var Status = StatusProductViewModels.GetListStatusOptions();
             ViewBag.Status = new SelectList(Status, "StatusID", "Value", selectedStatus);
-        } 
+        }
 
         // GET: Product/Delete/5
         public ActionResult Delete(int? id)
@@ -230,50 +232,50 @@ namespace WebApplication.Admin.Controllers
             {
                 foreach (var file in files)
                 {
-          
-                        if (file.ContentLength > 0)
+
+                    if (file.ContentLength > 0)
+                    {
+                        // width + height will force size, care for distortion
+                        //Exmaple: ImageUpload imageUpload = new ImageUpload { Width = 800, Height = 700 };
+
+                        // height will increase the width proportionally
+                        //Example: ImageUpload imageUpload = new ImageUpload { Height= 600 };
+
+                        // width will increase the height proportionally
+                        ImageUpload imageUpload = new ImageUpload { Width = 600 };
+
+                        // rename, resize, and upload
+                        //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                        ImageResult imageResult = imageUpload.RenameUploadFile(file);
+                        if (imageResult.Success)
                         {
-                            // width + height will force size, care for distortion
-                            //Exmaple: ImageUpload imageUpload = new ImageUpload { Width = 800, Height = 700 };
-
-                            // height will increase the width proportionally
-                            //Example: ImageUpload imageUpload = new ImageUpload { Height= 600 };
-
-                            // width will increase the height proportionally
-                            ImageUpload imageUpload = new ImageUpload { Width = 600 };
-
-                            // rename, resize, and upload
-                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
-                            ImageResult imageResult = imageUpload.RenameUploadFile(file);
-                            if (imageResult.Success)
+                            //TODO: write the filename to the db
+                            var photo = new share_Images
                             {
-                                //TODO: write the filename to the db
-                                var photo = new share_Images
-                                {
-                                    ImageName = imageResult.ImageName,
-                                    ImagePath = Path.Combine(ImageUpload.LoadPath, imageResult.ImageName)
-                                };
-                                if (product_Products.share_Images==null)
-                                {
-                                    product_Products.share_Images = new List<share_Images>();
-                                }
-                                product_Products.share_Images.Add(photo);
-                                if (product_Products.share_Images.Count() > 0)
-                                {
-                                    product_Products.CoverImageID = product_Products.share_Images.ElementAt(0).ID;
-                                }
-                               
-                            }
-                            else
+                                ImageName = imageResult.ImageName,
+                                ImagePath = Path.Combine(ImageUpload.LoadPath, imageResult.ImageName)
+                            };
+                            if (product_Products.share_Images == null)
                             {
-                                // use imageResult.ErrorMessage to show the error
-                                ViewBag.Error = imageResult.ErrorMessage;
+                                product_Products.share_Images = new List<share_Images>();
                             }
+                            product_Products.share_Images.Add(photo);
+                            if (product_Products.share_Images.Count() > 0)
+                            {
+                                product_Products.CoverImageID = product_Products.share_Images.ElementAt(0).ID;
+                            }
+
                         }
-                    
+                        else
+                        {
+                            // use imageResult.ErrorMessage to show the error
+                            ViewBag.Error = imageResult.ErrorMessage;
+                        }
+                    }
+
                 }
                 db.SaveChanges();
-        }
+            }
             LoadListImageProductPartialViewModels listImageViewModels = new LoadListImageProductPartialViewModels()
             {
                 ProductId = product_Products.ID,
@@ -314,7 +316,7 @@ namespace WebApplication.Admin.Controllers
         /// </summary>
         /// <param name="Id">product Id</param>
         /// <returns>updated view of Cart</returns>
-        public ActionResult DeleteImage(int productId,int imageId)
+        public ActionResult DeleteImage(int productId, int imageId)
         {
             product_Products product_Products = db.product_Products
                .Include(i => i.product_Categories)

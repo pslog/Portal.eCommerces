@@ -8,70 +8,62 @@
         margin: 20px 20px 40px 20px;
     }
 </style>
-@section navItems
-{
-    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
-}
 
 <div class="row">
-    <h2 id="create_title">Thêm bài viết</h2>
-</div>
+    <h4 id="create_title">Thêm bài viết</h4>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="col-md-6 col-md-offset-2">
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                <label class="control-label col-md-3">Tên danh mục</label>
-                <div class="col-md-9">
-                    @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.CmsCategories, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tên danh mục</label>
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.CmsCategories, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3">Tên tác giả</label>
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Authors, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Authors, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tên tác giả</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Authors, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Authors, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3">Tiêu đề</label>
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tiêu đề</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3">Mô tả</label>
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.SubTitle, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SubTitle, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-3">Mô tả</label>
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.SubTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SubTitle, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3">Nội dung</label>
-                <div class="col-md-9">
-                    @Html.TextAreaFor(model => model.ContentNews, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ContentNews, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-3">Nội dung</label>
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(model => model.ContentNews, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContentNews, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-4 col-md-offset-8 text-right">
-                    <input type="submit" value="Thêm bài viết" class="btn btn-primary" />
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-8 text-right">
+                        <input type="submit" value="Thêm bài viết" class="btn btn-primary" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
+
+@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

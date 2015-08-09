@@ -1,34 +1,27 @@
 ﻿@model WebApplication.Models.Models.cms_Categories
-
 @{
-    
+
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     string title = ViewBag.ParentID == null ? "danh mục" : string.Format("loại {0}", ((string)ViewBag.ParentTitle).ToLower());
 }
-
 <style>
     #create_title {
-        margin:20px 20px 40px 20px;
+        margin: 20px 20px 40px 20px;
     }
 </style>
 
-@section navItems
-{
-    <li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
-}
+<li>@Html.ActionLink("Danh sách danh mục", "CmsCategoryIndex")</li>
 
 <div class="row">
-    <h2 id="create_title">Thêm @title</h2>    
+    <h2 id="create_title">Thêm @title</h2>
 </div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="col-md-6 col-md-offset-2">
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
             @if (ViewBag.ParentID != null)
             {
                 @Html.HiddenFor(model => model.ParentID, new { Value = (int)ViewBag.ParentID })
@@ -39,7 +32,6 @@
                     </div>
                 </div>
             }
-
             <div class="form-group">
                 <label class="control-label col-md-3">Tên @title</label>
                 <div class="col-md-9">
@@ -47,7 +39,6 @@
                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-md-3">Mô tả</label>
                 <div class="col-md-9">
@@ -55,7 +46,6 @@
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-md-4 col-md-offset-8 text-right">
                     <input type="submit" value="Tạo mới" class="btn btn-primary" />
@@ -64,7 +54,6 @@
         </div>
     </div>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
